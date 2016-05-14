@@ -1,16 +1,16 @@
 CREATE SCHEMA SALUDOS
 
 CREATE TABLE SALUDOS.PUBLICACIONES(
-	PUBL_CODIGO			numeric(18,0)	PRIMARY KEY,	--Publicacion_Cod
+	PUBL_COD			numeric(18,0)	PRIMARY KEY,	--Publicacion_Cod
 	PUBL_DESCRIPCION	nvarchar(255),					--Publicacion_Descripcion
 	PUBL_STOCK			numeric (18,0),					--Publicacion_Stock
-	PUBL_INICIO			date,							--Publicacion_Fecha
-	PUBL_FINALIZACION	date,							--Publicacion_Fecha_Venc
+	PUBL_INICIO			datetime,						--Publicacion_Fecha
+	PUBL_FINALIZACION	datetime,						--Publicacion_Fecha_Venc
 	PUBL_PRECIO			numeric(18,2),					--Publicacion_Precio
 	PUBL_ESTADO			varchar(10),					--(borrador, activa, pausada, finalizada)
 	PUBL_TIPO			nvarchar(255),					--Publicacion_Tipo
 	PUBL_PREGUNTAS		bit,							--new
-	PUBL_FECHA			date,							--???
+	PUBL_FECHA			datetime,						--???
 )
 
 CREATE TABLE SALUDOS.VISIBILIDADES(
@@ -29,8 +29,14 @@ CREATE TABLE SALUDOS.RUBROS(
 
 )
 
---CREATE TABLE SALUDOS.TRANSACCIONES(
---)
+CREATE TABLE SALUDOS.TRANSACCIONES(
+	TRAN_COD				int				IDENTITY	PRIMARY KEY,
+	TRAN_TIPO				nvarchar(255),	--compra o subasta
+	TRAN_ADJUDICADA			bit,			--si fue adjudicada (para subastas)
+	TRAN_PRECIO				numeric(18,2),	--precio de compra u oferta
+	TRAN_CANTIDAD_COMPRADA	numeric(2),		--en caso de compra directa
+	TRAN_FECHA				datetime,		--momento de la transacción
+)
 
 --CREATE TABLE SALUDOS.CALIFICACIONES(
 --)
@@ -59,9 +65,13 @@ CREATE TABLE SALUDOS.RUBROS(
 --CREATE TABLE SALUDOS.FUNCIONALIDADESXROL(
 --)
 
---A Publicaciones hay que agregarle los siguientes FK:
+-----------FKs QUE HAY QUE AGREGAR-----------
 --ALTER TABLE SALUDOS.PUBLICACIONES
 --PUBL_CREADOR FK
 --PUBL_VISIBILIDAD FK
 --PUBL_RUBRO FK
 
+--ALTER TABLE SALUDOS.TRANSACCIONES
+--TRAN_COMPRADOR FK
+--TRAN_VENDEDOR FK
+--TRAN_PUBLICACION FK
