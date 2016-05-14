@@ -45,8 +45,22 @@ CREATE TABLE SALUDOS.CALIFICACIONES(
 	CALI_FECHA				datetime									--new
 )
 
---CREATE TABLE SALUDOS.EMPRESAS(
---)
+CREATE TABLE SALUDOS.EMPRESAS(
+	EMPR_RAZON_SOCIAL		nvarchar(255),		--Publ_Empresa_Razon_Social
+	EMPR_CUIT				nvarchar(50),		--Publ_Empresa_Cuit
+	EMPR_MAIL				nvarchar(50),		--Publ_Empresa_Mail
+	EMPR_TELEFONO			numeric(18,0),		--new
+	EMPR_CALLE				nvarchar(100),		--Publ_Empresa_Dom_Calle
+	EMPR_NRO_CALLE			numeric(18,0),		--Publ_Empresa_Nro_Calle
+	EMPR_PISO				numeric(18,0),		--Publ_Empresa_Piso
+	EMPR_DEPTO				nvarchar(50),		--Publ_Empresa_Depto
+	EMPR_CIUDAD				nvarchar(50),		--new
+	EMPR_CONTACTO			nvarchar(50),		--new
+	EMPR_CODIGO_POSTAL		nvarchar(50),		--Publ_Empresa_Cod_Postal
+	EMPR_LOCALIDAD			nvarchar(50),		--new
+	EMPR_FECHA_CREACION		datetime,			--Publ_Empresa_Fecha_Creacion
+	PRIMARY KEY (EMPR_RAZON_SOCIAL, EMPR_CUIT)
+)
 
 --CREATE TABLE SALUDOS.CLIENTES(
 --)
@@ -83,3 +97,7 @@ CREATE TABLE SALUDOS.CALIFICACIONES(
 --ALTER TABLE SALUDOS.CALIFICACIONES
 --CALI_USUARIO FK
 --CALI_PUBLICACION FK
+
+--ALTER TABLE SALUDOS.EMPRESAS
+--EMPR_USERNAME FK
+--EMPR_RUBRO_PRINCIPAL FK
