@@ -46,27 +46,49 @@ CREATE TABLE SALUDOS.CALIFICACIONES(
 )
 
 CREATE TABLE SALUDOS.EMPRESAS(
-	EMPR_RAZON_SOCIAL		nvarchar(255),		--Publ_Empresa_Razon_Social
-	EMPR_CUIT				nvarchar(50),		--Publ_Empresa_Cuit
-	EMPR_MAIL				nvarchar(50),		--Publ_Empresa_Mail
-	EMPR_TELEFONO			numeric(18,0),		--new
-	EMPR_CALLE				nvarchar(100),		--Publ_Empresa_Dom_Calle
-	EMPR_NRO_CALLE			numeric(18,0),		--Publ_Empresa_Nro_Calle
-	EMPR_PISO				numeric(18,0),		--Publ_Empresa_Piso
-	EMPR_DEPTO				nvarchar(50),		--Publ_Empresa_Depto
-	EMPR_CIUDAD				nvarchar(50),		--new
-	EMPR_CONTACTO			nvarchar(50),		--new
-	EMPR_CODIGO_POSTAL		nvarchar(50),		--Publ_Empresa_Cod_Postal
-	EMPR_LOCALIDAD			nvarchar(50),		--new
-	EMPR_FECHA_CREACION		datetime,			--Publ_Empresa_Fecha_Creacion
+	EMPR_RAZON_SOCIAL		nvarchar(255),	--Publ_Empresa_Razon_Social
+	EMPR_CUIT				nvarchar(50),	--Publ_Empresa_Cuit
+	EMPR_MAIL				nvarchar(50),	--Publ_Empresa_Mail
+	EMPR_TELEFONO			numeric(18,0),	--new
+	EMPR_CALLE				nvarchar(100),	--Publ_Empresa_Dom_Calle
+	EMPR_NRO_CALLE			numeric(18,0),	--Publ_Empresa_Nro_Calle
+	EMPR_PISO				numeric(18,0),	--Publ_Empresa_Piso
+	EMPR_DEPTO				nvarchar(50),	--Publ_Empresa_Depto
+	EMPR_CIUDAD				nvarchar(50),	--new
+	EMPR_CONTACTO			nvarchar(50),	--new
+	EMPR_CODIGO_POSTAL		nvarchar(50),	--Publ_Empresa_Cod_Postal
+	EMPR_LOCALIDAD			nvarchar(50),	--new
+	EMPR_FECHA_CREACION		datetime,		--Publ_Empresa_Fecha_Creacion
 	PRIMARY KEY (EMPR_RAZON_SOCIAL, EMPR_CUIT)
 )
 
---CREATE TABLE SALUDOS.CLIENTES(
---)
+CREATE TABLE SALUDOS.CLIENTES(
+	CLIE_NOMBRE				nvarchar(255),	--Publ_Cli_Nombre
+	CLIE_APELLIDO			nvarchar(255),	--Publ_Cli_Apeliido
+	CLIE_TELEFONO			numeric(18,0),	--new
+	CLIE_CALLE				nvarchar(255),	--Publ_Cli_Dom_Calle
+	CLIE_NRO_CALLE			numeric(18,0),	--Publ_Cli_Nro_Calle
+	CLIE_FECHA_CREACION		datetime,		--new
+	CLIE_FECHA_NACIMIENTO	datetime,		--new
+	CLIE_CODIGO_POSTAL		nvarchar(50),	--Publ_Cli_Cod_Postal
+	CLIE_DEPTO				nvarchar(50),	--Publ_Cli_Depto
+	CLIE_PISO				numeric(18,0),	--Publ_Cli_Piso
+	CLIE_LOCALIDAD			nvarchar(255),	--new
+	CLIE_NRO_DOCUMENTO		numeric(18,0),	--Publ_Cli_Dni.
+	CLIE_TIPO_DOCUMENTO		nvarchar(50),	--new. Todos los documentos existentes son DNIs.
+	CLIE_MAIL				nvarchar(50),	--new
+	PRIMARY KEY (CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO)
+)
 
---CREATE TABLE SALUDOS.USUARIOS(
---)
+CREATE TABLE SALUDOS.USUARIOS(
+	USUA_USERNAME			nvarchar(50),	--new
+	USUA_PASSWORD			nvarchar(50),	--new
+	USUA_NUEVO				bit,			--new
+	USUA_INTENTOS_LOGIN		tinyint,		--new
+	USUA_SIN_CALIFICAR		tinyint,		--new
+	USUA_TIPO				nvarchar(1),	--new. 'e' = empresa, 'u' = usuario
+	CHECK (USUA_TIPO IN ('e', 'u'))
+)
 
 --CREATE TABLE SALUDOS.FACTURAS(
 --)
@@ -101,3 +123,6 @@ CREATE TABLE SALUDOS.EMPRESAS(
 --ALTER TABLE SALUDOS.EMPRESAS
 --EMPR_USERNAME FK
 --EMPR_RUBRO_PRINCIPAL FK
+
+--ALTER TABLE SALUDOS.CLIENTES
+--CLIE_USERNAME FK
