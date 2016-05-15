@@ -7,7 +7,7 @@ CREATE TABLE SALUDOS.PUBLICACIONES(
 	PUBL_INICIO			datetime,						--Publicacion_Fecha
 	PUBL_FINALIZACION	datetime,						--Publicacion_Fecha_Venc
 	PUBL_PRECIO			numeric(18,2),					--Publicacion_Precio
-	PUBL_ESTADO			varchar(10),					--(borrador, activa, pausada, finalizada)
+	PUBL_ESTADO			varchar(10),					--Publicacion_Estado (borrador, activa, pausada, finalizada. reemplaza Publicada)
 	PUBL_TIPO			nvarchar(255),					--Publicacion_Tipo
 	PUBL_PREGUNTAS		bit,							--new
 )
@@ -29,11 +29,11 @@ CREATE TABLE SALUDOS.RUBROS(
 
 CREATE TABLE SALUDOS.TRANSACCIONES(
 	TRAN_COD				int				IDENTITY	PRIMARY KEY,
-	TRAN_TIPO				nvarchar(255),	--compra o subasta
-	TRAN_ADJUDICADA			bit,			--si fue adjudicada (para subastas)
-	TRAN_PRECIO				numeric(18,2),	--precio de compra u oferta
-	TRAN_CANTIDAD_COMPRADA	numeric(2),		--en caso de compra directa
-	TRAN_FECHA				datetime,		--momento de la transacción
+	TRAN_TIPO				nvarchar(255),	--Compra o subasta
+	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
+	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
+	TRAN_CANTIDAD_COMPRADA	numeric(2),		--Compra_Cantidad (en caso de compra directa)
+	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
 )
 
 CREATE TABLE SALUDOS.CALIFICACIONES(
