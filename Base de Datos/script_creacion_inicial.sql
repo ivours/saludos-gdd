@@ -10,7 +10,6 @@ CREATE TABLE SALUDOS.PUBLICACIONES(
 	PUBL_ESTADO			varchar(10),					--(borrador, activa, pausada, finalizada)
 	PUBL_TIPO			nvarchar(255),					--Publicacion_Tipo
 	PUBL_PREGUNTAS		bit,							--new
-	PUBL_FECHA			datetime,						--???
 )
 
 CREATE TABLE SALUDOS.VISIBILIDADES(
@@ -26,7 +25,6 @@ CREATE TABLE SALUDOS.RUBROS(
 	RUBR_COD			int				IDENTITY	PRIMARY KEY,	--new
 	RUBR_NOMBRE			nvarchar(255),								--Publicacion_Rubro_Descripcion
 	RUBR_DESCRIPCION	nvarchar(255),								--new
-
 )
 
 CREATE TABLE SALUDOS.TRANSACCIONES(
@@ -90,8 +88,17 @@ CREATE TABLE SALUDOS.USUARIOS(
 	CHECK (USUA_TIPO IN ('e', 'u'))
 )
 
---CREATE TABLE SALUDOS.FACTURAS(
---)
+CREATE TABLE SALUDOS.FACTURAS(
+	FACT_COD				int			IDENTITY PRIMARY KEY,	--Factura_Nro
+	FACT_FECHA				datetime,							--Factura_Fecha
+	FACT_TOTAL				numeric(18),						--Factura_Total
+)
+
+CREATE TABLE SALUDOS.ITEMS(
+	ITEM_COD				int			IDENTITY PRIMARY KEY,	--new
+	ITEM_IMPORTE			numeric(18),						--Item_Factura_Monto
+	ITEM_CANTIDAD			numeric(2),							--Item_Factura_Cantidad
+)
 
 --CREATE TABLE SALUDOS.ROLES(
 --)
@@ -126,3 +133,10 @@ CREATE TABLE SALUDOS.USUARIOS(
 
 --ALTER TABLE SALUDOS.CLIENTES
 --CLIE_USERNAME FK
+
+--ALTER TABLE SALUDOS.FACTURAS
+--FACT_USUARIO FK
+--FACT_PUBLICACION FK
+
+--ALTER TABLE SALUDOS.ITEMS
+--ITEM_FACTURA FK
