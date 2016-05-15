@@ -60,21 +60,21 @@ CREATE TABLE SALUDOS.EMPRESAS(
 	PRIMARY KEY (EMPR_RAZON_SOCIAL, EMPR_CUIT)
 )
 
-CREATE TABLE SALUDOS.CLIENTES(
-	CLIE_NOMBRE				nvarchar(255),	--Publ_Cli_Nombre
-	CLIE_APELLIDO			nvarchar(255),	--Publ_Cli_Apeliido
+CREATE TABLE SALUDOS.CLIENTES(				--PARA EL QUE PUBLICA / PARA EL QUE COMPRA
+	CLIE_NOMBRE				nvarchar(255),	--Publ_Cli_Nombre	  / Cli_Nombre
+	CLIE_APELLIDO			nvarchar(255),	--Publ_Cli_Apeliido   / Cli_Apeliido
 	CLIE_TELEFONO			numeric(18,0),	--new
-	CLIE_CALLE				nvarchar(255),	--Publ_Cli_Dom_Calle
-	CLIE_NRO_CALLE			numeric(18,0),	--Publ_Cli_Nro_Calle
+	CLIE_CALLE				nvarchar(255),	--Publ_Cli_Dom_Calle  / Cli_Dom_Calle
+	CLIE_NRO_CALLE			numeric(18,0),	--Publ_Cli_Nro_Calle  / Cli_Nro_Calle
 	CLIE_FECHA_CREACION		datetime,		--new
-	CLIE_FECHA_NACIMIENTO	datetime,		--new
-	CLIE_CODIGO_POSTAL		nvarchar(50),	--Publ_Cli_Cod_Postal
-	CLIE_DEPTO				nvarchar(50),	--Publ_Cli_Depto
-	CLIE_PISO				numeric(18,0),	--Publ_Cli_Piso
+	CLIE_FECHA_NACIMIENTO	datetime,		--Publ_Cli_Fecha_Nac  / Cli_Fecha_Nac
+	CLIE_CODIGO_POSTAL		nvarchar(50),	--Publ_Cli_Cod_Postal / Cli_Cod_Postal
+	CLIE_DEPTO				nvarchar(50),	--Publ_Cli_Depto	  / Cli_Depto
+	CLIE_PISO				numeric(18,0),	--Publ_Cli_Piso		  / Cli_Piso
 	CLIE_LOCALIDAD			nvarchar(255),	--new
-	CLIE_NRO_DOCUMENTO		numeric(18,0),	--Publ_Cli_Dni.
+	CLIE_NRO_DOCUMENTO		numeric(18,0),	--Publ_Cli_Dni		  / Cli_Dni
 	CLIE_TIPO_DOCUMENTO		nvarchar(50),	--new. Todos los documentos existentes son DNIs.
-	CLIE_MAIL				nvarchar(50),	--new
+	CLIE_MAIL				nvarchar(50),	--Publ_Cli_Mail		  / Cli_Mail
 	PRIMARY KEY (CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO)
 )
 
@@ -100,17 +100,25 @@ CREATE TABLE SALUDOS.ITEMS(
 	ITEM_CANTIDAD			numeric(2),							--Item_Factura_Cantidad
 )
 
---CREATE TABLE SALUDOS.ROLES(
---)
+CREATE TABLE SALUDOS.ROLES(
+	ROL_NOMBRE		nvarchar(50)	PRIMARY KEY,
+)
 
---CREATE TABLE SALUDOS.FUNCIONALIDADES(
---)
+CREATE TABLE SALUDOS.FUNCIONALIDADES(
+	FUNC_NOMBRE		nvarchar(50)	PRIMARY KEY,
+)
 
---CREATE TABLE SALUDOS.ROLESXUSUARIO(
---)
+CREATE TABLE SALUDOS.ROLESXUSUARIO(
+	ROL_NOMBRE		nvarchar(50),
+	USUA_USERNAME	nvarchar(50),
+	PRIMARY KEY (ROL_NOMBRE, USUA_USERNAME)
+)
 
---CREATE TABLE SALUDOS.FUNCIONALIDADESXROL(
---)
+CREATE TABLE SALUDOS.FUNCIONALIDADESXROL(
+	FUNC_NOMBRE		nvarchar(50),
+	ROL_NOMBRE		nvarchar(50),
+	PRIMARY KEY (FUNC_NOMBRE, ROL_NOMBRE)
+)
 
 -----------FKs QUE HAY QUE AGREGAR-----------
 --ALTER TABLE SALUDOS.PUBLICACIONES
@@ -140,3 +148,11 @@ CREATE TABLE SALUDOS.ITEMS(
 
 --ALTER TABLE SALUDOS.ITEMS
 --ITEM_FACTURA FK
+
+--ALTER TABLE SALUDOS.ROLESXUSUARIO
+--ROL_NOMBRE FK
+--USUA_USERNAME FK
+
+--ALTER TABLE SALUDOS.FUNCIONALIDADESXROL
+--FUNC_NOMBRE FK
+--ROL_NOMBRE FK
