@@ -38,7 +38,7 @@ CREATE TABLE SALUDOS.TRANSACCIONES(
 	TRAN_TIPO				nvarchar(255),	--Compra o subasta
 	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
 	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
-	TRAN_CANTIDAD_COMPRADA	numeric(2),		--Compra_Cantidad (en caso de compra directa)
+	TRAN_CANTIDAD_COMPRADA	numeric(2,0),		--Compra_Cantidad (en caso de compra directa)
 	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
 	USUA_USERNAME			nvarchar(50),	--FK. Comprador/ofertante.
 	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
@@ -107,7 +107,7 @@ CREATE TABLE SALUDOS.USUARIOS(
 CREATE TABLE SALUDOS.FACTURAS(
 	FACT_COD				numeric(18,0) IDENTITY,	--Factura_Nro
 	FACT_FECHA				datetime,				--Factura_Fecha
-	FACT_TOTAL				numeric(18),			--Factura_Total
+	FACT_TOTAL				numeric(18,2),			--Factura_Total
 	USUA_USERNAME			nvarchar(50),			--FK. A quién corresponde la factura.
 	PUBL_COD				numeric(18,0),			--FK. Por qué publicación se factura.
 	CONSTRAINT PK_FACTURAS PRIMARY KEY (FACT_COD)
@@ -115,8 +115,8 @@ CREATE TABLE SALUDOS.FACTURAS(
 
 CREATE TABLE SALUDOS.ITEMS(
 	ITEM_COD				int	IDENTITY,	--new
-	ITEM_IMPORTE			numeric(18),	--Item_Factura_Monto
-	ITEM_CANTIDAD			numeric(2),		--Item_Factura_Cantidad
+	ITEM_IMPORTE			numeric(18,2),	--Item_Factura_Monto
+	ITEM_CANTIDAD			numeric(2,0),		--Item_Factura_Cantidad
 	FACT_COD				numeric(18,0),	--FK. Factura a la que pertenece.
 	CONSTRAINT PK_ITEMS PRIMARY KEY (ITEM_COD)
 )
