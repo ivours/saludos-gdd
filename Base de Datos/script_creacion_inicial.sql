@@ -38,7 +38,7 @@ CREATE TABLE SALUDOS.TRANSACCIONES(
 	TRAN_TIPO				nvarchar(255),	--Compra o subasta
 	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
 	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
-	TRAN_CANTIDAD_COMPRADA	numeric(2,0),		--Compra_Cantidad (en caso de compra directa)
+	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
 	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
 	USUA_USERNAME			nvarchar(50),	--FK. Comprador/ofertante.
 	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
@@ -100,7 +100,7 @@ CREATE TABLE SALUDOS.USUARIOS(
 	USUA_INTENTOS_LOGIN		tinyint,		--new
 	USUA_SIN_CALIFICAR		tinyint,		--new
 	USUA_TIPO				nvarchar(1),	--new. 'e' = empresa, 'u' = usuario
-	USUA_HABILITADO			bit,
+	USUA_HABILITADO			bit DEFAULT 1,
 	CONSTRAINT CK_USUARIO CHECK (USUA_TIPO IN ('e', 'u')),
 	CONSTRAINT PK_USUA_USERNAME PRIMARY KEY (USUA_USERNAME)
 )
@@ -117,14 +117,14 @@ CREATE TABLE SALUDOS.FACTURAS(
 CREATE TABLE SALUDOS.ITEMS(
 	ITEM_COD				int	IDENTITY,	--new
 	ITEM_IMPORTE			numeric(18,2),	--Item_Factura_Monto
-	ITEM_CANTIDAD			numeric(2,0),		--Item_Factura_Cantidad
+	ITEM_CANTIDAD			numeric(2,0),	--Item_Factura_Cantidad
 	FACT_COD				numeric(18,0),	--FK. Factura a la que pertenece.
 	CONSTRAINT PK_ITEMS PRIMARY KEY (ITEM_COD)
 )
 
 CREATE TABLE SALUDOS.ROLES(
 	ROL_NOMBRE		nvarchar(50),
-	ROL_HABILITADO	bit,
+	ROL_HABILITADO	bit DEFAULT 1,
 	CONSTRAINT PK_ROLES PRIMARY KEY (ROL_NOMBRE)
 )
 
@@ -136,7 +136,7 @@ CREATE TABLE SALUDOS.FUNCIONALIDADES(
 CREATE TABLE SALUDOS.ROLESXUSUARIO(
 	ROL_NOMBRE		nvarchar(50),
 	USUA_USERNAME	nvarchar(50),
-	RXU_HABILITADO	bit,
+	RXU_HABILITADO	bit DEFAULT 1,
 	CONSTRAINT PK_ROLESXUSUARIO PRIMARY KEY (ROL_NOMBRE, USUA_USERNAME)
 )
 
@@ -242,3 +242,21 @@ ALTER TABLE SALUDOS.FUNCIONALIDADESXROL
 	ADD CONSTRAINT FK_FUNCIONALIDADESXROL_ROL_NOMBRE
 	FOREIGN KEY (ROL_NOMBRE)
 	REFERENCES SALUDOS.ROLES(ROL_NOMBRE)
+
+
+-----MIGRATION TIME-----
+
+INSERT INTO SALUDOS.ROLES (ROL_NOMBRE)
+	VALUES ('Administrador'),('Cliente'), ('Empresa')
+
+INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
+	VALUES	('ABM Roles'),
+			('ABM Usuarios'),
+			('ABM Rubros'),
+			('ABM Visibilidades'),
+			('Vender'),
+			('Comprar/Ofertar'),
+			('Historial de cliente'),
+			('Calificar al vendedor'),
+			('Consulta de facturas'),
+			('Listado estadístico')
