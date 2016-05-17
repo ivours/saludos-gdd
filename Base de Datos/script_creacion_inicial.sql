@@ -266,53 +266,21 @@ INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 --La tabla maestra tiene datos de clientes guardados en dos lugares distintos.
 --Primero agrego clientes que hayan hecho una publicación.
 INSERT INTO SALUDOS.CLIENTES(
-	CLIE_NRO_DOCUMENTO,
-	CLIE_APELLIDO,
-	CLIE_NOMBRE,
-	CLIE_FECHA_NACIMIENTO,
-	CLIE_MAIL,
-	CLIE_CALLE,
-	CLIE_NRO_CALLE,
-	CLIE_PISO,
-	CLIE_DEPTO,
-	CLIE_CODIGO_POSTAL)
+	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
+	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL)
 SELECT DISTINCT
-	Publ_Cli_Dni,
-	Publ_Cli_Apeliido,
-	Publ_Cli_Nombre,
-	Publ_Cli_Fecha_Nac,
-	Publ_Cli_Mail,
-	Publ_Cli_Dom_Calle,
-	Publ_Cli_Nro_Calle,
-	Publ_Cli_Piso,
-	Publ_Cli_Depto,
-	Publ_Cli_Cod_Postal
+	Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
+	Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal
 FROM gd_esquema.Maestra
 WHERE Publ_Cli_Dni IS NOT NULL
 
 --Luego agrego clientes que hayan realizado una compra.
 INSERT INTO SALUDOS.CLIENTES(
-	CLIE_NRO_DOCUMENTO,
-	CLIE_APELLIDO,
-	CLIE_NOMBRE,
-	CLIE_FECHA_NACIMIENTO,
-	CLIE_MAIL,
-	CLIE_CALLE,
-	CLIE_NRO_CALLE,
-	CLIE_PISO,
-	CLIE_DEPTO,
-	CLIE_CODIGO_POSTAL)
+	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
+	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL)
 SELECT DISTINCT
-	Cli_Dni,
-	Cli_Apeliido,
-	Cli_Nombre,
-	Cli_Fecha_Nac,
-	Cli_Mail,
-	Cli_Dom_Calle,
-	Cli_Nro_Calle,
-	Cli_Piso,
-	Cli_Depto,
-	Cli_Cod_Postal
+	Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
+	Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal
 FROM gd_esquema.Maestra
 WHERE	Cli_Dni IS NOT NULL
 		AND NOT EXISTS(
@@ -322,3 +290,14 @@ WHERE	Cli_Dni IS NOT NULL
 --Resulta que a pesar de que la información está dos veces,
 --los 28 clientes son los mismos. Así que esto no hace nada:
 --0 rows affected. Pero no me parece mal dejarlo.
+
+INSERT INTO SALUDOS.EMPRESAS(
+	EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_FECHA_CREACION,
+	EMPR_MAIL, EMPR_CALLE, EMPR_NRO_CALLE,
+	EMPR_PISO, EMPR_DEPTO, EMPR_CODIGO_POSTAL)
+SELECT DISTINCT
+	Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion,
+	Publ_Empresa_Mail, Publ_Empresa_Dom_Calle, Publ_Empresa_Nro_Calle,
+	Publ_Empresa_Piso, Publ_Empresa_Depto, Publ_Empresa_Cod_Postal
+FROM gd_esquema.Maestra
+WHERE Publ_Empresa_Razon_Social IS NOT NULL
