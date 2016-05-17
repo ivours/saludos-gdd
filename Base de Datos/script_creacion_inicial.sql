@@ -87,7 +87,7 @@ CREATE TABLE SALUDOS.CLIENTES(				--PARA EL QUE PUBLICA / PARA EL QUE COMPRA
 	CLIE_PISO				numeric(18,0),	--Publ_Cli_Piso		  / Cli_Piso
 	CLIE_LOCALIDAD			nvarchar(255),	--new
 	CLIE_NRO_DOCUMENTO		numeric(18,0),	--Publ_Cli_Dni		  / Cli_Dni
-	CLIE_TIPO_DOCUMENTO		nvarchar(50),	--new. Todos los documentos existentes son DNIs.
+	CLIE_TIPO_DOCUMENTO		nvarchar(50) DEFAULT 'DNI',--new
 	CLIE_MAIL				nvarchar(50),	--Publ_Cli_Mail		  / Cli_Mail
 	USUA_USERNAME			nvarchar(50),	--FK. Usuario del cliente.
 	CONSTRAINT PK_CLIENTES PRIMARY KEY (CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO)
@@ -246,9 +246,11 @@ ALTER TABLE SALUDOS.FUNCIONALIDADESXROL
 
 -----MIGRATION TIME-----
 
+--Agrego roles
 INSERT INTO SALUDOS.ROLES (ROL_NOMBRE)
 	VALUES ('Administrador'),('Cliente'), ('Empresa')
 
+--Agrego funcionalidades
 INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 	VALUES	('ABM Roles'),
 			('ABM Usuarios'),
@@ -260,3 +262,63 @@ INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 			('Calificar al vendedor'),
 			('Consulta de facturas'),
 			('Listado estadístico')
+
+--La tabla maestra tiene datos de clientes guardados en dos lugares distintos.
+--Primero agrego clientes que hayan hecho una publicación.
+INSERT INTO SALUDOS.CLIENTES(
+	CLIE_NRO_DOCUMENTO,
+	CLIE_APELLIDO,
+	CLIE_NOMBRE,
+	CLIE_FECHA_NACIMIENTO,
+	CLIE_MAIL,
+	CLIE_CALLE,
+	CLIE_NRO_CALLE,
+	CLIE_PISO,
+	CLIE_DEPTO,
+	CLIE_CODIGO_POSTAL)
+SELECT DISTINCT
+	Publ_Cli_Dni,
+	Publ_Cli_Apeliido,
+	Publ_Cli_Nombre,
+	Publ_Cli_Fecha_Nac,
+	Publ_Cli_Mail,
+	Publ_Cli_Dom_Calle,
+	Publ_Cli_Nro_Calle,
+	Publ_Cli_Piso,
+	Publ_Cli_Depto,
+	Publ_Cli_Cod_Postal
+FROM gd_esquema.Maestra
+WHERE Publ_Cli_Dni IS NOT NULL
+
+--Luego agrego clientes que hayan realizado una compra.
+INSERT INTO SALUDOS.CLIENTES(
+	CLIE_NRO_DOCUMENTO,
+	CLIE_APELLIDO,
+	CLIE_NOMBRE,
+	CLIE_FECHA_NACIMIENTO,
+	CLIE_MAIL,
+	CLIE_CALLE,
+	CLIE_NRO_CALLE,
+	CLIE_PISO,
+	CLIE_DEPTO,
+	CLIE_CODIGO_POSTAL)
+SELECT DISTINCT
+	Cli_Dni,
+	Cli_Apeliido,
+	Cli_Nombre,
+	Cli_Fecha_Nac,
+	Cli_Mail,
+	Cli_Dom_Calle,
+	Cli_Nro_Calle,
+	Cli_Piso,
+	Cli_Depto,
+	Cli_Cod_Postal
+FROM gd_esquema.Maestra
+WHERE	Cli_Dni IS NOT NULL
+		AND NOT EXISTS(
+		SELECT CLIE_NRO_DOCUMENTO
+		FROM SALUDOS.CLIENTES
+		WHERE Cli_Dni = CLIE_NRO_DOCUMENTO)
+--Resulta que a pesar de que la información está dos veces,
+--los 28 clientes son los mismos. Así que esto no hace nada:
+--0 rows affected. Pero no me parece mal dejarlo.
