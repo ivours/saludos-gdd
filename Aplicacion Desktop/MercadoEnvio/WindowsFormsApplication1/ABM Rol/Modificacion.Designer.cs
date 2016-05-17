@@ -41,7 +41,7 @@
             // labelNuevoNombre
             // 
             this.labelNuevoNombre.AutoSize = true;
-            this.labelNuevoNombre.Location = new System.Drawing.Point(56, 67);
+            this.labelNuevoNombre.Location = new System.Drawing.Point(12, 74);
             this.labelNuevoNombre.Name = "labelNuevoNombre";
             this.labelNuevoNombre.Size = new System.Drawing.Size(77, 13);
             this.labelNuevoNombre.TabIndex = 0;
@@ -49,23 +49,23 @@
             // 
             // textboxNuevoNombre
             // 
-            this.textboxNuevoNombre.Location = new System.Drawing.Point(170, 67);
+            this.textboxNuevoNombre.Location = new System.Drawing.Point(119, 67);
             this.textboxNuevoNombre.Name = "textboxNuevoNombre";
-            this.textboxNuevoNombre.Size = new System.Drawing.Size(100, 20);
+            this.textboxNuevoNombre.Size = new System.Drawing.Size(172, 20);
             this.textboxNuevoNombre.TabIndex = 1;
             // 
             // cListBoxFuncionalidades
             // 
             this.cListBoxFuncionalidades.FormattingEnabled = true;
-            this.cListBoxFuncionalidades.Location = new System.Drawing.Point(170, 111);
+            this.cListBoxFuncionalidades.Location = new System.Drawing.Point(119, 111);
             this.cListBoxFuncionalidades.Name = "cListBoxFuncionalidades";
-            this.cListBoxFuncionalidades.Size = new System.Drawing.Size(120, 94);
+            this.cListBoxFuncionalidades.Size = new System.Drawing.Size(172, 94);
             this.cListBoxFuncionalidades.TabIndex = 2;
             // 
             // labelFuncionalidades
             // 
             this.labelFuncionalidades.AutoSize = true;
-            this.labelFuncionalidades.Location = new System.Drawing.Point(56, 111);
+            this.labelFuncionalidades.Location = new System.Drawing.Point(12, 111);
             this.labelFuncionalidades.Name = "labelFuncionalidades";
             this.labelFuncionalidades.Size = new System.Drawing.Size(84, 13);
             this.labelFuncionalidades.TabIndex = 3;
@@ -74,7 +74,7 @@
             // labelNombreActual
             // 
             this.labelNombreActual.AutoSize = true;
-            this.labelNombreActual.Location = new System.Drawing.Point(56, 25);
+            this.labelNombreActual.Location = new System.Drawing.Point(12, 25);
             this.labelNombreActual.Name = "labelNombreActual";
             this.labelNombreActual.Size = new System.Drawing.Size(76, 13);
             this.labelNombreActual.TabIndex = 4;
@@ -82,15 +82,15 @@
             // 
             // textboxNombreActual
             // 
-            this.textboxNombreActual.Location = new System.Drawing.Point(170, 25);
+            this.textboxNombreActual.Location = new System.Drawing.Point(119, 25);
             this.textboxNombreActual.Name = "textboxNombreActual";
-            this.textboxNombreActual.Size = new System.Drawing.Size(100, 20);
+            this.textboxNombreActual.Size = new System.Drawing.Size(172, 20);
             this.textboxNombreActual.TabIndex = 5;
             // 
             // checkboxHabilitar
             // 
             this.checkboxHabilitar.AutoSize = true;
-            this.checkboxHabilitar.Location = new System.Drawing.Point(59, 226);
+            this.checkboxHabilitar.Location = new System.Drawing.Point(15, 227);
             this.checkboxHabilitar.Name = "checkboxHabilitar";
             this.checkboxHabilitar.Size = new System.Drawing.Size(104, 17);
             this.checkboxHabilitar.TabIndex = 6;
@@ -99,7 +99,7 @@
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(267, 263);
+            this.buttonGuardar.Location = new System.Drawing.Point(216, 263);
             this.buttonGuardar.Name = "buttonGuardar";
             this.buttonGuardar.Size = new System.Drawing.Size(75, 23);
             this.buttonGuardar.TabIndex = 7;
@@ -110,7 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 298);
+            this.ClientSize = new System.Drawing.Size(314, 298);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.checkboxHabilitar);
             this.Controls.Add(this.textboxNombreActual);
