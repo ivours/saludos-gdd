@@ -12,9 +12,33 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class CargarDatosCliente : Form
     {
-        public CargarDatosCliente()
+        Form formularioAnterior;
+
+        public CargarDatosCliente(Form formularioAnterior)
         {
             InitializeComponent();
+            this.formularioAnterior = formularioAnterior;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.abrirVentana(formularioAnterior);
+        }
+
+        private void abrirVentana(Form siguienteFormulario)
+        {
+            siguienteFormulario.Visible = true;
+            this.Visible = false;
         }
     }
 }

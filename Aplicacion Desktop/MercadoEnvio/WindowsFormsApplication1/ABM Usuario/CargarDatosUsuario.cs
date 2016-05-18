@@ -21,5 +21,25 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == true)
+            {
+                Form cargarDatosCliente = new ABM_Usuario.CargarDatosCliente(this);
+                this.abrirVentana(cargarDatosCliente);
+            }
+            else
+            {
+                //Cargar datos empresa
+            }
+           
+        }
+
+        private void abrirVentana(Form siguienteFormulario)
+        {
+            siguienteFormulario.Visible = true;
+            this.Visible = false;
+        }
     }
 }

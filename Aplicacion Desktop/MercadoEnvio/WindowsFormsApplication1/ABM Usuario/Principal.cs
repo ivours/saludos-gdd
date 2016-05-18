@@ -20,7 +20,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private void button1_Click(object sender, EventArgs e)
         {
             Form altaUsuario = new ABM_Usuario.CargarDatosUsuario();
-            altaUsuario.Visible = true;
+            this.abrirVentana(altaUsuario);
+        }
+
+        private void abrirVentana(Form siguienteFormulario)
+        {
+            siguienteFormulario.Visible = true;
+            this.Visible = false;
         }
     }
 }
