@@ -18,7 +18,7 @@ CREATE TABLE SALUDOS.PUBLICACIONES(
 )
 
 CREATE TABLE SALUDOS.VISIBILIDADES(
-	VISI_COD					int IDENTITY,	--reemplaza Publiacion_Visibilidad_Cod
+	VISI_COD					int,	--reemplaza Publiacion_Visibilidad_Cod
 	VISI_COMISION_PUBLICACION	numeric(18,2),	--Publicacion_Visibilidad_Precio
 	VISI_COMISION_VENTA			numeric(18,2),	--Publicacion_Visibilidad_Porcentaje
 	VISI_COMISION_ENVIO			numeric(18,2),	--new. 10% del valor inicial de la publicación.
@@ -310,3 +310,11 @@ SELECT DISTINCT
 	Publicacion_Rubro_Descripcion
 FROM gd_esquema.Maestra
 WHERE Publicacion_Rubro_Descripcion IS NOT NULL
+
+INSERT INTO SALUDOS.VISIBILIDADES(
+	VISI_COD, VISI_DESCRIPCION, VISI_COMISION_ENVIO,
+	VISI_COMISION_PUBLICACION, VISI_COMISION_VENTA)
+SELECT DISTINCT
+	Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, 0.10,
+	Publicacion_Visibilidad_Precio, Publicacion_Visibilidad_Porcentaje
+FROM gd_esquema.Maestra
