@@ -10,6 +10,7 @@ CREATE TABLE SALUDOS.PUBLICACIONES(
 	PUBL_ESTADO			varchar(10),			--Publicacion_Estado (borrador, activa, pausada, finalizada. reemplaza Publicada)
 	PUBL_TIPO			nvarchar(255),			--Publicacion_Tipo
 	PUBL_PREGUNTAS		bit,					--new
+	PUBL_PERMITE_ENVIO	bit,					--new
 	USUA_USERNAME		nvarchar(50),			--FK. Creador.
 	VISI_COD			int,					--FK. Visibilidad.
 	RUBR_COD			int,					--FK. Rubro.
@@ -21,7 +22,6 @@ CREATE TABLE SALUDOS.VISIBILIDADES(
 	VISI_COMISION_PUBLICACION	numeric(18,2),	--Publicacion_Visibilidad_Precio
 	VISI_COMISION_VENTA			numeric(18,2),	--Publicacion_Visibilidad_Porcentaje
 	VISI_COMISION_ENVIO			numeric(18,2),	--new. 10% del valor inicial de la publicación.
-	VISI_PERMITE_ENVIO			bit,			--new
 	VISI_DESCRIPCION			nvarchar(255),	--Publicacion_Visibilidad_Desc
 	CONSTRAINT PK_VISIBILIDADES PRIMARY KEY (VISI_COD),
 )
