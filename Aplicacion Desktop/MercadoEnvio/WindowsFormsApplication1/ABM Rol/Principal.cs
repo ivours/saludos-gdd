@@ -12,6 +12,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class Principal : Form
     {
+
         public Principal()
         {
             InitializeComponent();

@@ -36,12 +36,15 @@
             this.textboxNombreActual = new System.Windows.Forms.TextBox();
             this.checkboxHabilitar = new System.Windows.Forms.CheckBox();
             this.buttonGuardar = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelNuevoNombre
             // 
             this.labelNuevoNombre.AutoSize = true;
-            this.labelNuevoNombre.Location = new System.Drawing.Point(12, 74);
+            this.labelNuevoNombre.Location = new System.Drawing.Point(6, 68);
             this.labelNuevoNombre.Name = "labelNuevoNombre";
             this.labelNuevoNombre.Size = new System.Drawing.Size(77, 13);
             this.labelNuevoNombre.TabIndex = 0;
@@ -49,7 +52,7 @@
             // 
             // textboxNuevoNombre
             // 
-            this.textboxNuevoNombre.Location = new System.Drawing.Point(119, 67);
+            this.textboxNuevoNombre.Location = new System.Drawing.Point(118, 65);
             this.textboxNuevoNombre.Name = "textboxNuevoNombre";
             this.textboxNuevoNombre.Size = new System.Drawing.Size(172, 20);
             this.textboxNuevoNombre.TabIndex = 1;
@@ -57,7 +60,7 @@
             // cListBoxFuncionalidades
             // 
             this.cListBoxFuncionalidades.FormattingEnabled = true;
-            this.cListBoxFuncionalidades.Location = new System.Drawing.Point(119, 111);
+            this.cListBoxFuncionalidades.Location = new System.Drawing.Point(118, 109);
             this.cListBoxFuncionalidades.Name = "cListBoxFuncionalidades";
             this.cListBoxFuncionalidades.Size = new System.Drawing.Size(172, 94);
             this.cListBoxFuncionalidades.TabIndex = 2;
@@ -65,7 +68,7 @@
             // labelFuncionalidades
             // 
             this.labelFuncionalidades.AutoSize = true;
-            this.labelFuncionalidades.Location = new System.Drawing.Point(12, 111);
+            this.labelFuncionalidades.Location = new System.Drawing.Point(6, 109);
             this.labelFuncionalidades.Name = "labelFuncionalidades";
             this.labelFuncionalidades.Size = new System.Drawing.Size(84, 13);
             this.labelFuncionalidades.TabIndex = 3;
@@ -74,7 +77,7 @@
             // labelNombreActual
             // 
             this.labelNombreActual.AutoSize = true;
-            this.labelNombreActual.Location = new System.Drawing.Point(12, 25);
+            this.labelNombreActual.Location = new System.Drawing.Point(6, 26);
             this.labelNombreActual.Name = "labelNombreActual";
             this.labelNombreActual.Size = new System.Drawing.Size(76, 13);
             this.labelNombreActual.TabIndex = 4;
@@ -82,15 +85,16 @@
             // 
             // textboxNombreActual
             // 
-            this.textboxNombreActual.Location = new System.Drawing.Point(119, 25);
+            this.textboxNombreActual.Location = new System.Drawing.Point(118, 23);
             this.textboxNombreActual.Name = "textboxNombreActual";
+            this.textboxNombreActual.ReadOnly = true;
             this.textboxNombreActual.Size = new System.Drawing.Size(172, 20);
             this.textboxNombreActual.TabIndex = 5;
             // 
             // checkboxHabilitar
             // 
             this.checkboxHabilitar.AutoSize = true;
-            this.checkboxHabilitar.Location = new System.Drawing.Point(15, 227);
+            this.checkboxHabilitar.Location = new System.Drawing.Point(9, 220);
             this.checkboxHabilitar.Name = "checkboxHabilitar";
             this.checkboxHabilitar.Size = new System.Drawing.Size(104, 17);
             this.checkboxHabilitar.TabIndex = 6;
@@ -99,30 +103,51 @@
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(216, 263);
+            this.buttonGuardar.Location = new System.Drawing.Point(244, 269);
             this.buttonGuardar.Name = "buttonGuardar";
             this.buttonGuardar.Size = new System.Drawing.Size(75, 23);
             this.buttonGuardar.TabIndex = 7;
             this.buttonGuardar.Text = "Guardar";
             this.buttonGuardar.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cListBoxFuncionalidades);
+            this.groupBox1.Controls.Add(this.labelNuevoNombre);
+            this.groupBox1.Controls.Add(this.checkboxHabilitar);
+            this.groupBox1.Controls.Add(this.textboxNuevoNombre);
+            this.groupBox1.Controls.Add(this.textboxNombreActual);
+            this.groupBox1.Controls.Add(this.labelFuncionalidades);
+            this.groupBox1.Controls.Add(this.labelNombreActual);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(307, 251);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Datos del rol";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 269);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Limpiar";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Modificacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 298);
+            this.ClientSize = new System.Drawing.Size(337, 302);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonGuardar);
-            this.Controls.Add(this.checkboxHabilitar);
-            this.Controls.Add(this.textboxNombreActual);
-            this.Controls.Add(this.labelNombreActual);
-            this.Controls.Add(this.labelFuncionalidades);
-            this.Controls.Add(this.cListBoxFuncionalidades);
-            this.Controls.Add(this.textboxNuevoNombre);
-            this.Controls.Add(this.labelNuevoNombre);
             this.Name = "Modificacion";
             this.Text = "Modificar rol";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -136,5 +161,7 @@
         private System.Windows.Forms.TextBox textboxNombreActual;
         private System.Windows.Forms.CheckBox checkboxHabilitar;
         private System.Windows.Forms.Button buttonGuardar;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
