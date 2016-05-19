@@ -10,31 +10,29 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class CargarDatosUsuario : Form
+    public partial class CargarDatosEmpresa : Form
     {
-        public CargarDatosUsuario()
+        Form formularioAnterior;
+
+        public CargarDatosEmpresa(Form formularioAnterior)
         {
             InitializeComponent();
+            this.formularioAnterior = formularioAnterior;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (radioButton1.Checked == true)
-            {
-                Form cargarDatosCliente = new ABM_Usuario.CargarDatosCliente(this);
-                this.abrirVentana(cargarDatosCliente);
-            }
-            else
-            {
-                Form cargarDatosEmpresa = new ABM_Usuario.CargarDatosEmpresa(this);
-                this.abrirVentana(cargarDatosEmpresa);
-            }
-           
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.abrirVentana(formularioAnterior);
         }
 
         private void abrirVentana(Form siguienteFormulario)
