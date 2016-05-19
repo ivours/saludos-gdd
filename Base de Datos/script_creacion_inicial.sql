@@ -291,6 +291,7 @@ WHERE	Cli_Dni IS NOT NULL
 --los 28 clientes son los mismos. Así que esto no hace nada:
 --0 rows affected. Pero me parece que tiene sentido dejarlo.
 
+--Agrego empresas
 INSERT INTO SALUDOS.EMPRESAS(
 	EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_FECHA_CREACION,
 	EMPR_MAIL, EMPR_CALLE, EMPR_NRO_CALLE,
@@ -302,14 +303,10 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publ_Empresa_Razon_Social IS NOT NULL
 
---INSERT INTO SALUDOS.TRANSACCIONES(
-
---CREATE TABLE SALUDOS.TRANSACCIONES(
---	TRAN_COD				int	IDENTITY,	--new
---	TRAN_TIPO				nvarchar(255),	--Compra o subasta
---	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
---	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
---	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
---	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
---	USUA_USERNAME			nvarchar(50),	--FK. Comprador/ofertante.
---	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
+--Agrego rubros
+INSERT INTO SALUDOS.RUBROS(
+	RUBR_NOMBRE)
+SELECT DISTINCT
+	Publicacion_Rubro_Descripcion
+FROM gd_esquema.Maestra
+WHERE Publicacion_Rubro_Descripcion IS NOT NULL
