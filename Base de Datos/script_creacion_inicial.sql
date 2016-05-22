@@ -59,6 +59,7 @@ CREATE TABLE SALUDOS.CALIFICACIONES(
 )
 
 CREATE TABLE SALUDOS.EMPRESAS(
+	EMPR_COD				int IDENTITY,	--new
 	EMPR_RAZON_SOCIAL		nvarchar(255),	--Publ_Empresa_Razon_Social
 	EMPR_CUIT				nvarchar(50),	--Publ_Empresa_Cuit
 	EMPR_MAIL				nvarchar(50),	--Publ_Empresa_Mail
@@ -74,10 +75,11 @@ CREATE TABLE SALUDOS.EMPRESAS(
 	EMPR_FECHA_CREACION		datetime,		--Publ_Empresa_Fecha_Creacion
 	USUA_USERNAME			nvarchar(255),	--FK. Usuario de la empresa.
 	RUBR_COD				int,			--FK. Rubro principal donde se desempeña.
-	CONSTRAINT PK_EMPRESAS PRIMARY KEY (EMPR_RAZON_SOCIAL, EMPR_CUIT)
+	CONSTRAINT PK_EMPRESAS PRIMARY KEY (EMPR_COD)
 )
 
 CREATE TABLE SALUDOS.CLIENTES(				--PARA EL QUE PUBLICA / PARA EL QUE COMPRA
+	CLIE_COD				int IDENTITY,	--new
 	CLIE_NOMBRE				nvarchar(255),	--Publ_Cli_Nombre	  / Cli_Nombre
 	CLIE_APELLIDO			nvarchar(255),	--Publ_Cli_Apeliido   / Cli_Apeliido
 	CLIE_TELEFONO			numeric(18,0),	--new
@@ -93,7 +95,7 @@ CREATE TABLE SALUDOS.CLIENTES(				--PARA EL QUE PUBLICA / PARA EL QUE COMPRA
 	CLIE_TIPO_DOCUMENTO		nvarchar(50),	--new
 	CLIE_MAIL				nvarchar(50),	--Publ_Cli_Mail		  / Cli_Mail
 	USUA_USERNAME			nvarchar(255),	--FK. Usuario del cliente.
-	CONSTRAINT PK_CLIENTES PRIMARY KEY (CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO)
+	CONSTRAINT PK_CLIENTES PRIMARY KEY (CLIE_COD)
 )
 
 CREATE TABLE SALUDOS.USUARIOS(
