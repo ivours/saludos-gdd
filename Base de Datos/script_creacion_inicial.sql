@@ -97,12 +97,12 @@ CREATE TABLE SALUDOS.CLIENTES(				--PARA EL QUE PUBLICA / PARA EL QUE COMPRA
 )
 
 CREATE TABLE SALUDOS.USUARIOS(
-	USUA_USERNAME			nvarchar(255),	--new
-	USUA_PASSWORD			nvarchar(255),	--new
-	USUA_NUEVO				bit,			--new
-	USUA_INTENTOS_LOGIN		tinyint,		--new
-	USUA_SIN_CALIFICAR		tinyint,		--new
-	USUA_TIPO				nvarchar(1),	--new. 'e' = empresa, 'c' = cliente
+	USUA_USERNAME			nvarchar(255),		--new
+	USUA_PASSWORD			nvarchar(255),		--new
+	USUA_NUEVO				bit DEFAULT 0,		--new
+	USUA_INTENTOS_LOGIN		tinyint DEFAULT 0,	--new
+	USUA_SIN_CALIFICAR		tinyint DEFAULT 0,	--new
+	USUA_TIPO				nvarchar(1),		--new. 'e' = empresa, 'c' = cliente
 	USUA_HABILITADO			bit DEFAULT 1,
 	CONSTRAINT CK_USUARIO CHECK (USUA_TIPO IN ('e', 'c')),
 	CONSTRAINT PK_USUA_USERNAME PRIMARY KEY (USUA_USERNAME)
@@ -401,6 +401,3 @@ GO
 
 EXECUTE SALUDOS.migrarUsuarios
 GO
-
-UPDATE SALUDOS.USUARIOS
-SET USUA_NUEVO = 0, USUA_INTENTOS_LOGIN = 0
