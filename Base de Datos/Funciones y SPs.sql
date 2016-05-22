@@ -1,10 +1,10 @@
 ---------LOGIN---------
 CREATE PROCEDURE SALUDOS.login
-(@usuario nvarchar(50), @password_ingresada nvarchar(50))
+(@usuario nvarchar(255), @password_ingresada nvarchar(255))
 AS
 BEGIN
-	DECLARE @password nvarchar(50),
-			@password_hasheada nvarchar(50),
+	DECLARE @password nvarchar(255),
+			@password_hasheada nvarchar(255),
 			@intentos tinyint,
 			@existe_usuario int,
 			@usuario_habilitado bit
@@ -36,7 +36,7 @@ BEGIN
 	FROM SALUDOS.USUARIOS
 	WHERE USUA_USERNAME = @usuario
 
-	SELECT @password_hasheada = convert(nvarchar(50), HASHBYTES('SHA2_256', @password_ingresada), 1)
+	SELECT @password_hasheada = convert(nvarchar(255), HASHBYTES('SHA2_256', @password_ingresada), 1)
 
 	IF @password <> @password_hasheada
 		BEGIN
@@ -78,7 +78,7 @@ GO
 
 --------CREAR USUARIO CLIENTE----------
 CREATE PROCEDURE SALUDOS.alta_usuario_cliente
-(@username nvarchar(50), @password nvarchar(50), @nombre_rol nvarchar(50), @nombre nvarchar(255), @apellido nvarchar(255),
+(@username nvarchar(255), @password nvarchar(255), @nombre_rol nvarchar(50), @nombre nvarchar(255), @apellido nvarchar(255),
  @telefono numeric(18,0), @calle nvarchar(255), @nro_calle numeric(18,0), @nacimiento datetime, @cod_postal nvarchar(50),
  @depto nvarchar(50), @piso numeric(18,0), @localidad nvarchar(255), @documento numeric(18,0), @tipo_documento nvarchar(50),
  @mail nvarchar(50))
@@ -90,7 +90,7 @@ CREATE PROCEDURE SALUDOS.alta_usuario_cliente
 			AND CLIE_TIPO_DOCUMENTO = @tipo_documento)=0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
 				BEGIN
 					INSERT INTO SALUDOS.USUARIOS(USUA_USERNAME, USUA_PASSWORD, USUA_NUEVO, USUA_SIN_CALIFICAR)
-					VALUES(@username, convert(nvarchar(50), HASHBYTES('SHA2_256', @password), 1), 1, 1)
+					VALUES(@username, convert(nvarchar(255), HASHBYTES('SHA2_256', @password), 1), 1, 0)
 					
 					INSERT INTO SALUDOS.CLIENTES(CLIE_NOMBRE, CLIE_APELLIDO, CLIE_TELEFONO, CLIE_CALLE, CLIE_NRO_CALLE, 
 					CLIE_FECHA_NACIMIENTO, CLIE_CODIGO_POSTAL, CLIE_DEPTO, CLIE_PISO, CLIE_LOCALIDAD, CLIE_NRO_DOCUMENTO,
