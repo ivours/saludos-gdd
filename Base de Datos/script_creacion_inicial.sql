@@ -17,6 +17,8 @@ CREATE TABLE SALUDOS.PUBLICACIONES(
 	USUA_USERNAME		nvarchar(255),			--FK. Creador.
 	VISI_COD			int,					--FK. Visibilidad.
 	RUBR_COD			int,					--FK. Rubro.
+	CONSTRAINT CK_PUBL_TIPO CHECK (PUBL_TIPO IN ('Compra Inmediata', 'Subasta')),
+	CONSTRAINT CK_PUBL_ESTADO CHECK (PUBL_ESTADO IN ('Borrador', 'Activa', 'Pausada', 'Finalizada')),
 	CONSTRAINT PK_PUBLICACIONES PRIMARY KEY (PUBL_COD),
 )
 
@@ -106,7 +108,7 @@ CREATE TABLE SALUDOS.USUARIOS(
 	USUA_SIN_CALIFICAR		tinyint DEFAULT 0,	--new
 	USUA_TIPO				nvarchar(1),		--new. 'e' = empresa, 'c' = cliente
 	USUA_HABILITADO			bit DEFAULT 1,
-	CONSTRAINT CK_USUARIO CHECK (USUA_TIPO IN ('e', 'c')),
+	CONSTRAINT CK_USUA_TIPO CHECK (USUA_TIPO IN ('e', 'c')),
 	CONSTRAINT PK_USUA_USERNAME PRIMARY KEY (USUA_USERNAME)
 )
 
@@ -403,5 +405,29 @@ AS
 
 GO
 
+--Migrando usuarios.
 EXECUTE SALUDOS.migrarUsuarios
+GO
+
+--Migrando publicaciones.
+SET IDENTITY_INSERT SALUDOS.PUBLICACIONES ON;
+
+INSERT INTO SALUDOS.PUBLICACIONES(
+	PUBL_COD, PUBL_DESCRIPCION, PUBL_STOCK,
+	PUBL_INICIO, PUBL_FINALIZACION, PUBL_PRECIO,
+	PUBL_TIPO, PUBL_PREGUNTAS, PUBL_PERMITE_ENVIO
+	--PUBL_ESTADO, USUA_USERNAME, VISI_COD, RUBR_COD
+	)
+SELECT DISTINCT
+	Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock,
+	Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio,
+	Publicacion_Tipo, 0, 0
+	--determinar Publ_Estado (activa o finalizada), buscar las fks de usuario, visibilidad y rubro 
+FROM gd_esquema.Maestra
+
+SET IDENTITY_INSERT SALUDOS.PUBLICACIONES OFF;
+
+INSERT SALUDOS.PUBLICACIONES (PUBL_DESCRIPCION)
+VALUES ('TUVIEJA')
+
 GO
