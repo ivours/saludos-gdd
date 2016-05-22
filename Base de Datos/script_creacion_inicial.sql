@@ -432,19 +432,24 @@ EXECUTE SALUDOS.migrarUsuarios
 GO
 
 --Migrando publicaciones.
+--En primera instancia, todas se publican con estado Activa, porque se desconoce la fecha actual.
+--Al iniciar la aplicación se revisa qué publicaciones deben pasarse a Finalizadas.
 SET IDENTITY_INSERT SALUDOS.PUBLICACIONES ON;
 
 INSERT INTO SALUDOS.PUBLICACIONES(
 	PUBL_COD, PUBL_DESCRIPCION, PUBL_STOCK,
 	PUBL_INICIO, PUBL_FINALIZACION, PUBL_PRECIO,
-	PUBL_TIPO, PUBL_PREGUNTAS, PUBL_PERMITE_ENVIO
-	--PUBL_ESTADO, USUA_USERNAME, VISI_COD, RUBR_COD
+	PUBL_TIPO, PUBL_PREGUNTAS, PUBL_PERMITE_ENVIO, PUBL_ESTADO,
+	/*USUA_USERNAME,*/ VISI_COD, RUBR_COD
 	)
 SELECT DISTINCT
 	Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock,
 	Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio,
-	Publicacion_Tipo, 0, 0
-	--determinar Publ_Estado (activa o finalizada), buscar las fks de usuario, visibilidad y rubro 
+	Publicacion_Tipo, 0, 0, 'Activa',
+	Publicacion_Visibilidad_Cod,
+	(SELECT RUBR_COD
+	FROM SALUDOS.RUBROS
+	WHERE RUBR_NOMBRE = Publicacion_Rubro_Descripcion)
 FROM gd_esquema.Maestra
 
 SET IDENTITY_INSERT SALUDOS.PUBLICACIONES OFF;
