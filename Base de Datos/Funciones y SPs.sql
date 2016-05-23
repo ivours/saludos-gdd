@@ -236,3 +236,58 @@ BEGIN
 		END
 END
 GO
+
+
+
+--------BORRAR USUARIO----------
+CREATE PROCEDURE SALUDOS.borrarUsuario
+(@username nvarchar(255))
+AS
+BEGIN
+	UPDATE SALUDOS.USUARIOS
+	SET USUA_HABILITADO = 0
+	WHERE USUA_USERNAME = @username
+END
+GO
+
+
+------HABILITAR USUARIO-----------
+CREATE PROCEDURE SALUDOS.habilitarUsuario
+(@username nvarchar(255))
+AS
+BEGIN
+	UPDATE SALUDOS.USUARIOS
+	SET USUA_HABILITADO = 1
+	WHERE USUA_USERNAME = @username
+END
+GO
+
+
+-----FUNCION PARA VER SI EXISTE ROL CON MISMO NOMBRE------
+CREATE FUNCTION SALUDOS.existeRol
+(@nombre nvarchar(50))
+RETURNS int
+AS
+BEGIN
+	DECLARE @existe int
+	SET @existe = (SELECT COUNT(*) FROM SALUDOS.ROLES WHERE ROL_NOMBRE = @nombre)
+
+	RETURN @existe
+END
+GO
+
+--------CREAR ROL------------
+CREATE PROCEDURE SALUDOS.crearRol
+(@nombre nvarchar(50))
+AS BEGIN
+	IF SALUDOS.existeRol(@nombre) = 0
+		BEGIN
+			INSERT INTO SALUDOS.ROLES(ROL_NOMBRE)
+			VALUES (@nombre)
+		END
+	ELSE
+		BEGIN
+			RAISERROR('Ya existe el rol', 16, 1)
+			RETURN
+		END	
+END
