@@ -440,19 +440,17 @@ INSERT INTO SALUDOS.PUBLICACIONES(
 	PUBL_COD, PUBL_DESCRIPCION, PUBL_STOCK,
 	PUBL_INICIO, PUBL_FINALIZACION, PUBL_PRECIO,
 	PUBL_TIPO, PUBL_PREGUNTAS, PUBL_PERMITE_ENVIO, PUBL_ESTADO,
-	USUA_USERNAME, VISI_COD, RUBR_COD
+	VISI_COD, USUA_USERNAME, RUBR_COD
 	)
 SELECT DISTINCT
 	Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock,
 	Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio,
-	Publicacion_Tipo, 0, 0, 'Activa',
+	Publicacion_Tipo, 0, 0, 'Activa', Publicacion_Visibilidad_Cod,
 	
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.USUARIOS
 	WHERE	(USUA_USERNAME = LOWER(Publ_Cli_Nombre) + LOWER(Publ_Cli_Apeliido))
 		OR	(USUA_USERNAME = LOWER(Publ_Empresa_Razon_Social))),
-
-	Publicacion_Visibilidad_Cod,
 
 	(SELECT RUBR_COD
 	FROM SALUDOS.RUBROS
@@ -460,5 +458,26 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 
 SET IDENTITY_INSERT SALUDOS.PUBLICACIONES OFF;
+
+GO
+
+
+--Migrando calificaciones.
+SET IDENTITY_INSERT SALUDOS.CALIFICACIONES ON;
+
+INSERT INTO SALUDOS.CALIFICACIONES(
+	CALI_COD, CALI_ESTRELLAS,
+	CALI_DESCRIPCION, PUBL_COD, USUA_USERNAME)
+SELECT DISTINCT
+	Calificacion_Codigo, Calificacion_Cant_Estrellas,
+	Calificacion_Descripcion, Publicacion_Cod,
+
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.USUARIOS
+	WHERE	USUA_USERNAME = LOWER(Cli_Nombre) + LOWER(Cli_Apeliido))
+FROM gd_esquema.Maestra
+WHERE Calificacion_Codigo IS NOT NULL
+
+SET IDENTITY_INSERT SALUDOS.CALIFICACIONES OFF;
 
 GO
