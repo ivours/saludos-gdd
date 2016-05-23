@@ -432,7 +432,7 @@ EXECUTE SALUDOS.migrarUsuarios
 GO
 
 --Migrando publicaciones.
---En primera instancia, todas se publican con estado Activa, porque se desconoce la fecha actual.
+--En primera instancia, todas se migran con estado Activa, porque se desconoce la fecha actual.
 --Al iniciar la aplicación se revisa qué publicaciones deben pasarse a Finalizadas.
 SET IDENTITY_INSERT SALUDOS.PUBLICACIONES ON;
 
@@ -440,13 +440,20 @@ INSERT INTO SALUDOS.PUBLICACIONES(
 	PUBL_COD, PUBL_DESCRIPCION, PUBL_STOCK,
 	PUBL_INICIO, PUBL_FINALIZACION, PUBL_PRECIO,
 	PUBL_TIPO, PUBL_PREGUNTAS, PUBL_PERMITE_ENVIO, PUBL_ESTADO,
-	/*USUA_USERNAME,*/ VISI_COD, RUBR_COD
+	USUA_USERNAME, VISI_COD, RUBR_COD
 	)
 SELECT DISTINCT
 	Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock,
 	Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio,
 	Publicacion_Tipo, 0, 0, 'Activa',
+	
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.USUARIOS
+	WHERE	(USUA_USERNAME = LOWER(Publ_Cli_Nombre) + LOWER(Publ_Cli_Apeliido))
+		OR	(USUA_USERNAME = LOWER(Publ_Empresa_Razon_Social))),
+
 	Publicacion_Visibilidad_Cod,
+
 	(SELECT RUBR_COD
 	FROM SALUDOS.RUBROS
 	WHERE RUBR_NOMBRE = Publicacion_Rubro_Descripcion)
