@@ -298,15 +298,15 @@
             // 
             this.button2.Location = new System.Drawing.Point(12, 239);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(29, 23);
             this.button2.TabIndex = 27;
-            this.button2.Text = "Atrás";
+            this.button2.Text = "<-";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(93, 239);
+            this.button3.Location = new System.Drawing.Point(47, 239);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 28;
