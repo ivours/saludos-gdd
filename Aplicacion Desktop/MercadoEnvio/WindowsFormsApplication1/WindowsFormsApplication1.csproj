@@ -188,11 +188,17 @@
     <Compile Include="Generar Publicación\CrearPublicacion.Designer.cs">
       <DependentUpon>CrearPublicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\ElegirTipoPublicacion.cs">
+    <Compile Include="Generar Publicación\Principal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Publicación\ElegirTipoPublicacion.Designer.cs">
-      <DependentUpon>ElegirTipoPublicacion.cs</DependentUpon>
+    <Compile Include="Generar Publicación\Principal.Designer.cs">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\SeleccionarVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\SeleccionarVisibilidad.Designer.cs">
+      <DependentUpon>SeleccionarVisibilidad.cs</DependentUpon>
     </Compile>
     <Compile Include="Historial Cliente\Form1.cs">
       <SubType>Form</SubType>
@@ -265,8 +271,14 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicación\ElegirTipoPublicacion.resx">
-      <DependentUpon>ElegirTipoPublicacion.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Publicación\CrearPublicacion.resx">
+      <DependentUpon>CrearPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Principal.resx">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\SeleccionarVisibilidad.resx">
+      <DependentUpon>SeleccionarVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
       <DependentUpon>ListadoEstadistico.cs</DependentUpon>
