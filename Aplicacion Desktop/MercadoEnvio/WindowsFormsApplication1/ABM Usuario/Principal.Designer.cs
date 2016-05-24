@@ -70,7 +70,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "Principal";
-            this.Text = "Principal";
+            this.Text = "ABM Usuario";
             this.ResumeLayout(false);
 
         }
