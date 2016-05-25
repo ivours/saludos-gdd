@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.Generar_Publicación
 {
-    public partial class Factura : Form
+    public partial class FacturaPublicacion : Form
     {
-        public Factura()
+        public FacturaPublicacion()
         {
             InitializeComponent();
         }
