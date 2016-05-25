@@ -322,7 +322,7 @@ INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 			('Listado estadístico')
 
 --La tabla maestra tiene datos de clientes guardados en dos lugares distintos.
---Primero agrego clientes que hayan hecho una publicación.
+--Primero migro clientes que hayan hecho una publicación.
 INSERT INTO SALUDOS.CLIENTES(
 	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
 	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL, CLIE_TIPO_DOCUMENTO)
@@ -332,7 +332,7 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publ_Cli_Dni IS NOT NULL
 
---Luego agrego clientes que hayan realizado una compra.
+--Luego migro clientes que hayan realizado una compra.
 INSERT INTO SALUDOS.CLIENTES(
 	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
 	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL, CLIE_TIPO_DOCUMENTO)
@@ -349,7 +349,7 @@ WHERE	Cli_Dni IS NOT NULL
 --los 28 clientes son los mismos. Así que esto no hace nada:
 --0 rows affected. Pero me parece que tiene sentido dejarlo.
 
---Agrego empresas
+--Migrando empresas
 INSERT INTO SALUDOS.EMPRESAS(
 	EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_FECHA_CREACION,
 	EMPR_MAIL, EMPR_CALLE, EMPR_NRO_CALLE,
@@ -361,7 +361,7 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publ_Empresa_Razon_Social IS NOT NULL
 
---Agrego rubros
+--Migrando rubros
 INSERT INTO SALUDOS.RUBROS(
 	RUBR_NOMBRE)
 SELECT DISTINCT
@@ -369,7 +369,7 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publicacion_Rubro_Descripcion IS NOT NULL
 
---Agrego visibilidades
+--Migrando visibilidades
 INSERT INTO SALUDOS.VISIBILIDADES(
 	VISI_COD, VISI_DESCRIPCION, VISI_COMISION_ENVIO,
 	VISI_COMISION_PUBLICACION, VISI_COMISION_VENTA)
@@ -486,5 +486,28 @@ FROM gd_esquema.Maestra
 WHERE Calificacion_Codigo IS NOT NULL
 
 SET IDENTITY_INSERT SALUDOS.CALIFICACIONES OFF;
+
+GO
+
+
+--Migrando facturas.
+SET IDENTITY_INSERT SALUDOS.FACTURAS ON;
+
+INSERT INTO SALUDOS.FACTURAS(
+	FACT_COD, FACT_FECHA,
+	FACT_TOTAL, PUBL_COD,
+	USUA_USERNAME)
+SELECT DISTINCT
+	Factura_Nro, Factura_Fecha,
+	Factura_Total, Publicacion_Cod,
+
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.USUARIOS
+	WHERE	(USUA_USERNAME = LOWER(Publ_Cli_Nombre) + LOWER(Publ_Cli_Apeliido))
+		OR	(USUA_USERNAME = LOWER(Publ_Empresa_Razon_Social)))
+FROM gd_esquema.Maestra
+WHERE Factura_Nro IS NOT NULL
+
+SET IDENTITY_INSERT SALUDOS.FACTURAS OFF;
 
 GO
