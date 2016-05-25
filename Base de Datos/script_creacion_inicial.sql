@@ -126,7 +126,10 @@ CREATE TABLE SALUDOS.ITEMS(
 	ITEM_COD				int	IDENTITY,	--new
 	ITEM_IMPORTE			numeric(18,2),	--Item_Factura_Monto
 	ITEM_CANTIDAD			numeric(2,0),	--Item_Factura_Cantidad
+	ITEM_DESCRIPCION		nvarchar(255),	--new. A qué corresponde el cobro.
 	FACT_COD				numeric(18,0),	--FK. Factura a la que pertenece.
+	CONSTRAINT CK_ITEM_DESCRIPCION CHECK
+		(ITEM_DESCRIPCION IN ('Comisión por Publicación', 'Comisión por Venta', 'Comisión por envío')), 
 	CONSTRAINT PK_ITEMS PRIMARY KEY (ITEM_COD)
 )
 
