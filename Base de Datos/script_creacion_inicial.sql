@@ -510,4 +510,17 @@ WHERE Factura_Nro IS NOT NULL
 
 SET IDENTITY_INSERT SALUDOS.FACTURAS OFF;
 
-GO
+--Migrando items.
+INSERT INTO SALUDOS.ITEMS(
+	ITEM_IMPORTE, ITEM_CANTIDAD,
+	FACT_COD, ITEM_DESCRIPCION)
+SELECT DISTINCT
+	Item_Factura_Monto, Item_Factura_Cantidad,
+	Factura_Nro,
+	CASE
+		WHEN Item_Factura_Monto = Publicacion_Visibilidad_Precio
+				THEN 'Comisión por Publicación'
+		ELSE 'Comisión por Venta'
+	END
+FROM gd_esquema.Maestra
+WHERE Item_Factura_Monto IS NOT NULL
