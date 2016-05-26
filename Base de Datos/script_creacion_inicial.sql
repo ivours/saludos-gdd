@@ -531,26 +531,40 @@ FROM gd_esquema.Maestra
 WHERE Item_Factura_Monto IS NOT NULL
 
 
---Migrando transacciones.
---INSERT INTO SALUDOS.TRANSACCIONES(
---	TRAN_TIPO,
---	TRAN_ADJUDICADA,
---	TRAN_PRECIO,
---	TRAN_CANTIDAD_COMPRADA,
---	TRAN_FECHA,
---	USUA_USERNAME,
---	PUBL_COD)
+--Migrando transacciones de Compras Inmediatas.
+INSERT INTO SALUDOS.TRANSACCIONES(
+	PUBL_COD, TRAN_PRECIO,
+	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA, TRAN_ADJUDICADA,
+	TIPO_COD,
+	USUA_USERNAME)
 
---SELECT DISTINCT
---	(SELECT 
+SELECT DISTINCT
+	Publicacion_Cod, Publicacion_Precio,
+	Compra_Cantidad, Compra_Fecha, 1,
 
---FROM gd_esquema.Maestra
---WHERE Compra_Fecha IS NOT NULL OR Oferta_Fecha IS NOT NULL
+	(SELECT TIPO_COD
+	FROM SALUDOS.TIPOS
+	WHERE TIPO_NOMBRE = Publicacion_Tipo),
 
-----si es una subasta, y el usuario además de una oferta_fecha tiene una compra_fecha para una misma publicación...
-----entonces sólo pasar la oferta, dejarla con esa fecha, y poner el bit de adjudicada en 1.
-----si no tiene una compra_fecha, entonces no la ganó, el bit va en 0.
-----si es una compra,
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.USUARIOS
+	WHERE	USUA_USERNAME = LOWER(Cli_Nombre) + LOWER(Cli_Apeliido))
+FROM gd_esquema.Maestra
+WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
+
+--si es una subasta, y el usuario además de una oferta_fecha tiene una compra_fecha para una misma publicación...
+--entonces sólo pasar la oferta, dejarla con esa fecha, y poner el bit de adjudicada en 1.
+--si no tiene una compra_fecha, entonces no la ganó, el bit va en 0.
+--si es una compra,
+
+--CASE
+--	WHEN Publicacion_Tipo = 'Subasta' and exists
+--	(select Oferta_Monto, publicacion_cod, Cli_nombre from gd_esquema.Maestra t1 where exists
+--		(select oferta_monto, cli_nombre from gd_esquema.Maestra t2 where t2.Oferta_Monto > t1.oferta_monto
+--			and t1.Publicacion_Cod = t2.publicacion_cod) order by t1.publicacion_cod)
+--		THEN 1
+--	ELSE 0
+--END
 
 --select oferta_fecha, oferta_monto, compra_fecha, compra_cantidad, publicacion_cod, cli_nombre
 --from gd_esquema.Maestra t1
@@ -559,12 +573,22 @@ WHERE Item_Factura_Monto IS NOT NULL
 --	from gd_esquema.Maestra t2
 --	where compra_fecha is not null and calificacion_codigo is null
 --	and t2.publicacion_cod = t1.publicacion_cod)
+--order by publicacion_cod
 
---	TRAN_COD				int	IDENTITY,	--new
---	TRAN_TIPO				nvarchar(255),	--Compra o subasta
---	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
---	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
---	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
---	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
---	USUA_USERNAME			nvarchar(255),	--FK. Comprador/ofertante.
---	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
+--select distinct publicacion_cod, cli_nombre
+--from gd_esquema.Maestra t1
+--where calificacion_codigo is null and publicacion_tipo = 'Subasta' and t1.cli_nombre =
+--	(select cli_nombre
+--	from gd_esquema.Maestra t2
+--	where compra_fecha is not null and calificacion_codigo is null
+--	and t2.publicacion_cod = t1.publicacion_cod)
+--order by publicacion_cod
+
+--CASE
+--	WHEN Cli_Nombre = (
+--		SELECT Cli_Nombre
+--		FROM gd_esquema.Maestra
+--		WHERE Publicacion_Tipo = 'Subasta' AND Compra_Fecha IS NOT NULL) then 1
+--	WHEN Publicacion_Tipo = 'Compra Inmediata' then 0
+--	ELSE 0
+--END,
