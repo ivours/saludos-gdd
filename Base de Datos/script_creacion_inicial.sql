@@ -552,6 +552,82 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
 
+GO
+
+CREATE PROCEDURE SALUDOS.migrarSubastas
+AS
+	BEGIN
+		DECLARE cursorMigrarSubastas CURSOR FOR
+			SELECT Publicacion_Cod, Cli_Nombre, Cli_Apeliido, Oferta_Monto, Oferta_Fecha
+			FROM gd_esquema.Maestra
+			WHERE	Publicacion_Tipo = 'Subasta' AND
+					Cli_Nombre IS NOT NULL AND
+					Calificacion_Codigo IS NULL AND
+					Compra_Fecha IS NULL --order by publicacion_cod
+
+		DECLARE @publ_cod numeric(18,0)
+		DECLARE @clie_nombre nvarchar(255)
+		DECLARE @clie_apellido nvarchar(255)
+		DECLARE @oferta_monto numeric(18,2)
+		DECLARE @oferta_fecha datetime
+		DECLARE @monto_ganador numeric(18,2)
+
+		OPEN cursorMigrarSubastas
+		FETCH NEXT FROM cursorMigrarSubastas INTO @publ_cod, @clie_nombre, @clie_apellido, @oferta_monto, @oferta_fecha
+		WHILE (@@FETCH_STATUS = 0)
+	
+		BEGIN
+			
+			SET @monto_ganador = (	SELECT MAX(Oferta_Monto)
+									FROM gd_esquema.Maestra
+									WHERE Oferta_Monto IS NOT NULL AND Publicacion_Cod = @publ_cod )
+
+			IF @oferta_monto = @monto_ganador
+				BEGIN
+					INSERT INTO SALUDOS.TRANSACCIONES(
+						TRAN_PRECIO, TRAN_FECHA,
+						TRAN_CANTIDAD_COMPRADA, TRAN_ADJUDICADA, PUBL_COD,
+						USUA_USERNAME, TIPO_COD)
+					VALUES
+						(@oferta_monto, @oferta_fecha,
+						1, 1, @publ_cod,
+						LOWER(@clie_nombre) + LOWER(@clie_apellido),
+						
+						(SELECT TIPO_COD
+						FROM SALUDOS.TIPOS
+						WHERE TIPO_NOMBRE = 'Subasta')
+						)
+				END
+			
+			ELSE			
+				BEGIN
+					INSERT INTO SALUDOS.TRANSACCIONES(
+						TRAN_PRECIO, TRAN_FECHA,
+						TRAN_CANTIDAD_COMPRADA, TRAN_ADJUDICADA, PUBL_COD,
+						USUA_USERNAME, TIPO_COD)
+					VALUES
+						(@oferta_monto, @oferta_fecha,
+						1, 0, @publ_cod,
+						LOWER(@clie_nombre) + LOWER(@clie_apellido),
+						
+						(SELECT TIPO_COD
+						FROM SALUDOS.TIPOS
+						WHERE TIPO_NOMBRE = 'Subasta')
+						)
+				END
+
+			FETCH NEXT FROM cursorMigrarSubastas INTO @publ_cod, @clie_nombre, @clie_apellido, @oferta_monto, @oferta_fecha
+		END
+			
+		CLOSE cursorMigrarSubastas
+		DEALLOCATE cursorMigrarSubastas
+	END
+GO	
+
+
+EXECUTE SALUDOS.migrarSubastas
+GO
+
 --si es una subasta, y el usuario además de una oferta_fecha tiene una compra_fecha para una misma publicación...
 --entonces sólo pasar la oferta, dejarla con esa fecha, y poner el bit de adjudicada en 1.
 --si no tiene una compra_fecha, entonces no la ganó, el bit va en 0.
@@ -566,13 +642,19 @@ WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
 --	ELSE 0
 --END
 
---select oferta_fecha, oferta_monto, compra_fecha, compra_cantidad, publicacion_cod, cli_nombre
---from gd_esquema.Maestra t1
---where calificacion_codigo is null and publicacion_tipo = 'Subasta' and t1.cli_nombre =
---	(select cli_nombre
---	from gd_esquema.Maestra t2
---	where compra_fecha is not null and calificacion_codigo is null
---	and t2.publicacion_cod = t1.publicacion_cod)
+/*select oferta_fecha, oferta_monto, compra_fecha, compra_cantidad, publicacion_cod, cli_nombre
+from gd_esquema.Maestra t1
+where calificacion_codigo is null and publicacion_tipo = 'Subasta' and t1.cli_nombre =
+	(select cli_nombre
+	from gd_esquema.Maestra t2
+	where compra_fecha is not null and calificacion_codigo is null
+	and t2.publicacion_cod = t1.publicacion_cod)
+order by publicacion_cod*/
+
+--select MAX(Oferta_Monto), Publicacion_Cod
+--from gd_esquema.Maestra
+--where Oferta_Monto is not null
+--group by Publicacion_Cod
 --order by publicacion_cod
 
 --select distinct publicacion_cod, cli_nombre
