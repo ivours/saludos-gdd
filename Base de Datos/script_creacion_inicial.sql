@@ -55,13 +55,13 @@ CREATE TABLE SALUDOS.RUBROS(
 
 CREATE TABLE SALUDOS.TRANSACCIONES(
 	TRAN_COD				int	IDENTITY,	--new
-	TRAN_TIPO				nvarchar(255),	--Compra o subasta
 	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
 	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
 	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
 	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
 	USUA_USERNAME			nvarchar(255),	--FK. Comprador/ofertante.
 	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
+	TIPO_COD				int				--FK. Compra o subasta.
 	CONSTRAINT PK_TRANSACCIONES PRIMARY KEY (TRAN_COD),
 )
 
@@ -210,6 +210,11 @@ ALTER TABLE SALUDOS.TRANSACCIONES
 	ADD CONSTRAINT FK_TRANSACCIONES_PUBL_COD
 	FOREIGN KEY (PUBL_COD)
 	REFERENCES SALUDOS.PUBLICACIONES(PUBL_COD)
+
+ALTER TABLE SALUDOS.TRANSACCIONES
+	ADD CONSTRAINT FK_TRANSACCIONES_TIPO_COD
+	FOREIGN KEY (TIPO_COD)
+	REFERENCES SALUDOS.TIPOS(TIPO_COD)
 
 
 ALTER TABLE SALUDOS.CALIFICACIONES
@@ -524,3 +529,42 @@ SELECT DISTINCT
 	END
 FROM gd_esquema.Maestra
 WHERE Item_Factura_Monto IS NOT NULL
+
+
+--Migrando transacciones.
+--INSERT INTO SALUDOS.TRANSACCIONES(
+--	TRAN_TIPO,
+--	TRAN_ADJUDICADA,
+--	TRAN_PRECIO,
+--	TRAN_CANTIDAD_COMPRADA,
+--	TRAN_FECHA,
+--	USUA_USERNAME,
+--	PUBL_COD)
+
+--SELECT DISTINCT
+--	(SELECT 
+
+--FROM gd_esquema.Maestra
+--WHERE Compra_Fecha IS NOT NULL OR Oferta_Fecha IS NOT NULL
+
+----si es una subasta, y el usuario además de una oferta_fecha tiene una compra_fecha para una misma publicación...
+----entonces sólo pasar la oferta, dejarla con esa fecha, y poner el bit de adjudicada en 1.
+----si no tiene una compra_fecha, entonces no la ganó, el bit va en 0.
+----si es una compra,
+
+--select oferta_fecha, oferta_monto, compra_fecha, compra_cantidad, publicacion_cod, cli_nombre
+--from gd_esquema.Maestra t1
+--where calificacion_codigo is null and publicacion_tipo = 'Subasta' and t1.cli_nombre =
+--	(select cli_nombre
+--	from gd_esquema.Maestra t2
+--	where compra_fecha is not null and calificacion_codigo is null
+--	and t2.publicacion_cod = t1.publicacion_cod)
+
+--	TRAN_COD				int	IDENTITY,	--new
+--	TRAN_TIPO				nvarchar(255),	--Compra o subasta
+--	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
+--	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
+--	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
+--	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
+--	USUA_USERNAME			nvarchar(255),	--FK. Comprador/ofertante.
+--	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
