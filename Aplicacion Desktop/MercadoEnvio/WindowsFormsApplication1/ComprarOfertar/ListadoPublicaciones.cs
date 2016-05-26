@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ComprarOfertar
 {
-    public partial class Form1 : Form
+    public partial class ListadoPublicaciones : Form
     {
-        public Form1()
+        public ListadoPublicaciones()
         {
             InitializeComponent();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
