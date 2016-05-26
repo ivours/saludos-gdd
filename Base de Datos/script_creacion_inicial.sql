@@ -307,7 +307,6 @@ AS
 		VALUES (@fecha)
 GO
 
------MIGRATION TIME-----
 
 --Agrego roles
 INSERT INTO SALUDOS.ROLES (ROL_NOMBRE)
@@ -494,7 +493,7 @@ INSERT INTO SALUDOS.CALIFICACIONES(
 	CALI_COD, CALI_ESTRELLAS,
 	CALI_DESCRIPCION, PUBL_COD, USUA_USERNAME)
 SELECT DISTINCT
-	Calificacion_Codigo, Calificacion_Cant_Estrellas,
+	Calificacion_Codigo, CEILING(Calificacion_Cant_Estrellas/2),
 	Calificacion_Descripcion, Publicacion_Cod,
 	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
 FROM gd_esquema.Maestra
