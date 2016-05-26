@@ -326,6 +326,19 @@ INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 			('Consulta de facturas'),
 			('Listado estadístico')
 
+--Agrego funcionalidades por cada rol
+INSERT INTO SALUDOS.FUNCIONALIDADESXROL(
+	ROL_COD, FUNC_COD)
+SELECT
+	ROL_COD, FUNC_COD
+FROM SALUDOS.ROLES, SALUDOS.FUNCIONALIDADES
+WHERE	(ROL_NOMBRE = 'Cliente' AND
+			FUNC_NOMBRE IN ('Vender', 'Comprar/Ofertar', 'Historial de cliente', 'Calificar al vendedor', 'Consulta de facturas')) OR
+		(ROL_NOMBRE = 'Empresa' AND
+			FUNC_NOMBRE IN ('Vender', 'Consulta de facturas')) OR
+		(ROL_NOMBRE = 'Administrador' AND
+			FUNC_NOMBRE LIKE '%')
+
 --La tabla maestra tiene datos de clientes guardados en dos lugares distintos.
 --Primero migro clientes que hayan hecho una publicación.
 INSERT INTO SALUDOS.CLIENTES(
@@ -549,6 +562,7 @@ WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
 
 GO
 
+--Migrando transacciones de Subastas.
 INSERT INTO SALUDOS.TRANSACCIONES(
 	PUBL_COD, TRAN_PRECIO,
 	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
