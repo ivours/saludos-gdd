@@ -483,10 +483,7 @@ INSERT INTO SALUDOS.CALIFICACIONES(
 SELECT DISTINCT
 	Calificacion_Codigo, Calificacion_Cant_Estrellas,
 	Calificacion_Descripcion, Publicacion_Cod,
-
-	(SELECT USUA_USERNAME
-	FROM SALUDOS.USUARIOS
-	WHERE	USUA_USERNAME = LOWER(Cli_Nombre) + LOWER(Cli_Apeliido))
+	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
 FROM gd_esquema.Maestra
 WHERE Calificacion_Codigo IS NOT NULL
 
