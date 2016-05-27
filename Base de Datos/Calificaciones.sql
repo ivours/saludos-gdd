@@ -30,7 +30,7 @@ RETURNS int AS
 	END
 GO
 
-CREATE FUNCTION SALUDOS.calificacionesPendientes(@usuario nvarchar(255))
+CREATE FUNCTION SALUDOS.cantidadCalificacionesPendientes(@usuario nvarchar(255))
 RETURNS int AS
 	BEGIN
 		RETURN(
@@ -38,5 +38,26 @@ RETURNS int AS
 			FROM SALUDOS.USUARIOS
 			WHERE USUA_USERNAME = @usuario
 		)
+	END
+GO
+
+CREATE PROCEDURE SALUDOS.calificarPublicacion(
+	@usuario nvarchar(255),
+	@publicacion numeric(18,0),
+	@estrellas numeric(18,0),
+	@descripcion nvarchar(255))
+AS
+	BEGIN
+		DECLARE @fecha datetime
+		SET @fecha = SALUDOS.fechaActual()
+
+		INSERT INTO SALUDOS.CALIFICACIONES
+			(USUA_USERNAME, PUBL_COD,
+			CALI_ESTRELLAS, CALI_DESCRIPCION,
+			CALI_FECHA)
+		VALUES(
+			@usuario, @publicacion,
+			@estrellas, @descripcion,
+			@fecha)
 	END
 GO
