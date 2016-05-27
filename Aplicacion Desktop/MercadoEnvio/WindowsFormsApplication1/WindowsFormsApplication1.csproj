@@ -98,6 +98,12 @@
     <Compile Include="ABM Usuario\CargarDatosEmpresa.Designer.cs">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\ListadoRubros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoRubros.Designer.cs">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\ModificarDatosEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,17 +170,35 @@
     <Compile Include="Calificar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOfertar\Form1.cs">
+    <Compile Include="ComprarOfertar\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComprarOfertar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ComprarOfertar\Comprar.Designer.cs">
+      <DependentUpon>Comprar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Facturas\Form1.cs">
+    <Compile Include="ComprarOfertar\ListadoPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturas\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ComprarOfertar\ListadoPublicaciones.Designer.cs">
+      <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas\FacturaPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturas\FacturaPublicacion.Designer.cs">
+      <DependentUpon>FacturaPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas\FacturaVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturas\FacturaVenta.Designer.cs">
+      <DependentUpon>FacturaVenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas\Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturas\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -182,11 +206,35 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Publicación\CambiarEstado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\CambiarEstado.Designer.cs">
+      <DependentUpon>CambiarEstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\ModificarVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\ModificarVisibilidad.Designer.cs">
+      <DependentUpon>ModificarVisibilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\ModificarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\ModificarPublicacion.Designer.cs">
+      <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicación\CrearPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Generar Publicación\CrearPublicacion.Designer.cs">
       <DependentUpon>CrearPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Publicación\Principal.cs">
       <SubType>Form</SubType>
@@ -238,6 +286,9 @@
     <EmbeddedResource Include="ABM Usuario\CargarDatosEmpresa.resx">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ListadoRubros.resx">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ModificarDatosEmpresa.resx">
       <DependentUpon>ModificarDatosEmpresa.cs</DependentUpon>
     </EmbeddedResource>
@@ -268,11 +319,35 @@
     <EmbeddedResource Include="ABM Visibilidad\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\ListadoPublicaciones.resx">
+      <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\FacturaPublicacion.resx">
+      <DependentUpon>FacturaPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\FacturaVenta.resx">
+      <DependentUpon>FacturaVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\CambiarEstado.resx">
+      <DependentUpon>CambiarEstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\ModificarVisibilidad.resx">
+      <DependentUpon>ModificarVisibilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\ModificarPublicacion.resx">
+      <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\CrearPublicacion.resx">
       <DependentUpon>CrearPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
