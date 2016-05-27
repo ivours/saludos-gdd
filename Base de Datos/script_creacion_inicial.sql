@@ -1,7 +1,7 @@
 USE GD1C2016
 GO
 
-CREATE SCHEMA SALUDOS
+CREATE SCHEMA SALUDOS AUTHORIZATION gd
 GO
 
 CREATE TABLE SALUDOS.PUBLICACIONES(
@@ -32,8 +32,8 @@ CREATE TABLE SALUDOS.ESTADOS(
 CREATE TABLE SALUDOS.TIPOS(
 	TIPO_COD	int IDENTITY,	--PK.
 	TIPO_NOMBRE	nvarchar(255)	--Publicacion_Tipo.
-	--CONSTRAINT CK_TIPO_NOMBRE CHECK
-	--	(TIPO_NOMBRE IN ('Compra Inmediata', 'Subasta')),
+	CONSTRAINT CK_TIPO_NOMBRE CHECK
+		(TIPO_NOMBRE IN ('Compra Inmediata', 'Subasta')),
 	CONSTRAINT PK_TIPOS PRIMARY KEY (TIPO_COD),
 )
 
@@ -284,35 +284,12 @@ ALTER TABLE SALUDOS.FUNCIONALIDADESXROL
 	REFERENCES SALUDOS.ROLES(ROL_COD)
 
 
---Creación de tabla Fecha, function y procedure
---para manejar la fecha del sistema.
-CREATE TABLE SALUDOS.FECHA(
-	hoy datetime
-)
-GO
-
-CREATE FUNCTION SALUDOS.fechaActual()
-RETURNS datetime
-AS 
-	BEGIN
-	RETURN (SELECT TOP 1 * FROM SALUDOS.FECHA)
-	END
-GO
-
-CREATE PROCEDURE SALUDOS.asignarFecha
-	@fecha datetime
-AS
-	DELETE FROM SALUDOS.FECHA
-	INSERT INTO SALUDOS.FECHA
-		VALUES (@fecha)
-GO
-
-
---Agrego roles
+--Agregando roles.
 INSERT INTO SALUDOS.ROLES (ROL_NOMBRE)
 	VALUES ('Administrador'), ('Cliente'), ('Empresa')
 
---Agrego funcionalidades
+
+--Agregando funcionalidades.
 INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 	VALUES	('ABM Roles'),
 			('ABM Usuarios'),
@@ -325,7 +302,8 @@ INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 			('Consulta de facturas'),
 			('Listado estadístico')
 
---Agrego funcionalidades por cada rol
+
+--Agregando funcionalidades por cada rol.
 INSERT INTO SALUDOS.FUNCIONALIDADESXROL(
 	ROL_COD, FUNC_COD)
 SELECT
@@ -338,8 +316,9 @@ WHERE	(ROL_NOMBRE = 'Cliente' AND
 		(ROL_NOMBRE = 'Administrador' AND
 			FUNC_NOMBRE LIKE '%')
 
+
 --La tabla maestra tiene datos de clientes guardados en dos lugares distintos.
---Primero migro clientes que hayan hecho una publicación.
+--Primero se migran clientes que hayan hecho una publicación.
 INSERT INTO SALUDOS.CLIENTES(
 	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
 	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL, CLIE_TIPO_DOCUMENTO)
@@ -349,7 +328,8 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publ_Cli_Dni IS NOT NULL
 
---Luego migro clientes que hayan realizado una compra.
+
+--Luego se migran clientes que hayan realizado una compra.
 INSERT INTO SALUDOS.CLIENTES(
 	CLIE_NRO_DOCUMENTO, CLIE_APELLIDO, CLIE_NOMBRE, CLIE_FECHA_NACIMIENTO, CLIE_MAIL,
 	CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_CODIGO_POSTAL, CLIE_TIPO_DOCUMENTO)
@@ -366,7 +346,8 @@ WHERE	Cli_Dni IS NOT NULL
 --los 28 clientes son los mismos. Así que esto no hace nada:
 --0 rows affected. Pero me parece que tiene sentido dejarlo.
 
---Migrando empresas
+
+--Migrando empresas.
 INSERT INTO SALUDOS.EMPRESAS(
 	EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_FECHA_CREACION,
 	EMPR_MAIL, EMPR_CALLE, EMPR_NRO_CALLE,
@@ -378,7 +359,8 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publ_Empresa_Razon_Social IS NOT NULL
 
---Migrando rubros
+
+--Migrando rubros.
 INSERT INTO SALUDOS.RUBROS(
 	RUBR_NOMBRE)
 SELECT DISTINCT
@@ -386,7 +368,8 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 WHERE Publicacion_Rubro_Descripcion IS NOT NULL
 
---Migrando visibilidades
+
+--Migrando visibilidades.
 INSERT INTO SALUDOS.VISIBILIDADES(
 	VISI_COD, VISI_DESCRIPCION, VISI_COMISION_ENVIO,
 	VISI_COMISION_PUBLICACION, VISI_COMISION_VENTA)
@@ -396,6 +379,7 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra
 
 GO
+
 
 --Creando usuarios para clientes.
 INSERT INTO SALUDOS.USUARIOS(
@@ -415,6 +399,7 @@ FROM (
 	FROM SALUDOS.USUARIOS) USUARIOS
 WHERE
 	USUARIOS.USUA_USERNAME = LOWER(SALUDOS.CLIENTES.CLIE_NOMBRE) + LOWER(SALUDOS.CLIENTES.CLIE_APELLIDO)
+
 
 --Creando usuarios para empresas.
 INSERT INTO SALUDOS.USUARIOS(
@@ -437,15 +422,20 @@ WHERE
 
 GO
 
+
+--Agregando estados.
 INSERT INTO SALUDOS.ESTADOS(
 	ESTA_NOMBRE)
 VALUES ('Activa'), ('Finalizada'), ('Borrador'), ('Pausada')
 
+
+--Agregando tipos.
 INSERT INTO SALUDOS.TIPOS(
 	TIPO_NOMBRE)
 VALUES ('Compra Inmediata'), ('Subasta')
 
 GO
+
 
 --Migrando publicaciones.
 --En primera instancia, todas se migran con estado Activa, porque se desconoce la fecha actual.
@@ -486,24 +476,6 @@ SET IDENTITY_INSERT SALUDOS.PUBLICACIONES OFF;
 GO
 
 
---Migrando calificaciones.
-SET IDENTITY_INSERT SALUDOS.CALIFICACIONES ON;
-
-INSERT INTO SALUDOS.CALIFICACIONES(
-	CALI_COD, CALI_ESTRELLAS,
-	CALI_DESCRIPCION, PUBL_COD, USUA_USERNAME)
-SELECT DISTINCT
-	Calificacion_Codigo, CEILING(Calificacion_Cant_Estrellas/2),
-	Calificacion_Descripcion, Publicacion_Cod,
-	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
-FROM gd_esquema.Maestra
-WHERE Calificacion_Codigo IS NOT NULL
-
-SET IDENTITY_INSERT SALUDOS.CALIFICACIONES OFF;
-
-GO
-
-
 --Migrando facturas.
 SET IDENTITY_INSERT SALUDOS.FACTURAS ON;
 
@@ -523,6 +495,7 @@ FROM gd_esquema.Maestra
 WHERE Factura_Nro IS NOT NULL
 
 SET IDENTITY_INSERT SALUDOS.FACTURAS OFF;
+
 
 --Migrando items.
 INSERT INTO SALUDOS.ITEMS(
@@ -561,6 +534,7 @@ WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
 
 GO
 
+
 --Migrando transacciones de Subastas.
 INSERT INTO SALUDOS.TRANSACCIONES(
 	PUBL_COD, TRAN_PRECIO,
@@ -589,4 +563,46 @@ SELECT DISTINCT
 FROM gd_esquema.Maestra t1
 WHERE Oferta_Fecha IS NOT NULL AND Publicacion_Tipo = 'Subasta'
 
+GO
+
+
+--Migrando calificaciones.
+SET IDENTITY_INSERT SALUDOS.CALIFICACIONES ON;
+
+INSERT INTO SALUDOS.CALIFICACIONES(
+	CALI_COD, CALI_ESTRELLAS,
+	CALI_DESCRIPCION, PUBL_COD, USUA_USERNAME)
+SELECT DISTINCT
+	Calificacion_Codigo, CEILING(Calificacion_Cant_Estrellas/2),
+	Calificacion_Descripcion, Publicacion_Cod,
+	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
+FROM gd_esquema.Maestra
+WHERE Calificacion_Codigo IS NOT NULL
+
+SET IDENTITY_INSERT SALUDOS.CALIFICACIONES OFF;
+
+GO
+
+
+--Creación de tabla Fecha, function y procedure
+--para manejar la fecha del sistema.
+CREATE TABLE SALUDOS.FECHA(
+	hoy datetime
+)
+GO
+
+CREATE FUNCTION SALUDOS.fechaActual()
+RETURNS datetime
+AS 
+	BEGIN
+	RETURN (SELECT TOP 1 * FROM SALUDOS.FECHA)
+	END
+GO
+
+CREATE PROCEDURE SALUDOS.asignarFecha
+	@fecha datetime
+AS
+	DELETE FROM SALUDOS.FECHA
+	INSERT INTO SALUDOS.FECHA
+		VALUES (@fecha)
 GO
