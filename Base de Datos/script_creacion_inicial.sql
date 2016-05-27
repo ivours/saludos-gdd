@@ -591,7 +591,6 @@ WHERE TRAN_ADJUDICADA = 1
 	AND CALIFICACIONES.USUA_USERNAME = TRANSACCIONES.USUA_USERNAME
 
 
-
 --Creación de tabla Fecha, function y procedure
 --para manejar la fecha del sistema.
 CREATE TABLE SALUDOS.FECHA(
