@@ -176,6 +176,12 @@
     <Compile Include="ComprarOfertar\Comprar.Designer.cs">
       <DependentUpon>Comprar.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOfertar\Ofertar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Ofertar.Designer.cs">
+      <DependentUpon>Ofertar.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComprarOfertar\ListadoPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -318,6 +324,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Visibilidad\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Comprar.resx">
+      <DependentUpon>Comprar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Ofertar.resx">
+      <DependentUpon>Ofertar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOfertar\ListadoPublicaciones.resx">
       <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
