@@ -22,9 +22,14 @@ CREATE FUNCTION SALUDOS.clientesMasCompradoresEnUnRubro(@anio int, @trimestre in
 RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT TOP 5
-			FROM
-			WHERE
+			SELECT trns.USUA_USERNAME, COUNT(TRAN_COD) cantidad
+			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
+			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
+					publ.RUBR_COD = rubr.RUBR_COD AND
+					TRAN_ADJUDICADA = 1 AND
+					RUBR_NOMBRE = @rubro
+			GROUP BY trns.USUA_USERNAME
+			ORDER BY cantidad DESC 
 		RETURN;
 	END
 GO
@@ -36,7 +41,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 			SELECT USUA_USERNAME, COUNT(FACT_COD) cantidad
 			FROM SALUDOS.FACTURAS
 			GROUP BY USUA_USERNAME
-			ORDER BY cantidad desc
+			ORDER BY cantidad DESC
 		RETURN;
 	END
 GO
