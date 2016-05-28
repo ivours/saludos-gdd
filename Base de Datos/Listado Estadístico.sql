@@ -44,9 +44,12 @@ CREATE FUNCTION SALUDOS.vendedoresConMayorFacturacion(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor numeric(18,0), Monto_Facturado int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT TOP 5
-			FROM
-			WHERE
+			SELECT publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
+			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ
+			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
+					TRAN_ADJUDICADA = 1
+			GROUP BY publ.USUA_USERNAME
+			ORDER BY monto DESC
 		RETURN;
 	END
 GO
