@@ -33,9 +33,10 @@ CREATE FUNCTION SALUDOS.vendedoresConMasFacturas(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT TOP 5
-			FROM
-			WHERE
+			SELECT USUA_USERNAME, COUNT(FACT_COD) cantidad
+			FROM SALUDOS.FACTURAS
+			GROUP BY USUA_USERNAME
+			ORDER BY cantidad desc
 		RETURN;
 	END
 GO
