@@ -33,7 +33,7 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION SALUDOS.cuantasEstrellasPara(@usuario nvarchar(255), @estrellas int, @tipo_publicacion varchar(255))
+CREATE FUNCTION SALUDOS.cuantasEstrellasPara(@usuario nvarchar(255), @estrellas int)
 RETURNS int AS
 	BEGIN
 		RETURN(
@@ -42,8 +42,7 @@ RETURNS int AS
 			WHERE	cali.PUBL_COD = publ.PUBL_COD AND
 					publ.TIPO_COD = tipo.TIPO_COD AND	
 					cali.USUA_USERNAME = @usuario AND
-					CALI_ESTRELLAS = @estrellas AND
-					TIPO_NOMBRE = @tipo_publicacion
+					CALI_ESTRELLAS = @estrellas
 		)
 	END
 GO
