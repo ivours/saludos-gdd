@@ -102,6 +102,8 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0) --NO EXISTE OTRO USERNAME IGUAL
 		BEGIN
 			IF (SALUDOS.existeTipoYNumeroDeDocumento(@documento, @tipo_documento) = 0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
+				DECLARE @fecha_actual datetime
+				SET @fecha_actual = SALUDOS.fechaActual()
 				BEGIN
 					INSERT INTO SALUDOS.USUARIOS(USUA_USERNAME, USUA_PASSWORD, USUA_NUEVO, USUA_SIN_CALIFICAR)
 					VALUES(@username, convert(nvarchar(255), HASHBYTES('SHA2_256', @password), 1), 1, 0)
@@ -110,7 +112,7 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
 					CLIE_FECHA_NACIMIENTO, CLIE_CODIGO_POSTAL, CLIE_DEPTO, CLIE_PISO, CLIE_LOCALIDAD, CLIE_NRO_DOCUMENTO,
 					CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_FECHA_CREACION)
 					VALUES(@nombre, @apellido, @telefono, @calle, @nro_calle, @nacimiento, @cod_postal, @depto, @piso,
-					@localidad, @documento, @tipo_documento, @mail, GETDATE())
+					@localidad, @documento, @tipo_documento, @mail, @fecha_actual)
 
 					INSERT INTO SALUDOS.ROLESXUSUARIO(USUA_USERNAME, ROL_COD)
 					VALUES(@username, @id_rol)
@@ -187,14 +189,16 @@ BEGIN TRANSACTION
 		BEGIN
 			IF (SALUDOS.existeRazonSocialYCuit(@razon_social, @cuit) = 0)------No existe empresa con misma razon y cuit
 				BEGIN
+					DECLARE @fecha_actual datetime
+					SET @fecha_actual = SALUDOS.fechaActual()
 					INSERT INTO SALUDOS.USUARIOS(USUA_USERNAME, USUA_PASSWORD, USUA_NUEVO, USUA_SIN_CALIFICAR)
 					VALUES(@username, convert(nvarchar(255), HASHBYTES('SHA2_256', @password), 1), 1, 0)
 
 					INSERT INTO SALUDOS.EMPRESAS(EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE,
 					EMPR_NRO_CALLE, EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL, EMPR_LOCALIDAD,
-					RUBR_COD)
+					RUBR_COD, EMPR_FECHA_CREACION)
 					VALUES(@razon_social, @cuit, @mail, @telefono, @calle, @nro_calle, @piso, @depto, @ciudad, @contacto, 
-					@cod_postal, @localidad, @id_rubro)
+					@cod_postal, @localidad, @id_rubro, @fecha_actual)
 
 					INSERT INTO ROLESXUSUARIO(USUA_USERNAME, ROL_COD)
 					VALUES(@username, @id_rol)
@@ -291,3 +295,56 @@ AS BEGIN
 			RETURN
 		END	
 END
+GO
+
+----------BORRAR ROL-------------
+CREATE PROCEDURE SALUDOS.borrarRol
+(@id_rol int)
+AS BEGIN
+	UPDATE SALUDOS.ROLES
+	SET ROL_HABILITADO = 0
+	WHERE ROL_COD = @id_rol
+
+	UPDATE SALUDOS.ROLESXUSUARIOS
+	SET RXU_HABILITADO = 0
+	WHERE ROL_COD = @id_rol
+
+END
+GO
+
+
+----------MODIFICAR ROL-----------
+CREATE PROCEDURE SALUDOS.modificarRol
+(@id_rol int, @nombre nvarchar(50))
+AS BEGIN
+	UPDATE SALUDOS.ROLES
+	SET ROL_NOMBRE = @nombre
+	WHERE ROL_COD = @id_rol
+END
+GO
+
+
+--------AGREGAR FUNCIONALIDAD A ROL------
+CREATE PROCEDURE SALUDOS.agregarFuncionalidadARol
+(@id_rol int, @id_funcionalidad int)
+AS 
+	BEGIN TRY
+		INSERT INTO SALUDOS.FUNCIONALIDADESXROL(ROL_COD, FUNC_COD)
+		VALUES(@id_rol, @id_funcionalidad)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Esta funcionalidad ya esta asociada a este rol', 16, 1)
+	END CATCH
+GO
+
+
+--------QUITAR FUNCIONALIDAD DE UN ROL-------
+CREATE PROCEDURE SALUDOS.quitarFuncionalidadDeRol
+(@id_rol int, @id_funcionalidad int)
+AS BEGIN
+	DELETE FROM SALUDOS.FUNCIONALIDADESXROL
+	WHERE ROL_COD = @id_rol AND FUNC_COD = @id_funcionalidad
+END
+GO
+
+
