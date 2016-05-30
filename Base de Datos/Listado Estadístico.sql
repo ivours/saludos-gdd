@@ -18,6 +18,18 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	END
 GO
 
+CREATE FUNCTION SALUDOS.productosSinVenderDeUnVendedor(@anio int, @trimestre int, @usuario nvarchar(255))
+RETURNS @table TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2)
+						Fecha_Inicio datetime, Fecha_Finalizacion datetime
+	BEGIN
+		INSERT @tabla
+			SELECT
+			FROM
+			WHERE
+		RETURN;
+	END
+GO
+
 CREATE FUNCTION SALUDOS.clientesMasCompradoresEnUnRubro(@anio int, @trimestre int, @rubro nvarchar(255))
 RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 	BEGIN
