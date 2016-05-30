@@ -36,7 +36,7 @@ BEGIN
 	FROM SALUDOS.USUARIOS
 	WHERE USUA_USERNAME = @usuario
 
-	SELECT @password_hasheada = convert(nvarchar(255), HASHBYTES('SHA2_256', @password_ingresada), 1)
+	SELECT @password_hasheada = HASHBYTES('SHA2_256',CONVERT(nvarchar(255),@password_ingresada))
 
 	IF @password <> @password_hasheada
 		BEGIN
