@@ -36,7 +36,7 @@ BEGIN
 	FROM SALUDOS.USUARIOS
 	WHERE USUA_USERNAME = @usuario
 
-	SELECT @password_hasheada = HASHBYTES('SHA2_256',CONVERT(nvarchar(255),@password_ingresada))
+	SELECT @password_hasheada = HASHBYTES('SHA2_256',@password_ingresada)
 
 	IF @password <> @password_hasheada
 		BEGIN
@@ -102,17 +102,17 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0) --NO EXISTE OTRO USERNAME IGUAL
 		BEGIN
 			IF (SALUDOS.existeTipoYNumeroDeDocumento(@documento, @tipo_documento) = 0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
-				DECLARE @fecha_actual datetime
-				SET @fecha_actual = SALUDOS.fechaActual()
 				BEGIN
+					DECLARE @fecha_actual datetime
+					SET @fecha_actual = SALUDOS.fechaActual()
 					INSERT INTO SALUDOS.USUARIOS(USUA_USERNAME, USUA_PASSWORD, USUA_NUEVO, USUA_SIN_CALIFICAR)
-					VALUES(@username, convert(nvarchar(255), HASHBYTES('SHA2_256', @password), 1), 1, 0)
+					VALUES(@username, HASHBYTES('SHA2_256', @password), 1, 0)
 					
 					INSERT INTO SALUDOS.CLIENTES(CLIE_NOMBRE, CLIE_APELLIDO, CLIE_TELEFONO, CLIE_CALLE, CLIE_NRO_CALLE, 
 					CLIE_FECHA_NACIMIENTO, CLIE_CODIGO_POSTAL, CLIE_DEPTO, CLIE_PISO, CLIE_LOCALIDAD, CLIE_NRO_DOCUMENTO,
-					CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_FECHA_CREACION)
+					CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_FECHA_CREACION, USUA_USERNAME)
 					VALUES(@nombre, @apellido, @telefono, @calle, @nro_calle, @nacimiento, @cod_postal, @depto, @piso,
-					@localidad, @documento, @tipo_documento, @mail, @fecha_actual)
+					@localidad, @documento, @tipo_documento, @mail, @fecha_actual, @username)
 
 					INSERT INTO SALUDOS.ROLESXUSUARIO(USUA_USERNAME, ROL_COD)
 					VALUES(@username, @id_rol)
@@ -192,13 +192,13 @@ BEGIN TRANSACTION
 					DECLARE @fecha_actual datetime
 					SET @fecha_actual = SALUDOS.fechaActual()
 					INSERT INTO SALUDOS.USUARIOS(USUA_USERNAME, USUA_PASSWORD, USUA_NUEVO, USUA_SIN_CALIFICAR)
-					VALUES(@username, convert(nvarchar(255), HASHBYTES('SHA2_256', @password), 1), 1, 0)
+					VALUES(@username, HASHBYTES('SHA2_256', @password), 1, 0)
 
 					INSERT INTO SALUDOS.EMPRESAS(EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE,
 					EMPR_NRO_CALLE, EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL, EMPR_LOCALIDAD,
-					RUBR_COD, EMPR_FECHA_CREACION)
+					RUBR_COD, EMPR_FECHA_CREACION, USUA_USERNAME)
 					VALUES(@razon_social, @cuit, @mail, @telefono, @calle, @nro_calle, @piso, @depto, @ciudad, @contacto, 
-					@cod_postal, @localidad, @id_rubro, @fecha_actual)
+					@cod_postal, @localidad, @id_rubro, @fecha_actual, @username)
 
 					INSERT INTO ROLESXUSUARIO(USUA_USERNAME, ROL_COD)
 					VALUES(@username, @id_rol)
@@ -346,5 +346,26 @@ AS BEGIN
 	WHERE ROL_COD = @id_rol AND FUNC_COD = @id_funcionalidad
 END
 GO
+
+
+-------OBTENER USUARIO--------
+CREATE FUNCTION SALUDOS.getTipoUsuario
+(@username nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN (SELECT USUA_TIPO FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username)
+GO
+
+
+
+------MOSTRAR ROLES DE USUARIO------
+CREATE FUNCTION SALUDOS.getRolesUsuario
+(@username nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN (SELECT R.ROL_NOMBRE FROM SALUDOS.USUARIOS U, SALUDOS.ROLESXUSUARIO RXU, SALUDOS.ROLES R
+			WHERE U.USUA_USERNAME = RXU.USUA_USERNAME AND R.ROL_COD = RXU.ROL_COD)
+GO
+
 
 
