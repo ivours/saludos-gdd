@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
     {
         public SqlCommand command;
 
-        public SQLManager generarSP(string nombre)
+        public SQLManager generarSP(String nombre)
         {
             command = new SqlCommand();
             command.Connection = Program.conexionDB();

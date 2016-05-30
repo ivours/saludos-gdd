@@ -51,21 +51,33 @@ namespace WindowsFormsApplication1.Login
                                                  .agregarStringSP("@usuario", textBox1.Text)
                                                  .agregarStringSP("@password_ingresada", textBox2.Text);
 
-                try
-                {
-                    manager.ejecutarSP();
-                    MessageBox.Show("login ok");
+                manager.ejecutarSP();
 
-                }
-                catch (Exception e)
+                //MessageBox.Show("login ok");
+                String tipoUsuario = this.getTipoUsuario(textBox1.Text);
+
+                if (tipoUsuario.Equals("Administrador"))
                 {
-                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                    //TODO: loguear como admin
                 }
+                else
+                {
+                    if (this.getRolesUsuario(textBox1.Text).Count() == 1)
+                    {
+                        //TODO: ingresar con tipo y unico rol asignado
+                    }
+                    else
+                    {
+                        //TODO: proceder a ventana de seleccion de rol
+                    }
+                }
+
 
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                this.limpiarCampos();
             }
 
         }
@@ -75,7 +87,36 @@ namespace WindowsFormsApplication1.Login
             this.loguearse();
         }
 
+        private String getTipoUsuario(String username)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.getTipoUsuario(@username)";
+            consulta.Parameters.Add(new SqlParameter(@username,username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+            reader.Read();
 
+            return (String) reader.GetValue(0);
+        }
+
+        private List<String> getRolesUsuario(String username)
+        {
+            List<String> rolesUsuario = new List<String>();
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.getRolesUsuario(@username)";
+            consulta.Parameters.Add(new SqlParameter(@username, username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            while (reader.Read())
+                rolesUsuario.Add((String) reader.GetValue(0));
+
+            return rolesUsuario;
+        }
 
     }
 }
