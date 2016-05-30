@@ -195,7 +195,6 @@
     <Compile Include="ComprarOfertar\ListadoPublicaciones.Designer.cs">
       <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Encriptador.cs" />
     <Compile Include="Facturas\FacturaPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>

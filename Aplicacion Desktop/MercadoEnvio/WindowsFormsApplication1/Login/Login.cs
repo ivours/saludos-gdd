@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1.Login
 
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", textBox1.Text)
-                                                 .agregarStringSP("@password_ingresada", Encriptador.encriptarSegunSHA256(textBox2.Text));
+                                                 .agregarStringSP("@password_ingresada", textBox2.Text);
 
                 try
                 {
