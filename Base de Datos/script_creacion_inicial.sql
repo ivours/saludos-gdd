@@ -57,8 +57,9 @@ CREATE TABLE SALUDOS.TRANSACCIONES(
 	TRAN_COD				int	IDENTITY,	--new
 	TRAN_ADJUDICADA			bit,			--Si fue adjudicada (para subastas)
 	TRAN_PRECIO				numeric(18,2),	--Oferta_Monto (en caso de subasta). Sino, es el precio de compra.
-	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad (en caso de compra directa)
+	TRAN_CANTIDAD_COMPRADA	numeric(2,0),	--Compra_Cantidad. Siempre es 1 en caso de subastas.
 	TRAN_FECHA				datetime,		--Compra_Fecha u Oferta_Fecha. Momento de la transacción.
+	TRAN_FORMA_PAGO			nvarchar(255),	--Forma_Pago_Desc.
 	USUA_USERNAME			nvarchar(255),	--FK. Comprador/ofertante.
 	PUBL_COD				numeric(18,0),	--FK. Qué compra u oferta.
 	TIPO_COD				int				--FK. Compra o subasta.
@@ -514,13 +515,13 @@ WHERE Item_Factura_Monto IS NOT NULL
 
 --Migrando transacciones de Compras Inmediatas.
 INSERT INTO SALUDOS.TRANSACCIONES(
-	PUBL_COD, TRAN_PRECIO,
+	PUBL_COD, TRAN_PRECIO, TRAN_FORMA_PAGO,
 	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA, TRAN_ADJUDICADA,
 	TIPO_COD,
 	USUA_USERNAME)
 
 SELECT DISTINCT
-	Publicacion_Cod, Publicacion_Precio,
+	Publicacion_Cod, Publicacion_Precio, Forma_Pago_Desc,
 	Compra_Cantidad, Compra_Fecha, 1,
 
 	(SELECT TIPO_COD
@@ -536,14 +537,14 @@ GO
 
 --Migrando transacciones de Subastas.
 INSERT INTO SALUDOS.TRANSACCIONES(
-	PUBL_COD, TRAN_PRECIO,
+	PUBL_COD, TRAN_PRECIO, TRAN_FORMA_PAGO,
 	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
 	TRAN_ADJUDICADA,
 	TIPO_COD,
 	USUA_USERNAME)
 
 SELECT DISTINCT
-	Publicacion_Cod, Oferta_Monto,
+	Publicacion_Cod, Oferta_Monto, Forma_Pago_Desc,
 	1, Oferta_Fecha,
 
 	CASE
