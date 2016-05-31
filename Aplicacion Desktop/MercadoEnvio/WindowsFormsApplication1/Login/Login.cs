@@ -92,8 +92,8 @@ namespace WindowsFormsApplication1.Login
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT GD1C2016.SALUDOS.getTipoUsuario(@username)";
-            consulta.Parameters.Add(new SqlParameter(@username,username));
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getTipoUsuario(@username)";
+            consulta.Parameters.Add(new SqlParameter("@username",username));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
             reader.Read();
@@ -107,7 +107,7 @@ namespace WindowsFormsApplication1.Login
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT GD1C2016.SALUDOS.getRolesUsuario(@username)";
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getRolesUsuario(@username)";
             consulta.Parameters.Add(new SqlParameter(@username, username));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
