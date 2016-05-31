@@ -76,5 +76,14 @@ AS
 			@usuario, @publicacion,
 			@estrellas, @descripcion,
 			@fecha)
+
+		UPDATE SALUDOS.USUARIOS
+		SET USUA_SIN_CALIFICAR = USUA_SIN_CALIFICAR - 1
+		WHERE USUA_USERNAME = @usuario
+
 	END
 GO
+
+select publ_precio from saludos.publicaciones
+where publ_cod = 23000
+
