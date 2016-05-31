@@ -4,5 +4,5 @@ SALUDOS.borrarRol, SALUDOS.modificarRol, SALUDOS.agregarFuncionalidadARol, SALUD
 GO
 
 DROP FUNCTION SALUDOS.existeTipoYNumeroDeDocumento, SALUDOS.existeRazonSocialYCuit, SALUDOS.existeRol, SALUDOS.obtenerUsuario,
-SALUDOS.obtenerRolesDeUsuario
+SALUDOS.obtenerRolesDeUsuario, SALUDOS.getTipoUsuario, SALUDOS.getRolesUsuarios
 GO
