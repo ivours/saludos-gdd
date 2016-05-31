@@ -50,10 +50,17 @@ GO
 CREATE FUNCTION SALUDOS.cantidadCalificacionesPendientes(@usuario nvarchar(255))
 RETURNS int AS
 	BEGIN
-		RETURN(
-			SELECT USUA_SIN_CALIFICAR
-			FROM SALUDOS.USUARIOS
-			WHERE USUA_USERNAME = @usuario
+		RETURN (
+			SELECT COUNT(*)
+			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.TIPOS tipo
+			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
+					trns.TIPO_COD = tipo.TIPO_COD AND
+					trns.TRAN_ADJUDICADA = 1 AND
+					trns.USUA_USERNAME = @usuario AND
+					NOT EXISTS(	SELECT *
+								FROM SALUDOS.CALIFICACIONES cali
+								WHERE	publ.PUBL_COD = cali.PUBL_COD AND
+										cali.USUA_USERNAME = @usuario)
 		)
 	END
 GO
@@ -76,10 +83,6 @@ AS
 			@usuario, @publicacion,
 			@estrellas, @descripcion,
 			@fecha)
-
-		UPDATE SALUDOS.USUARIOS
-		SET USUA_SIN_CALIFICAR = USUA_SIN_CALIFICAR - 1
-		WHERE USUA_USERNAME = @usuario
 
 	END
 GO
