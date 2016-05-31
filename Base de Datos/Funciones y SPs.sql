@@ -368,21 +368,35 @@ AS
 GO
 
 
-------FILTRAR CLIENTES-------
-CREATE FUNCTION SALUDOS.filtrarClientes
-(@nombre nvarchar(255), @apellido nvarchar(255), @nro_documento numeric(18,0), @mail nvarchar(50))
+
+------OBTENER FUNCIONALIDADES DE UN ROL--------
+CREATE FUNCTION SALUDOS.getFuncionalidadesRol
+(@rol nvarchar(255))
 RETURNS TABLE
 AS
+	RETURN (SELECT FUNC_NOMBRE FROM SALUDOS.ROLES R, SALUDOS.FUNCIONALIDADESXROL FR, SALUDOS.FUNCIONALIDADES F
+			WHERE R.ROL_NOMBRE = @rol 
+			AND R.ROL_COD = FR.ROL_COD AND F.FUNC_COD = FR.FUNC_COD)
+GO
+
+------FILTRAR CLIENTES-------VER TIPO NRO DOC
+CREATE FUNCTION SALUDOS.filtrarClientes
+(@nombre nvarchar(255), @apellido nvarchar(255), @nro_documento nvarchar(255), @mail nvarchar(50))
+RETURNS TABLE
+AS 
 	RETURN (SELECT CLIE_NOMBRE, CLIE_APELLIDO, CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_TELEFONO,
 			CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_LOCALIDAD, CLIE_CODIGO_POSTAL, CLIE_FECHA_NACIMIENTO
 			FROM SALUDOS.CLIENTES
 			WHERE CLIE_NOMBRE LIKE '%' + @nombre + '%' AND
 			CLIE_APELLIDO LIKE '%' + @apellido + '%' AND 
-			CLIE_NRO_DOCUMENTO LIKE '%' + @nro_documento + '%' AND
+			CLIE_NRO_DOCUMENTO LIKE '' + @nro_documento + '' AND
 			CLIE_MAIL LIKE '%' + @mail + '%')
+	
 GO
 
+select * from SALUDOS.filtrarClientes('oda', '', '', '')
 
+select * from SALUDOS.CLIENTES
 
 -----FILTRAR EMPRESAS-------
 CREATE FUNCTION SALUDOS.filtrarEmpresas
@@ -396,3 +410,6 @@ AS
 	EMPR_CUIT LIKE '%' + @cuit + '%' AND
 	EMPR_MAIL LIKE '%' + @mail + '%')
 GO
+
+
+
