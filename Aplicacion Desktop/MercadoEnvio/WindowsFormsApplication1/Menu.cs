@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Dominio;
+
 
 namespace WindowsFormsApplication1
 {
@@ -16,9 +18,11 @@ namespace WindowsFormsApplication1
         String rol;
         Form[] formsFuncionalidades;
 
-        public Menu()
+        public Menu(String username, String rol)
         {
             InitializeComponent();
+            this.username = username;
+            this.rol = rol;
             formsFuncionalidades = new Form[9];
             this.asignarVisibilidadYNombresABotones();
         }
@@ -77,30 +81,9 @@ namespace WindowsFormsApplication1
             formsFuncionalidades[8].Visible = true;
         }
 
-        private List<String> getFuncionalidadesRol(String nombreRol)
-        {
-            List<String> funcionalidadesRol = new List<String>();
-            SqlDataReader reader;
-            SqlCommand consulta = new SqlCommand();
-            consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getFuncionalidadesRol(@nombreRol)";
-            consulta.Parameters.Add(new SqlParameter(@nombreRol, nombreRol));
-            consulta.Connection = Program.conexionDB();
-            reader = consulta.ExecuteReader();
-
-            while (reader.Read())
-                funcionalidadesRol.Add((String)reader.GetValue(0));
-
-            return funcionalidadesRol;
-        }
-
         private void asignarFuncionalidadAlBoton(int nroBoton)
         {
-            List<String> funcionalidades = new List<String>();
-            funcionalidades.Add("Vender");
-            funcionalidades.Add("Historial de cliente");
-            funcionalidades.Add("ABM Roles");
-            funcionalidades.Add("Comprar/Ofertar");
+            List<String> funcionalidades = Rol.getFuncionalidadesRol(rol);
 
             switch (funcionalidades[nroBoton])
             {
@@ -144,12 +127,7 @@ namespace WindowsFormsApplication1
 
         private void asignarVisibilidadYNombresABotones()
         {
-            //List<String> funcionalidades = this.getFuncionalidadesRol(rol);
-            List<String> funcionalidades = new List<String>();
-            funcionalidades.Add("Vender");
-            funcionalidades.Add("Historial de cliente");
-            funcionalidades.Add("ABM Roles");
-            funcionalidades.Add("Comprar/Ofertar");
+            List<String> funcionalidades = Rol.getFuncionalidadesRol(rol);
 
             List<Button> botones = new List<Button>();
             botones.Add(button0);

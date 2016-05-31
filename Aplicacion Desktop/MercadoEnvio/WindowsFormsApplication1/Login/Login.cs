@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Dominio;
 
 namespace WindowsFormsApplication1.Login
 {
@@ -47,27 +48,34 @@ namespace WindowsFormsApplication1.Login
             {
                 this.validarLogin();
 
+                String username = textBox1.Text;
+                String password = textBox2.Text;
+
                 SQLManager manager = new SQLManager().generarSP("login")
-                                                 .agregarStringSP("@usuario", textBox1.Text)
-                                                 .agregarStringSP("@password_ingresada", textBox2.Text);
+                                                 .agregarStringSP("@usuario", username)
+                                                 .agregarStringSP("@password_ingresada", password);
 
                 manager.ejecutarSP();
 
-                //MessageBox.Show("login ok");
-                String tipoUsuario = this.getTipoUsuario(textBox1.Text);
+                String tipoUsuario = Usuario.getTipoUsuario(username);
+                Form menu;
 
                 if (tipoUsuario.Equals("Administrador"))
                 {
-                    //TODO: loguear como admin
+                    //Se ingresa como administrador
+                    this.mostrarMenuSegunRol(username, "Administrador");
                 }
                 else
                 {
-                    if (this.getRolesUsuario(textBox1.Text).Count() == 1)
+                    if (Usuario.getRolesUsuario(username).Count().Equals(1))
                     {
-                        //TODO: ingresar con tipo y unico rol asignado
+                        //Se ingresa con tipo y unico rol asignado
+                        String rol = Usuario.getRolesUsuario(username)[0];
+                        this.mostrarMenuSegunRol(username, rol);
                     }
                     else
                     {
+                        MessageBox.Show("chau");
                         //TODO: proceder a ventana de seleccion de rol
                     }
                 }
@@ -87,35 +95,10 @@ namespace WindowsFormsApplication1.Login
             this.loguearse();
         }
 
-        private String getTipoUsuario(String username)
+        private void mostrarMenuSegunRol(String username, String rol)
         {
-            SqlDataReader reader;
-            SqlCommand consulta = new SqlCommand();
-            consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getTipoUsuario(@username)";
-            consulta.Parameters.Add(new SqlParameter("@username",username));
-            consulta.Connection = Program.conexionDB();
-            reader = consulta.ExecuteReader();
-            reader.Read();
-
-            return (String) reader.GetValue(0);
-        }
-
-        private List<String> getRolesUsuario(String username)
-        {
-            List<String> rolesUsuario = new List<String>();
-            SqlDataReader reader;
-            SqlCommand consulta = new SqlCommand();
-            consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getRolesUsuario(@username)";
-            consulta.Parameters.Add(new SqlParameter(@username, username));
-            consulta.Connection = Program.conexionDB();
-            reader = consulta.ExecuteReader();
-
-            while (reader.Read())
-                rolesUsuario.Add((String) reader.GetValue(0));
-
-            return rolesUsuario;
+            Form menu = new Menu(username, rol);
+            menu.Visible = true;
         }
 
     }
