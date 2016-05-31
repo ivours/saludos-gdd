@@ -83,7 +83,3 @@ AS
 
 	END
 GO
-
-select publ_precio from saludos.publicaciones
-where publ_cod = 23000
-
