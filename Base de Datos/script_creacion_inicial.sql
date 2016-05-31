@@ -612,6 +612,14 @@ FROM(
 WHERE cuento.USUA_USERNAME = SALUDOS.USUARIOS.USUA_USERNAME
 
 
+--Agregando roles Cliente y Empresa a los clientes y a las... empresas.
+INSERT INTO SALUDOS.ROLESXUSUARIO(
+	USUA_USERNAME, ROL_COD)
+SELECT USUA_USERNAME, ROL_COD
+FROM SALUDOS.USUARIOS, SALUDOS.ROLES
+WHERE USUA_TIPO = 'Cliente' AND ROL_NOMBRE = 'Cliente' OR USUA_TIPO = 'Empresa' AND ROL_NOMBRE = 'Empresa'
+
+
 --Creación de tabla Fecha, function y procedure
 --para manejar la fecha del sistema.
 CREATE TABLE SALUDOS.FECHA(
