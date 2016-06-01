@@ -7,13 +7,18 @@
 --# Vendedores con mayor cantidad de facturas dentro de un mes y año particular
 --# Vendedores con mayor monto facturado dentro de un mes y año particular
 
+--Esta función no devuelve nada post-migración porque todos los productos fueron vendidos.
 CREATE FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT TOP 5
-			FROM
-			WHERE
+			SELECT usua.USUA_USERNAME, COUNT(*) cantidad
+			FROM SALUDOS.USUARIOS usua, SALUDOS.PUBLICACIONES publ
+			WHERE	usua.USUA_USERNAME = publ.USUA_USERNAME AND
+					NOT EXISTS (	SELECT trns.PUBL_COD
+									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
+									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
+			GROUP BY usua.USUA_USERNAME
 		RETURN;
 	END
 GO
