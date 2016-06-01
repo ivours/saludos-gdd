@@ -24,14 +24,18 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	END
 GO
 
+--Lo mismo que para la función anterior.
 CREATE FUNCTION SALUDOS.productosSinVenderDeUnVendedor(@anio int, @trimestre int, @usuario nvarchar(255))
-RETURNS @table TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2)
-						Fecha_Inicio datetime, Fecha_Finalizacion datetime
+RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2),
+						Inicio datetime, Finalización datetime)
 	BEGIN
 		INSERT @tabla
-			SELECT
-			FROM
-			WHERE
+			SELECT PUBL_COD, PUBL_DESCRIPCION, PUBL_PRECIO, PUBL_INICIO, PUBL_FINALIZACION
+			FROM SALUDOS.PUBLICACIONES publ
+			WHERE USUA_USERNAME = @usuario AND
+				NOT EXISTS (	SELECT trns.PUBL_COD
+								FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
+								WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
 		RETURN;
 	END
 GO
