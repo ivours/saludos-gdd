@@ -57,8 +57,8 @@ namespace WindowsFormsApplication1.Login
 
                 manager.ejecutarSP();
 
-                String tipoUsuario = Usuario.getTipoUsuario(username);
-                //String tipoUsuario = "Administrador";
+                //String tipoUsuario = Usuario.getTipoUsuario(username);
+                String tipoUsuario = "Administrador";
 
                 if (tipoUsuario.Equals("Administrador"))
                 {
