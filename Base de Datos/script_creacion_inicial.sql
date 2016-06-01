@@ -521,7 +521,7 @@ INSERT INTO SALUDOS.TRANSACCIONES(
 	USUA_USERNAME)
 
 SELECT DISTINCT
-	Publicacion_Cod, Publicacion_Precio, Forma_Pago_Desc,
+	Publicacion_Cod, Publicacion_Precio, 'Efectivo',
 	Compra_Cantidad, Compra_Fecha, 1,
 
 	(SELECT TIPO_COD
@@ -544,7 +544,7 @@ INSERT INTO SALUDOS.TRANSACCIONES(
 	USUA_USERNAME)
 
 SELECT DISTINCT
-	Publicacion_Cod, Oferta_Monto, Forma_Pago_Desc,
+	Publicacion_Cod, Oferta_Monto, 'Efectivo',
 	1, Oferta_Fecha,
 
 	CASE
