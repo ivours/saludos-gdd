@@ -12,7 +12,7 @@ CREATE FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio in
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT usua.USUA_USERNAME, COUNT(*) cantidad
+			SELECT TOP 5 usua.USUA_USERNAME, COUNT(*) cantidad
 			FROM SALUDOS.USUARIOS usua, SALUDOS.PUBLICACIONES publ
 			WHERE	usua.USUA_USERNAME = publ.USUA_USERNAME AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
@@ -44,7 +44,7 @@ CREATE FUNCTION SALUDOS.clientesMasCompradoresEnUnRubro(@anio int, @trimestre in
 RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT trns.USUA_USERNAME, COUNT(TRAN_COD) cantidad
+			SELECT TOP 5 trns.USUA_USERNAME, COUNT(TRAN_COD) cantidad
 			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
 			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
 					publ.RUBR_COD = rubr.RUBR_COD AND
@@ -60,7 +60,7 @@ CREATE FUNCTION SALUDOS.vendedoresConMasFacturas(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT USUA_USERNAME, COUNT(FACT_COD) cantidad
+			SELECT TOP 5 USUA_USERNAME, COUNT(FACT_COD) cantidad
 			FROM SALUDOS.FACTURAS
 			GROUP BY USUA_USERNAME
 			ORDER BY cantidad DESC
@@ -72,7 +72,7 @@ CREATE FUNCTION SALUDOS.vendedoresConMayorFacturacion(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor numeric(18,0), Monto_Facturado int) AS
 	BEGIN
 		INSERT @tabla
-			SELECT publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
+			SELECT TOP 5 publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
 			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ
 			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
 					TRAN_ADJUDICADA = 1
