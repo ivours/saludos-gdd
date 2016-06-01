@@ -123,7 +123,7 @@ CREATE TABLE SALUDOS.USUARIOS(
 	USUA_INTENTOS_LOGIN		tinyint DEFAULT 0,	--new
 	USUA_TIPO				nvarchar(255),		--new.
 	USUA_HABILITADO			bit DEFAULT 1,
-	CONSTRAINT CK_USUA_TIPO CHECK (USUA_TIPO IN ('Empresa', 'Cliente')),
+	CONSTRAINT CK_USUA_TIPO CHECK (USUA_TIPO IN ('Empresa', 'Cliente', 'Administrador')),
 	CONSTRAINT PK_USUA_USERNAME PRIMARY KEY (USUA_USERNAME)
 )
 
@@ -590,14 +590,22 @@ WHERE TRAN_ADJUDICADA = 1
 	AND CALIFICACIONES.USUA_USERNAME = TRANSACCIONES.USUA_USERNAME
 
 
---Agregando roles Cliente y Empresa a los clientes y a las... empresas.
+--Creando administrador default.
+INSERT INTO SALUDOS.USUARIOS(
+	USUA_USERNAME, USUA_PASSWORD, USUA_TIPO)
+VALUES('admin', HASHBYTES('SHA2_256', 'w23e'), 'Administrador')
+
+
+--Agregando roles Cliente, Empresa y Administrador
+--a los clientes, empresas... y administrador.
 INSERT INTO SALUDOS.ROLESXUSUARIO(
 	USUA_USERNAME, ROL_COD)
 SELECT USUA_USERNAME, ROL_COD
 FROM SALUDOS.USUARIOS, SALUDOS.ROLES
 WHERE	USUA_TIPO = 'Cliente' AND ROL_NOMBRE = 'Cliente' OR
-		USUA_TIPO = 'Empresa' AND ROL_NOMBRE = 'Empresa'
-				
+		USUA_TIPO = 'Empresa' AND ROL_NOMBRE = 'Empresa' OR
+		USUA_TIPO = 'Administrador' AND ROL_NOMBRE = 'Administrador'
+
 
 --Creación de tabla Fecha, function y procedure
 --para manejar la fecha del sistema.
