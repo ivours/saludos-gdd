@@ -19,6 +19,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
 			GROUP BY usua.USUA_USERNAME
+			ORDER BY cantidad DESC
 		RETURN;
 	END
 GO
