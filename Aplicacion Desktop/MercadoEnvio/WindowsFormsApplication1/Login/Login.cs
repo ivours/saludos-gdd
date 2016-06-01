@@ -57,11 +57,12 @@ namespace WindowsFormsApplication1.Login
 
                 manager.ejecutarSP();
 
-                String tipoUsuario = Usuario.getTipoUsuario(username);
-                Form menu;
+                //String tipoUsuario = Usuario.getTipoUsuario(username);
+                String tipoUsuario = "Administrador";
 
                 if (tipoUsuario.Equals("Administrador"))
                 {
+                    MessageBox.Show("Hola");
                     //Se ingresa como administrador
                     this.mostrarMenuSegunRol(username, "Administrador");
                 }
@@ -75,8 +76,16 @@ namespace WindowsFormsApplication1.Login
                     }
                     else
                     {
-                        MessageBox.Show("chau");
-                        //TODO: proceder a ventana de seleccion de rol
+                        if (Usuario.getRolesUsuario(username).Count() > 1)
+                        {
+                            //TODO: testear
+                            this.mostrarSeleccionDeRol(username);
+                        }
+                        else
+                        {
+                            MessageBox.Show("El usuario no puede ingresar al sistema ya que no tiene ningún rol.");
+                        }
+                        
                     }
                 }
 
@@ -98,7 +107,15 @@ namespace WindowsFormsApplication1.Login
         private void mostrarMenuSegunRol(String username, String rol)
         {
             Form menu = new Menu(username, rol);
-            menu.Visible = true;
+            menu.Show();
+            this.Hide();
+        }
+
+        private void mostrarSeleccionDeRol(String username)
+        {
+            Form seleccionDeRol = new SeleccionarRol(username,this);
+            seleccionDeRol.Show();
+            this.Hide();
         }
 
     }

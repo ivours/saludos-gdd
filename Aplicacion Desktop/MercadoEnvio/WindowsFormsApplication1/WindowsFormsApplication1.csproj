@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Dominio\Rol.cs" />
     <Compile Include="Dominio\Usuario.cs" />
+    <Compile Include="Dominio\Visibilidad.cs" />
     <Compile Include="Facturas\FacturaPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>

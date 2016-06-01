@@ -12,6 +12,8 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
+        /// 
+
         [STAThread]
         static void Main()
         {
@@ -30,5 +32,6 @@ namespace WindowsFormsApplication1
             conexion.Open();
             return conexion;
         }
+
     }
 }

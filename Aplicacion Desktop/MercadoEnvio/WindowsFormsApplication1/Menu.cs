@@ -146,7 +146,18 @@ namespace WindowsFormsApplication1
                 botones[i].Visible = true;
             }
         }
-        
+
+        private void mostrarMenuSegunRol(String username, String rol)
+        {
+            Form menu = new Menu(username, rol);
+            menu.Visible = true;
+        }
+
+        //TODO: ver si esto es muy rancio
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void Menu_Load(object sender, EventArgs e)
         {
