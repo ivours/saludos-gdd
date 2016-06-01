@@ -293,7 +293,6 @@ INSERT INTO SALUDOS.ROLES (ROL_NOMBRE)
 INSERT INTO SALUDOS.FUNCIONALIDADES(FUNC_NOMBRE)
 	VALUES	('ABM Roles'),
 			('ABM Usuarios'),
-			('ABM Rubros'),
 			('ABM Visibilidades'),
 			('Vender'),
 			('Comprar/Ofertar'),
