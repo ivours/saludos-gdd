@@ -69,7 +69,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 GO
 
 CREATE FUNCTION SALUDOS.vendedoresConMayorFacturacion(@anio int, @trimestre int)
-RETURNS @tabla TABLE (Vendedor numeric(18,0), Monto_Facturado int) AS
+RETURNS @tabla TABLE (Vendedor nvarchar(255), Monto_Facturado int) AS
 	BEGIN
 		INSERT @tabla
 			SELECT TOP 5 publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
