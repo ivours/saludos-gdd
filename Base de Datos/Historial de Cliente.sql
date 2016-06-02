@@ -25,14 +25,16 @@ RETURNS int AS
 GO	
 
 CREATE FUNCTION SALUDOS.historialDeCompras(@usuario nvarchar(255))
-RETURNS @compras TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2),
-						Fecha datetime, Estrellas numeric(18,0)) AS
+RETURNS @compras TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2), Fecha datetime) AS
 	BEGIN
 		INSERT @compras
-			SELECT 
-			FROM 
-			WHERE
-			ORDER BY
+			SELECT trns.TRAN_COD, PUBL_DESCRIPCION, TRAN_PRECIO, TRAN_FECHA
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
+			WHERE	publ.PUBL_COD = trns.PUBL_COD AND
+					trns.TIPO_COD = tipo.TIPO_COD AND
+					TIPO_NOMBRE = 'Compra Inmediata' AND
+					trns.USUA_USERNAME = @usuario
+			ORDER BY TRAN_FECHA DESC
 		RETURN;
 	END
 GO
