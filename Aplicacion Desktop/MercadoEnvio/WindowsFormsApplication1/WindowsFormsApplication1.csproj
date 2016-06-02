@@ -77,11 +77,11 @@
     <Compile Include="ABM Rol\Alta.Designer.cs">
       <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rubro\Form1.cs">
+    <Compile Include="ABM Rubro\ListadoRubros.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rubro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Rubro\ListadoRubros.Designer.cs">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\CargarDatosUsuario.cs">
       <SubType>Form</SubType>
@@ -100,12 +100,6 @@
     </Compile>
     <Compile Include="ABM Usuario\CargarDatosEmpresa.Designer.cs">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM Usuario\ListadoRubros.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Usuario\ListadoRubros.Designer.cs">
-      <DependentUpon>ListadoRubros.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\ModificarDatosEmpresa.cs">
       <SubType>Form</SubType>
@@ -218,6 +212,12 @@
     <Compile Include="Facturas\Listado.Designer.cs">
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listado Estadistico\ListadoRubros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoRubros.Designer.cs">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +309,9 @@
     <EmbeddedResource Include="ABM Rol\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rubro\ListadoRubros.resx">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\CargarDatosCliente.resx">
       <DependentUpon>CargarDatosCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -317,9 +320,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\CargarDatosEmpresa.resx">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\ListadoRubros.resx">
-      <DependentUpon>ListadoRubros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ModificarDatosEmpresa.resx">
       <DependentUpon>ModificarDatosEmpresa.cs</DependentUpon>
@@ -374,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Facturas\Listado.resx">
       <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoRubros.resx">
+      <DependentUpon>ListadoRubros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>

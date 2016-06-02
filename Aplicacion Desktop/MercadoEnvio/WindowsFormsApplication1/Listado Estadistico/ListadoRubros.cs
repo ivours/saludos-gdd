@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.ABM_Usuario
+namespace WindowsFormsApplication1.Listado_Estadistico
 {
     public partial class ListadoRubros : Form
     {
-        public ListadoRubros()
+        ListadoEstadistico listadoEstadistico;
+
+        public ListadoRubros(ListadoEstadistico listadoEstadistico)
         {
             InitializeComponent();
+            this.listadoEstadistico = listadoEstadistico;
         }
     }
 }

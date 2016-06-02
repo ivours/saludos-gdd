@@ -20,6 +20,10 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             this.llenarComboBoxVisibilidades();
             this.llenarComboBoxTrimestres();
             comboBox1.SelectedIndexChanged += OnSelectedIndexChanged;
+            //TODO: ver si esto de abajo esta bien
+            this.comboBox2.SelectedIndex = 0;
+            this.comboBox1.SelectedIndex = 0;
+            this.comboBox3.SelectedIndex = 0;
         }
 
         private void llenarComboBoxDeTiposDeConsultas()
@@ -32,8 +36,34 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex == 2)
-                this.llenarDataGridConConsulta(this.vendedoresConMasFacturas());
+            try
+            {
+                this.validarFiltros();
+
+                switch (comboBox1.SelectedIndex)
+                {
+                    case 0:
+                        this.llenarDataGridConConsulta(this.vendedoresConMayorCantidadDeProductosNoVendidos());
+                        break;
+
+                    case 1:
+                        this.llenarDataGridConConsulta(this.clientesMasCompradoresEnUnRubro());
+                        break;
+
+                    case 2:
+                        this.llenarDataGridConConsulta(this.vendedoresConMasFacturas());
+                        break;
+
+                    case 3:
+                        this.llenarDataGridConConsulta(this.vendedoresConMayorFacturacion());
+                        dataGridView1.Columns[1].HeaderText = dataGridView1.Columns[1].HeaderText + " (ARS)";
+                        break;
+                }
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK);
+            }
         }
 
         private void llenarDataGridConConsulta(SqlDataReader reader)
@@ -51,8 +81,54 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMasFacturas(@anio, @trimestre)";
-            consulta.Parameters.Add(new SqlParameter("@anio", 2015));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", 1));
+            consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
+        }
+
+        private SqlDataReader clientesMasCompradoresEnUnRubro()
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.clientesMasCompradoresEnUnRubro(@anio, @trimestre, @rubro)";
+            consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@rubro", textBox1.Text));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
+        }
+
+        private SqlDataReader vendedoresConMayorFacturacion()
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorFacturacion(@anio, @trimestre)";
+            consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
+        }
+
+        private SqlDataReader vendedoresConMayorCantidadDeProductosNoVendidos()
+        {
+            //TODO: ver si el nombre de parametro visibilidad esta bien
+
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio, @trimestre, @visibilidad)";
+            consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@visibilidad", comboBox3.SelectedValue));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -61,7 +137,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
         private void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            textBox1.Hide();
             label4.Hide();
             label5.Hide();
             comboBox3.Hide();
@@ -75,6 +151,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
                     break;
 
                 case "Clientes con mayor cantidad de productos comprados":
+                    textBox1.Show();
                     label5.Show();
                     button3.Show();
                     break;
@@ -109,27 +186,58 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
         private int getNroTrimestre(String trimestre)
         {
+
+            int nroTrimestre;
+
             switch (trimestre)
             {
                 case "Ene-Feb-Mar":
-                    return 1;
+                    nroTrimestre = 1;
                     break;
 
                 case "Abr-May-Jun":
-                    return 2;
+                    nroTrimestre = 2;
                     break;
 
                 case "Jul-Ago-Sep":
-                    return 3;
+                    nroTrimestre = 3;
                     break;
 
                 case "Oct-Nov-Dic":
-                    return 4;
+                    nroTrimestre = 4;
                     break;
 
                 default:
                     throw new Exception("El nombre del trimestre es invalido");
             }
+
+            return nroTrimestre;
+        }
+
+        public void setRubro(String rubro)
+        {
+            textBox1.Text = rubro;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ABM_Rubro.ListadoRubros listadoRubros = new ABM_Rubro.ListadoRubros(this);
+            listadoRubros.Show();
+        }
+
+        private void validarFiltros()
+        {
+            if (comboBox2.SelectedItem.Equals(null))
+                throw new Exception("Debe seleccionar un trimestre");
+
+            if (comboBox1.SelectedItem.Equals(null))
+                throw new Exception("Debe seleccionar una estadística");
+
+            if (comboBox1.SelectedItem.Equals("Vendedores con mayor cantidad de productos no vendidos") && (comboBox3.SelectedItem.Equals(null)))
+                throw new Exception("Debe seleccionar una visibilidad");
+
+            if (comboBox1.SelectedItem.Equals("Clientes con mayor cantidad de productos comprados") && textBox1.Text.Equals(""))
+                throw new Exception("Debe seleccionar un rubro");
         }
 
     }
