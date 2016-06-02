@@ -40,15 +40,20 @@ RETURNS @compras TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio 
 GO
 
 CREATE FUNCTION SALUDOS.historialDeSubastas(@usuario nvarchar(255))
-RETURNS @subastas TABLE (Código numeric(18,0), Descripción nvarchar(255), Oferta numeric(18,2),
-						Adjudicada bit, Fecha datetime, Estrellas numeric(18,0)) AS
+RETURNS @subastas TABLE (	Código numeric(18,0), Descripción nvarchar(255),
+							Oferta numeric(18,2), Adjudicada nvarchar(2), Fecha datetime) AS
 	BEGIN
 		INSERT @subastas
-			SELECT 
-			FROM 
-			WHERE
-			ORDER BY
+			SELECT	trns.TRAN_COD, PUBL_DESCRIPCION, TRAN_PRECIO,
+					CASE WHEN TRAN_ADJUDICADA = 1 THEN 'Sí' ELSE 'No' END, TRAN_FECHA
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
+			WHERE	publ.PUBL_COD = trns.PUBL_COD AND
+					trns.TIPO_COD = tipo.TIPO_COD AND
+					TIPO_NOMBRE = 'Subasta' AND
+					trns.USUA_USERNAME = @usuario
+			ORDER BY TRAN_FECHA DESC
 		RETURN;
 	END
 GO
+
 
