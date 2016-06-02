@@ -1,6 +1,29 @@
 --Historial del Cliente
 --Se muestran en una grilla el historial de todas las transacciones de un cliente.
 
+--Función para saber cantidad de páginas según un usuario y un tipo (compra inmediata o subasta).
+--Se utiliza para la paginación al mostrar el historial de compras o subastas.
+CREATE FUNCTION SALUDOS.cantidadDePaginasHistorialDe(@usuario nvarchar(255), @tipoDePublicacion nvarchar(255))
+RETURNS int AS
+	BEGIN
+	DECLARE @cuenta decimal
+
+	SET	@cuenta = (	SELECT COUNT(*)
+					FROM SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
+					WHERE	trns.TIPO_COD = tipo.TIPO_COD AND
+							TIPO_NOMBRE = @tipoDePublicacion AND
+							USUA_USERNAME = @usuario)
+	
+	IF CEILING(@cuenta / 10) = (@cuenta / 10)
+		SET @cuenta = CEILING(@cuenta / 10)
+	ELSE
+		SET @cuenta = CEILING(@cuenta / 10) + 1
+
+	RETURN CONVERT(int, @cuenta)
+
+	END
+GO	
+
 CREATE FUNCTION SALUDOS.historialDeCompras(@usuario nvarchar(255))
 RETURNS @compras TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2),
 						Fecha datetime, Estrellas numeric(18,0)) AS
