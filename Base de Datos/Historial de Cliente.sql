@@ -14,10 +14,7 @@ RETURNS int AS
 							TIPO_NOMBRE = @tipoDePublicacion AND
 							USUA_USERNAME = @usuario)
 	
-	IF CEILING(@cuenta / 10) = (@cuenta / 10)
 		SET @cuenta = CEILING(@cuenta / 10)
-	ELSE
-		SET @cuenta = CEILING(@cuenta / 10) + 1
 
 	RETURN CONVERT(int, @cuenta)
 
@@ -55,5 +52,3 @@ RETURNS @subastas TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 		RETURN;
 	END
 GO
-
-
