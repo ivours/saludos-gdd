@@ -593,7 +593,7 @@ WHERE TRAN_ADJUDICADA = 1
 --Creando administrador default.
 INSERT INTO SALUDOS.USUARIOS(
 	USUA_USERNAME, USUA_PASSWORD, USUA_TIPO)
-VALUES('admin', HASHBYTES('SHA2_256', 'w23e'), 'Administrador')
+VALUES('admin', HASHBYTES('SHA2_256', CONVERT(nvarchar(255), 'w23e')), 'Administrador')
 
 
 --Agregando roles Cliente, Empresa y Administrador
