@@ -17,5 +17,10 @@ namespace WindowsFormsApplication1
         {
             return texto.Length.Equals(0);
         }
+
+        //public static Boolean esTrimestreMenorAlActual(String trimestre)
+        //{
+
+        //}
     }
 }

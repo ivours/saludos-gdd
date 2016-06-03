@@ -62,6 +62,11 @@ namespace WindowsFormsApplication1.ABM_Rubro
             this.Close();
         }
 
+        //private void setPropiedadesDataGrid()
+        //{
+        //    dataGridView1.AutoResizeColumns = 
+        //} TODO:terminar
+
 
     }
 }

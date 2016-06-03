@@ -191,6 +191,7 @@
     <Compile Include="ComprarOfertar\ListadoPublicaciones.Designer.cs">
       <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dominio\Fecha.cs" />
     <Compile Include="Dominio\Rol.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Dominio\Visibilidad.cs" />

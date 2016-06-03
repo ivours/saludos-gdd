@@ -46,10 +46,14 @@ namespace WindowsFormsApplication1.Login
         {
             try
             {
-                this.validarLogin();
+                //TODO: descomentar
+                //this.validarLogin();
 
-                String username = textBox1.Text;
-                String password = textBox2.Text;
+                //String username = textBox1.Text;
+                //String password = textBox2.Text;
+                //TODO: Dejo hardcodeado usuario admin para tests, sacar despues
+                String username = "admin2";
+                String password = "w23e";
 
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", username)
@@ -57,12 +61,10 @@ namespace WindowsFormsApplication1.Login
 
                 manager.ejecutarSP();
 
-                //String tipoUsuario = Usuario.getTipoUsuario(username);
-                String tipoUsuario = "Administrador";
+                String tipoUsuario = Usuario.getTipoUsuario(username);
 
                 if (tipoUsuario.Equals("Administrador"))
                 {
-                    MessageBox.Show("Hola");
                     //Se ingresa como administrador
                     this.mostrarMenuSegunRol(username, "Administrador");
                 }

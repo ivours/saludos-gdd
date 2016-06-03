@@ -92,7 +92,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMasFacturas(@anio, @trimestre)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -106,7 +106,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.clientesMasCompradoresEnUnRubro(@anio, @trimestre, @rubro)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
             consulta.Parameters.Add(new SqlParameter("@rubro", textBox1.Text));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
@@ -121,7 +121,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorFacturacion(@anio, @trimestre)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -137,7 +137,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio, @trimestre, @visibilidad)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", this.getNroTrimestre(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
             consulta.Parameters.Add(new SqlParameter("@visibilidad", comboBox3.SelectedValue));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
@@ -194,36 +194,6 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             comboBox2.Items.Add("Abr-May-Jun");
             comboBox2.Items.Add("Jul-Ago-Sep");
             comboBox2.Items.Add("Oct-Nov-Dic");
-        }
-
-        private int getNroTrimestre(String trimestre)
-        {
-
-            int nroTrimestre;
-
-            switch (trimestre)
-            {
-                case "Ene-Feb-Mar":
-                    nroTrimestre = 1;
-                    break;
-
-                case "Abr-May-Jun":
-                    nroTrimestre = 2;
-                    break;
-
-                case "Jul-Ago-Sep":
-                    nroTrimestre = 3;
-                    break;
-
-                case "Oct-Nov-Dic":
-                    nroTrimestre = 4;
-                    break;
-
-                default:
-                    throw new Exception("El nombre del trimestre es invalido");
-            }
-
-            return nroTrimestre;
         }
 
         public void setRubro(String rubro)
