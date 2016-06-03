@@ -17,6 +17,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 			WHERE	usua.USUA_USERNAME = publ.USUA_USERNAME AND
 					publ.VISI_COD = visi.VISI_COD AND
 					VISI_DESCRIPCION = @visibilidad AND
+					YEAR(publ.PUBL_FINALIZACION) = @anio AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
 									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
@@ -37,6 +38,7 @@ RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio n
 			WHERE	USUA_USERNAME = @usuario AND
 					publ.VISI_COD = visi.VISI_COD AND
 					VISI_DESCRIPCION = @visibilidad AND
+					YEAR(publ.PUBL_FINALIZACION) = @anio AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
 								FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 								WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
@@ -54,6 +56,7 @@ RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
 					publ.RUBR_COD = rubr.RUBR_COD AND
 					TRAN_ADJUDICADA = 1 AND
+					YEAR(trns.TRAN_FECHA) = @anio AND
 					RUBR_NOMBRE = @rubro
 			GROUP BY trns.USUA_USERNAME
 			ORDER BY cantidad DESC 
@@ -67,6 +70,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 		INSERT @tabla
 			SELECT TOP 5 USUA_USERNAME, COUNT(FACT_COD) cantidad
 			FROM SALUDOS.FACTURAS
+			WHERE YEAR(FACT_FECHA) = @anio
 			GROUP BY USUA_USERNAME
 			ORDER BY cantidad DESC
 		RETURN;
@@ -80,7 +84,8 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Monto_Facturado int) AS
 			SELECT TOP 5 publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
 			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ
 			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
-					TRAN_ADJUDICADA = 1
+					TRAN_ADJUDICADA = 1 AND
+					YEAR(trns.TRAN_FECHA) = @anio
 			GROUP BY publ.USUA_USERNAME
 			ORDER BY monto DESC
 		RETURN;
