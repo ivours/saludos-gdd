@@ -11,6 +11,12 @@
 CREATE FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio int, @trimestre int, @visibilidad nvarchar(255))
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	BEGIN
+		DECLARE @primerMes int
+		DECLARE @tercerMes int
+		
+		SET @primerMes = (@trimestre * 3) - 2 
+		SET @tercerMes = @trimestre * 3
+			
 		INSERT @tabla
 			SELECT TOP 5 usua.USUA_USERNAME, COUNT(*) cantidad
 			FROM SALUDOS.USUARIOS usua, SALUDOS.PUBLICACIONES publ, SALUDOS.VISIBILIDADES visi
@@ -18,6 +24,7 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 					publ.VISI_COD = visi.VISI_COD AND
 					VISI_DESCRIPCION = @visibilidad AND
 					YEAR(publ.PUBL_FINALIZACION) = @anio AND
+					(MONTH(publ.PUBL_FINALIZACION) BETWEEN @primerMes AND @tercerMes) AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
 									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
@@ -32,6 +39,12 @@ CREATE FUNCTION SALUDOS.productosSinVenderDeUnVendedor(@anio int, @trimestre int
 RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2),
 						Inicio datetime, Finalización datetime)
 	BEGIN
+		DECLARE @primerMes int
+		DECLARE @tercerMes int
+		
+		SET @primerMes = (@trimestre * 3) - 2 
+		SET @tercerMes = @trimestre * 3
+
 		INSERT @tabla
 			SELECT PUBL_COD, PUBL_DESCRIPCION, PUBL_PRECIO, PUBL_INICIO, PUBL_FINALIZACION
 			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.VISIBILIDADES visi
@@ -39,6 +52,7 @@ RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio n
 					publ.VISI_COD = visi.VISI_COD AND
 					VISI_DESCRIPCION = @visibilidad AND
 					YEAR(publ.PUBL_FINALIZACION) = @anio AND
+					(MONTH(publ.PUBL_FINALIZACION) BETWEEN @primerMes AND @tercerMes) AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
 								FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 								WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
@@ -50,6 +64,12 @@ GO
 CREATE FUNCTION SALUDOS.clientesMasCompradoresEnUnRubro(@anio int, @trimestre int, @rubro nvarchar(255))
 RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 	BEGIN
+		DECLARE @primerMes int
+		DECLARE @tercerMes int
+		
+		SET @primerMes = (@trimestre * 3) - 2 
+		SET @tercerMes = @trimestre * 3
+
 		INSERT @tabla
 			SELECT TOP 5 trns.USUA_USERNAME, COUNT(TRAN_COD) cantidad
 			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
@@ -57,6 +77,7 @@ RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 					publ.RUBR_COD = rubr.RUBR_COD AND
 					TRAN_ADJUDICADA = 1 AND
 					YEAR(trns.TRAN_FECHA) = @anio AND
+					(MONTH(trns.TRAN_FECHA) BETWEEN @primerMes AND @tercerMes) AND
 					RUBR_NOMBRE = @rubro
 			GROUP BY trns.USUA_USERNAME
 			ORDER BY cantidad DESC 
@@ -67,10 +88,17 @@ GO
 CREATE FUNCTION SALUDOS.vendedoresConMasFacturas(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Facturas int) AS
 	BEGIN
+		DECLARE @primerMes int
+		DECLARE @tercerMes int
+		
+		SET @primerMes = (@trimestre * 3) - 2 
+		SET @tercerMes = @trimestre * 3
+
 		INSERT @tabla
 			SELECT TOP 5 USUA_USERNAME, COUNT(FACT_COD) cantidad
 			FROM SALUDOS.FACTURAS
-			WHERE YEAR(FACT_FECHA) = @anio
+			WHERE	YEAR(FACT_FECHA) = @anio AND
+					(MONTH(FACT_FECHA) BETWEEN @primerMes AND @tercerMes)
 			GROUP BY USUA_USERNAME
 			ORDER BY cantidad DESC
 		RETURN;
@@ -80,12 +108,19 @@ GO
 CREATE FUNCTION SALUDOS.vendedoresConMayorFacturacion(@anio int, @trimestre int)
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Monto_Facturado int) AS
 	BEGIN
+		DECLARE @primerMes int
+		DECLARE @tercerMes int
+		
+		SET @primerMes = (@trimestre * 3) - 2 
+		SET @tercerMes = @trimestre * 3
+
 		INSERT @tabla
 			SELECT TOP 5 publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
 			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ
 			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
 					TRAN_ADJUDICADA = 1 AND
-					YEAR(trns.TRAN_FECHA) = @anio
+					YEAR(trns.TRAN_FECHA) = @anio AND
+					(MONTH(trns.TRAN_FECHA) BETWEEN @primerMes AND @tercerMes)
 			GROUP BY publ.USUA_USERNAME
 			ORDER BY monto DESC
 		RETURN;
