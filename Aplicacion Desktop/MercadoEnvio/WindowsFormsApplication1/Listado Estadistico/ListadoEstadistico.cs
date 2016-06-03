@@ -152,12 +152,14 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             label5.Hide();
             comboBox3.Hide();
             button3.Hide();
+            button4.Hide();
 
             switch (comboBox1.SelectedItem.ToString())
             {
                 case "Vendedores con mayor cantidad de productos no vendidos":
                     label4.Show();
                     comboBox3.Show();
+                    button4.Show();
                     break;
 
                 case "Clientes con mayor cantidad de productos comprados":
