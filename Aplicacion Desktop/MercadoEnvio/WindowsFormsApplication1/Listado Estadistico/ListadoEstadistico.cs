@@ -19,11 +19,21 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             this.llenarComboBoxDeTiposDeConsultas();
             this.llenarComboBoxVisibilidades();
             this.llenarComboBoxTrimestres();
+            this.inicializarCampos();
+
+        }
+
+        private void inicializarCampos()
+        {
             comboBox1.SelectedIndexChanged += OnSelectedIndexChanged;
-            //TODO: ver si esto de abajo esta bien
-            this.comboBox2.SelectedIndex = 0;
-            this.comboBox1.SelectedIndex = 0;
-            this.comboBox3.SelectedIndex = 0;
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
+            textBox1.Text = "";
+            numericUpDown1.Value = 2015;
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
         }
 
         private void llenarComboBoxDeTiposDeConsultas()
@@ -238,6 +248,11 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
             if (comboBox1.SelectedItem.Equals("Clientes con mayor cantidad de productos comprados") && textBox1.Text.Equals(""))
                 throw new Exception("Debe seleccionar un rubro");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.inicializarCampos();
         }
 
     }
