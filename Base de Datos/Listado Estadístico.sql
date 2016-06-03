@@ -8,13 +8,15 @@
 --# Vendedores con mayor monto facturado dentro de un mes y año particular
 
 --Esta función no devuelve nada post-migración porque todos los productos fueron vendidos.
-CREATE FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio int, @trimestre int)
+CREATE FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio int, @trimestre int, @visibilidad nvarchar(255))
 RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 	BEGIN
 		INSERT @tabla
 			SELECT TOP 5 usua.USUA_USERNAME, COUNT(*) cantidad
-			FROM SALUDOS.USUARIOS usua, SALUDOS.PUBLICACIONES publ
+			FROM SALUDOS.USUARIOS usua, SALUDOS.PUBLICACIONES publ, SALUDOS.VISIBILIDADES visi
 			WHERE	usua.USUA_USERNAME = publ.USUA_USERNAME AND
+					publ.VISI_COD = visi.VISI_COD AND
+					VISI_DESCRIPCION = @visibilidad AND
 					NOT EXISTS (	SELECT trns.PUBL_COD
 									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
@@ -25,17 +27,20 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 GO
 
 --Lo mismo que para la función anterior.
-CREATE FUNCTION SALUDOS.productosSinVenderDeUnVendedor(@anio int, @trimestre int, @usuario nvarchar(255))
+CREATE FUNCTION SALUDOS.productosSinVenderDeUnVendedor(@anio int, @trimestre int, @usuario nvarchar(255), @visibilidad nvarchar(255))
 RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2),
 						Inicio datetime, Finalización datetime)
 	BEGIN
 		INSERT @tabla
 			SELECT PUBL_COD, PUBL_DESCRIPCION, PUBL_PRECIO, PUBL_INICIO, PUBL_FINALIZACION
-			FROM SALUDOS.PUBLICACIONES publ
-			WHERE USUA_USERNAME = @usuario AND
-				NOT EXISTS (	SELECT trns.PUBL_COD
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.VISIBILIDADES visi
+			WHERE	USUA_USERNAME = @usuario AND
+					publ.VISI_COD = visi.VISI_COD AND
+					VISI_DESCRIPCION = @visibilidad AND
+					NOT EXISTS (	SELECT trns.PUBL_COD
 								FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
 								WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
+			ORDER BY publ.PUBL_INICIO
 		RETURN;
 	END
 GO
