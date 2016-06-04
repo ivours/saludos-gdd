@@ -28,7 +28,7 @@ namespace WindowsFormsApplication1.Dominio
             return Fecha.getFechaActual().Year;
         }
 
-        public static Boolean esAnioActual(decimal anio)
+        public static Boolean esAnioActual(int anio)
         {
             return anio.Equals(Fecha.getAnioActual());
         }

@@ -138,7 +138,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio, @trimestre, @visibilidad)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
             consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString())));
-            consulta.Parameters.Add(new SqlParameter("@visibilidad", comboBox3.SelectedValue));
+            consulta.Parameters.Add(new SqlParameter("@visibilidad", comboBox3.SelectedItem.ToString()));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -213,7 +213,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
                 throw new Exception("Debe seleccionar un trimestre");
             else
                 if ( (!Validacion.esTrimestreMenorAlActual(Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString()))) && 
-                    (Fecha.esAnioActual(numericUpDown1.Value)) )
+                    (Fecha.esAnioActual(Convert.ToInt32(numericUpDown1.Value))) )
                     throw new Exception("Debe seleccionar un trimestre anterior al trimestre en curso");
 
 
@@ -230,6 +230,24 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         private void button2_Click(object sender, EventArgs e)
         {
             this.inicializarCampos();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Validacion.dataGridViewSinSeleccion(dataGridView1);
+                //String vendedor = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                //int anio = Convert.ToInt32(numericUpDown1.Value);
+                //int trimestre = Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString());
+                //DetalleProductosSinVender detalleProductosSinVender = new DetalleProductosSinVender(anio, trimestre, vendedor);
+                //detalleProductosSinVender.Show();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
+
         }
 
     }
