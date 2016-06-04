@@ -490,3 +490,13 @@ BEGIN
 END
 GO
 
+
+CREATE PROCEDURE SALUDOS.asignarVisibilidadAPublicacion
+(@desc_visibilidad nvarchar(255), @cod_publicacion numeric(18,0))
+AS BEGIN
+	UPDATE SALUDOS.PUBLICACIONES
+	SET VISI_COD = (SELECT VISI_COD FROM SALUDOS.VISIBILIDADES
+					WHERE VISI_DESCRIPCION = @desc_visibilidad)
+	WHERE PUBL_COD = @cod_publicacion
+END
+GO
