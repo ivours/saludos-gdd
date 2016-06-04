@@ -19,9 +19,9 @@ namespace WindowsFormsApplication1
             return texto.Length.Equals(0);
         }
 
-        public static Boolean esTrimestreMenorAlActual(String trimestre)
+        public static Boolean esTrimestreMenorAlActual(int trimestre)
         {
-            return Fecha.getNroTrimestreDesdeTrimestre(trimestre) < Fecha.getNroTrimestreDesdeDatetime(Fecha.getFechaActual());
+            return trimestre < Fecha.getNroTrimestreDesdeDatetime(Fecha.getFechaActual());
         }
     }
 }

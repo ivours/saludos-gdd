@@ -23,6 +23,16 @@ namespace WindowsFormsApplication1.Dominio
                                        System.Globalization.CultureInfo.InvariantCulture);
         }
 
+        public static int getAnioActual()
+        {
+            return Fecha.getFechaActual().Year;
+        }
+
+        public static Boolean esAnioActual(decimal anio)
+        {
+            return anio.Equals(Fecha.getAnioActual());
+        }
+
         //Dado un string con el formato "Mes1-Mes2-Mes3" del trimestre, devuelve su nro. de trimestre
         public static int getNroTrimestreDesdeTrimestre(String trimestre)
         {

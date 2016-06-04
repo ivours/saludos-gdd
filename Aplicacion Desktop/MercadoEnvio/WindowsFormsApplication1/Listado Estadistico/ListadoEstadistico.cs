@@ -92,7 +92,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMasFacturas(@anio, @trimestre)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString())));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -106,7 +106,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.clientesMasCompradoresEnUnRubro(@anio, @trimestre, @rubro)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString())));
             consulta.Parameters.Add(new SqlParameter("@rubro", textBox1.Text));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
@@ -121,7 +121,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorFacturacion(@anio, @trimestre)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString())));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -137,7 +137,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos(@anio, @trimestre, @visibilidad)";
             consulta.Parameters.Add(new SqlParameter("@anio", numericUpDown1.Value));
-            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeString(comboBox2.SelectedItem.ToString())));
+            consulta.Parameters.Add(new SqlParameter("@trimestre", Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString())));
             consulta.Parameters.Add(new SqlParameter("@visibilidad", comboBox3.SelectedValue));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
@@ -173,19 +173,19 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
         private void llenarComboBoxVisibilidades()
         {
-            //List<String> visibilidades = Visibilidad.getNombresVisibilidades();
+            List<String> visibilidades = Visibilidad.getNombresVisibilidades();
 
-            //for (int i = 0; i < visibilidades.Count(); i++)
-            //{
-            //    comboBox3.Items.Add(visibilidades[i]);
-            //}
+            for (int i = 0; i < visibilidades.Count(); i++)
+            {
+                comboBox3.Items.Add(visibilidades[i]);
+            }
 
             //TODO: datos de test, borrar despues
-            comboBox3.Items.Add("Platino");
-            comboBox3.Items.Add("Oro");
-            comboBox3.Items.Add("Plata");
-            comboBox3.Items.Add("Bronce");
-            comboBox3.Items.Add("Gratis");
+            //comboBox3.Items.Add("Platino");
+            //comboBox3.Items.Add("Oro");
+            //comboBox3.Items.Add("Plata");
+            //comboBox3.Items.Add("Bronce");
+            //comboBox3.Items.Add("Gratis");
         }
 
         private void llenarComboBoxTrimestres()
@@ -211,6 +211,11 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         {
             if (comboBox2.SelectedItem.Equals(null))
                 throw new Exception("Debe seleccionar un trimestre");
+            else
+                if ( (!Validacion.esTrimestreMenorAlActual(Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString()))) && 
+                    (Fecha.esAnioActual(numericUpDown1.Value)) )
+                    throw new Exception("Debe seleccionar un trimestre anterior al trimestre en curso");
+
 
             if (comboBox1.SelectedItem.Equals(null))
                 throw new Exception("Debe seleccionar una estadística");
