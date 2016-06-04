@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,22 @@ namespace WindowsFormsApplication1.Dominio
 {
     class Fecha
     {
-        //TODO: Codificar este metodo
+        public static void asignarFecha()
+        {
+            SQLManager manager = new SQLManager();
+            manager.generarSP("asignarFecha");
+            manager.agregarFechaSP("@fecha", Fecha.getFechaActual());
+            manager.ejecutarSP();
+        }
+
         public static DateTime getFechaActual()
         {
-            DateTime fechaActual = new DateTime();
-
-            return fechaActual;
+            return DateTime.ParseExact(ConfigurationManager.AppSettings["FechaSistema"], "yyyy-dd-MM HH:mm:ss",
+                                       System.Globalization.CultureInfo.InvariantCulture);
         }
 
         //Dado un string con el formato "Mes1-Mes2-Mes3" del trimestre, devuelve su nro. de trimestre
-        public static int getNroTrimestreDesdeString(String trimestre)
+        public static int getNroTrimestreDesdeTrimestre(String trimestre)
         {
 
             int nroTrimestre;

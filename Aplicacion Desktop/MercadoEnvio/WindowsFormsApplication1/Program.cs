@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 using System.Configuration;
+using WindowsFormsApplication1.Dominio;
 
 namespace WindowsFormsApplication1
 {
@@ -19,8 +20,8 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Fecha.asignarFecha();
             Application.Run(new Login.Login());
-            //Application.Run(new Menu());
 
             return;
         }

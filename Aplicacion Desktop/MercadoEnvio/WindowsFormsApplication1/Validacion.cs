@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Dominio;
 
 namespace WindowsFormsApplication1
 {
@@ -18,9 +19,9 @@ namespace WindowsFormsApplication1
             return texto.Length.Equals(0);
         }
 
-        //public static Boolean esTrimestreMenorAlActual(String trimestre)
-        //{
-
-        //}
+        public static Boolean esTrimestreMenorAlActual(String trimestre)
+        {
+            return Fecha.getNroTrimestreDesdeTrimestre(trimestre) < Fecha.getNroTrimestreDesdeDatetime(Fecha.getFechaActual());
+        }
     }
 }
