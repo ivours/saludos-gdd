@@ -1,5 +1,4 @@
 CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
-	
 	DECLARE @fecha datetime
 	DECLARE @codActiva int
 	DECLARE @codFinalizada int
@@ -27,3 +26,53 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 			ESTA_COD IN (@codActiva, @codFinalizada)
 GO
 
+CREATE PROCEDURE SALUDOS.crearPublicacion --SALUDOS.asignarFecha '2016-06-15 12:00:00.000'
+	@usuario nvarchar(255),
+	@tipo nvarchar(255),
+	@descripcion nvarchar(255),
+	@stock numeric(18,0),
+	@precio numeric(18,2),
+	@rubro nvarchar(255),
+	@estado nvarchar(255),
+	@preguntas bit,
+	@visibilidad nvarchar(255),
+	@envio bit
+AS
+	INSERT INTO SALUDOS.PUBLICACIONES(
+	USUA_USERNAME, TIPO_COD, PUBL_DESCRIPCION,
+	PUBL_STOCK, PUBL_PRECIO, RUBR_COD, ESTA_COD,
+	PUBL_PREGUNTAS,	VISI_COD, PUBL_PERMITE_ENVIO,
+	PUBL_INICIO, PUBL_FINALIZACION)
+
+	VALUES(
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.USUARIOS
+	WHERE USUA_USERNAME = @usuario),
+
+	(SELECT TIPO_COD
+	FROM SALUDOS.TIPOS
+	WHERE TIPO_NOMBRE = @tipo),
+
+	@descripcion, @stock, @precio,
+
+	(SELECT RUBR_COD
+	FROM SALUDOS.RUBROS
+	WHERE RUBR_NOMBRE = @rubro),
+
+	(SELECT ESTA_COD
+	FROM SALUDOS.ESTADOS
+	WHERE ESTA_NOMBRE = @estado),
+
+	@preguntas,
+
+	(SELECT VISI_COD
+	FROM SALUDOS.VISIBILIDADES
+	WHERE VISI_DESCRIPCION = @visibilidad),
+
+	@envio,
+
+	(SELECT SALUDOS.fechaActual()),
+
+	DATEADD(day, 7, SALUDOS.fechaActual())
+	)
+GO
