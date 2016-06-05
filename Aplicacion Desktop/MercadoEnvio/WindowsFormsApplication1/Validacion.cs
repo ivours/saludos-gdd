@@ -24,7 +24,7 @@ namespace WindowsFormsApplication1
             return trimestre < Fecha.getNroTrimestreDesdeDatetime(Fecha.getFechaActual());
         }
 
-        public static void dataGridViewSinSeleccion(DataGridView dataGridView)
+        public static void tieneFilaSeleccionada(DataGridView dataGridView)
         {
             if (dataGridView.SelectedRows.Count.Equals(0))
                 throw new Exception("Debe seleccionar una fila de la tabla");

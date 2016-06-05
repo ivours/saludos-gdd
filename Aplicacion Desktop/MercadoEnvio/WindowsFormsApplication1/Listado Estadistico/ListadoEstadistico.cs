@@ -236,12 +236,12 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         {
             try
             {
-                Validacion.dataGridViewSinSeleccion(dataGridView1);
-                //String vendedor = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                //int anio = Convert.ToInt32(numericUpDown1.Value);
-                //int trimestre = Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString());
-                //DetalleProductosSinVender detalleProductosSinVender = new DetalleProductosSinVender(anio, trimestre, vendedor);
-                //detalleProductosSinVender.Show();
+                Validacion.tieneFilaSeleccionada(dataGridView1);
+                String vendedor = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                int anio = Convert.ToInt32(numericUpDown1.Value);
+                int trimestre = Fecha.getNroTrimestreDesdeTrimestre(comboBox2.SelectedItem.ToString());
+                DetalleProductosSinVender detalleProductosSinVender = new DetalleProductosSinVender(anio, trimestre, vendedor);
+                detalleProductosSinVender.Show();
             }
             catch (Exception excepcion)
             {
