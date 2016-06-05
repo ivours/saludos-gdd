@@ -9,6 +9,8 @@ namespace WindowsFormsApplication1
 {
     class Validacion
     {
+        //Validaciones de strings
+
         public static Boolean empiezaConCaracter(String texto)
         {
             return !texto.StartsWith(" ");
@@ -17,6 +19,16 @@ namespace WindowsFormsApplication1
         public static Boolean contieneEspacio(String texto)
         {
             return texto.Contains(" ");
+        }
+
+        public static Boolean contieneSoloLetrasOEspacios(String texto)
+        {
+            return (texto.All(caracter => Char.IsLetter(caracter) || Char.IsWhiteSpace(caracter)));
+        }
+
+        public static Boolean contieneSoloNumeros(String texto)
+        {
+            return (texto.All(caracter => Char.IsNumber(caracter)));
         }
 
         public static Boolean estaVacio(String texto)
@@ -29,6 +41,8 @@ namespace WindowsFormsApplication1
             return texto.Length >= longitudMinima;
         }
 
+        //Validaciones de fechas
+
         public static Boolean esTrimestreMenorAlActual(int trimestre)
         {
             return trimestre < Fecha.getNroTrimestreDesdeDatetime(Fecha.getFechaActual());
@@ -38,6 +52,11 @@ namespace WindowsFormsApplication1
         {
             if (dataGridView.SelectedRows.Count.Equals(0))
                 throw new Exception("Debe seleccionar una fila de la tabla");
+        }
+
+        public static Boolean esFechaMayorALaActual(DateTime fecha)
+        {
+            return fecha.CompareTo(Fecha.getFechaActual()) > 0;
         }
     }
 }

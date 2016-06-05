@@ -202,6 +202,7 @@
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Dominio\Visibilidad.cs" />
     <Compile Include="Extras\ConfiguradorDataGrid.cs" />
+    <Compile Include="Extras\EmailChecker.cs" />
     <Compile Include="Facturas\FacturaPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
