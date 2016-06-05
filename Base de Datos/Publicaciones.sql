@@ -26,7 +26,7 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 			ESTA_COD IN (@codActiva, @codFinalizada)
 GO
 
-CREATE PROCEDURE SALUDOS.crearPublicacion --SALUDOS.asignarFecha '2016-06-15 12:00:00.000'
+CREATE PROCEDURE SALUDOS.crearPublicacion
 	@usuario nvarchar(255),
 	@tipo nvarchar(255),
 	@descripcion nvarchar(255),
@@ -75,4 +75,30 @@ AS
 
 	DATEADD(day, 7, SALUDOS.fechaActual())
 	)
+GO
+
+CREATE FUNCTION SALUDOS.stockActual(@codPublicacion numeric(18,0))
+RETURNS int AS
+	BEGIN
+		DECLARE @cantidadComprada int
+		
+		SET @cantidadComprada = (
+			SELECT SUM(TRAN_CANTIDAD_COMPRADA)
+			FROM SALUDOS.TRANSACCIONES
+			WHERE	PUBL_COD = @codPublicacion AND
+					TRAN_FECHA <= SALUDOS.fechaActual()
+		)
+
+		IF @cantidadComprada IS NULL
+			SET @cantidadComprada = 0
+
+		DECLARE @stockInicial int
+		SET @stockInicial = (
+			SELECT PUBL_STOCK
+			FROM SALUDOS.PUBLICACIONES
+			WHERE PUBL_COD = @codPublicacion
+		)
+
+		RETURN (@stockInicial - @cantidadComprada)
+	END
 GO
