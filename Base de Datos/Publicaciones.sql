@@ -130,3 +130,27 @@ AS
 	@usuario
 	)
 GO
+
+CREATE PROCEDURE SALUDOS.ofertar
+	@codPublicacion numeric(18,0),
+	@oferta numeric(18,2),
+	@usuario nvarchar(255)
+AS
+	INSERT INTO SALUDOS.TRANSACCIONES(
+	PUBL_COD, TIPO_COD, TRAN_ADJUDICADA,
+	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
+	TRAN_FORMA_PAGO, TRAN_PRECIO, USUA_USERNAME)
+
+	VALUES(
+	@codPublicacion,
+	
+	(SELECT TIPO_COD
+	FROM SALUDOS.TIPOS
+	WHERE TIPO_NOMBRE = 'Subasta'),
+	
+	0, 1,
+	SALUDOS.fechaActual(), 'Efectivo',
+
+	@oferta, @usuario
+	)
+GO
