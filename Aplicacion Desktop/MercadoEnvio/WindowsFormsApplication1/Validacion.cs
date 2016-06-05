@@ -14,9 +14,19 @@ namespace WindowsFormsApplication1
             return !texto.StartsWith(" ");
         }
 
+        public static Boolean contieneEspacio(String texto)
+        {
+            return texto.Contains(" ");
+        }
+
         public static Boolean estaVacio(String texto)
         {
             return texto.Length.Equals(0);
+        }
+
+        public static Boolean tieneLongitudMayorOIgualA(String texto, int longitudMinima)
+        {
+            return texto.Length >= longitudMinima;
         }
 
         public static Boolean esTrimestreMenorAlActual(int trimestre)

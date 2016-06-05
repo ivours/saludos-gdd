@@ -12,11 +12,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
     public partial class CargarDatosCliente : Form
     {
         Form formularioAnterior;
+        String username;
+        String password;
 
-        public CargarDatosCliente(Form formularioAnterior)
+        public CargarDatosCliente(Form formularioAnterior, String username, String password)
         {
             InitializeComponent();
             this.formularioAnterior = formularioAnterior;
+            this.username = username;
+            this.password = password;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
