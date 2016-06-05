@@ -517,7 +517,7 @@ AS BEGIN
 	
 	SET @password = (SELECT USUA_PASSWORD FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username)
 	
-	IF(HASHBYTES('SHA2_256', @password) = @passwordActual)----La pass actual es correcta----
+	IF(HASHBYTES('SHA2_256', @passwordActual) = @password)----La pass actual es correcta----
 		BEGIN
 			UPDATE SALUDOS.USUARIOS
 			SET USUA_PASSWORD = HASHBYTES('SHA2_256', @nuevaPassword)
@@ -528,3 +528,4 @@ AS BEGIN
 		END
 END
 GO
+

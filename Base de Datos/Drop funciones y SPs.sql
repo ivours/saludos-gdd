@@ -6,5 +6,5 @@ GO
 
 DROP FUNCTION SALUDOS.existeTipoYNumeroDeDocumento, SALUDOS.existeRazonSocialYCuit, SALUDOS.existeRol, SALUDOS.obtenerUsuario,
 SALUDOS.obtenerRolesDeUsuario, SALUDOS.getTipoUsuario, SALUDOS.getRolesUsuarios, SALUDOS.filtrarClientes, SALUDOS.filtrarEmpresas,
-SALUDOS.getFuncionalidadesRol, SALUDOS.filtrarClientes, SALUDOS.filtrarEmpresas
+SALUDOS.getFuncionalidadesRol, SALUDOS.filtrarClientes, SALUDOS.filtrarEmpresas, SALUDOS.cambiarPassword
 GO
