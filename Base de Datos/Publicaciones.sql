@@ -102,3 +102,31 @@ RETURNS int AS
 		RETURN (@stockInicial - @cantidadComprada)
 	END
 GO
+
+CREATE PROCEDURE SALUDOS.comprar
+	@codPublicacion numeric(18,0),
+	@cantidadComprada int,
+	@usuario nvarchar(255)
+AS
+	INSERT INTO SALUDOS.TRANSACCIONES(
+	PUBL_COD, TIPO_COD, TRAN_ADJUDICADA,
+	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
+	TRAN_FORMA_PAGO, TRAN_PRECIO, USUA_USERNAME)
+
+	VALUES(
+	@codPublicacion,
+	
+	(SELECT TIPO_COD
+	FROM SALUDOS.TIPOS
+	WHERE TIPO_NOMBRE = 'Compra Inmediata'),
+	
+	1, @cantidadComprada,
+	SALUDOS.fechaActual(), 'Efectivo',
+
+	(SELECT PUBL_PRECIO
+	FROM SALUDOS.PUBLICACIONES
+	WHERE PUBL_COD = @codPublicacion),
+
+	@usuario
+	)
+GO
