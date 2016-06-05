@@ -17,8 +17,14 @@ namespace WindowsFormsApplication1.ABM_Rubro
         public ListadoRubros(Form formAnterior)
         {
             InitializeComponent();
+            this.inicializarCampos();
             this.formAnterior = formAnterior;
             this.llenarDataGridConConsulta(this.getRubros());
+        }
+
+        private void inicializarCampos()
+        {
+            ConfiguradorDataGrid.configurar(dataGridView1);
         }
 
         private void llenarDataGridConConsulta(SqlDataReader reader)

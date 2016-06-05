@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         public ListadoEstadistico()
         {
             InitializeComponent();
+            ConfiguradorDataGrid.configurar(dataGridView1);
             this.llenarComboBoxDeTiposDeConsultas();
             this.llenarComboBoxVisibilidades();
             this.llenarComboBoxTrimestres();
@@ -179,13 +180,6 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             {
                 comboBox3.Items.Add(visibilidades[i]);
             }
-
-            //TODO: datos de test, borrar despues
-            //comboBox3.Items.Add("Platino");
-            //comboBox3.Items.Add("Oro");
-            //comboBox3.Items.Add("Plata");
-            //comboBox3.Items.Add("Bronce");
-            //comboBox3.Items.Add("Gratis");
         }
 
         private void llenarComboBoxTrimestres()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
@@ -20,16 +21,23 @@ namespace WindowsFormsApplication1
             return this;
         }
 
+        public Object ejecutarSP()
+        {
+            return command.ExecuteScalar();
+        }
+
         public SQLManager agregarStringSP(String nombreVariable, String texto)
         {
             command.Parameters.AddWithValue(nombreVariable, texto);
             return this;
         }
 
-        public Object ejecutarSP()
+        public SQLManager agregarFechaSP(string nombreVariable, DateTime dateTime)
         {
-            return command.ExecuteScalar();
+            command.Parameters.AddWithValue(nombreVariable, dateTime);
+            return this;
         }
+
 
     }
 }
