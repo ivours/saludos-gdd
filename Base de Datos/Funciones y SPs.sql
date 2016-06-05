@@ -500,3 +500,31 @@ AS BEGIN
 	WHERE PUBL_COD = @cod_publicacion
 END
 GO
+
+
+
+
+
+----------CAMBIAR PASSWORD------------
+CREATE PROCEDURE SALUDOS.cambiarPassword
+(@username nvarchar(255), @passwordActual nvarchar(255), @nuevaPassword nvarchar(255))
+AS BEGIN
+	DECLARE @password nvarchar(255)
+	IF (SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0	---No existe el usuario----
+		BEGIN
+			RAISERROR('No existe el usuario.',16,1) 
+		END
+	
+	SET @password = (SELECT USUA_PASSWORD FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username)
+	
+	IF(HASHBYTES('SHA2_256', @password) = @passwordActual)----La pass actual es correcta----
+		BEGIN
+			UPDATE SALUDOS.USUARIOS
+			SET USUA_PASSWORD = HASHBYTES('SHA2_256', @nuevaPassword)
+		END
+	ELSE
+		BEGIN
+			RAISERROR('La contraseña actual es incorrecta', 16,1)
+		END
+END
+GO
