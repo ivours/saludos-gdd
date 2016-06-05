@@ -23,6 +23,7 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             this.username = username;
             this.rol = rol;
+            textBox1.Text = username;
             formsFuncionalidades = new Form[9];
             this.asignarVisibilidadYNombresABotones();
         }
@@ -79,6 +80,12 @@ namespace WindowsFormsApplication1
         {
             this.asignarFuncionalidadAlBoton(8);
             formsFuncionalidades[8].Visible = true;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Cambio_de_Password.CambiarPassword cambiarPassword = new Cambio_de_Password.CambiarPassword(username);
+            cambiarPassword.Show();
         }
 
         private void asignarFuncionalidadAlBoton(int nroBoton)
