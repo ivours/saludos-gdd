@@ -1,4 +1,9 @@
 
+
+--Los índices ya fueron agregados a script_creacion_inicial.sql.
+--Cualquier cambio debe actualizarse también en ese archivo.
+
+
 ----ESTOS SON NECESARIOS------
 CREATE INDEX IDX_RUBR_NOMBRE
 ON SALUDOS.RUBROS (RUBR_NOMBRE)
