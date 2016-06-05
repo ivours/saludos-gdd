@@ -154,3 +154,23 @@ AS
 	@oferta, @usuario
 	)
 GO
+
+CREATE FUNCTION SALUDOS.ultimaOferta(@codPublicacion numeric(18,0))
+RETURNS numeric(18,2) AS
+	BEGIN
+		DECLARE @oferta numeric(18,2)
+		
+		SET @oferta = (
+			SELECT MAX(TRAN_PRECIO)
+			FROM SALUDOS.TRANSACCIONES
+			WHERE PUBL_COD = @codPublicacion
+		)
+
+		IF @oferta IS NULL 
+			SET @oferta = 0.00
+		
+		RETURN @oferta
+
+	END
+
+GO
