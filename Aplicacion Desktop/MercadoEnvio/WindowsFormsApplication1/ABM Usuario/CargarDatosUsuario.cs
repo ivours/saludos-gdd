@@ -43,8 +43,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             else
             {
-                Form cargarDatosEmpresa = new ABM_Usuario.CargarDatosEmpresa(this);
-                this.abrirVentana(cargarDatosEmpresa);
+                try
+                {
+                    this.validarCampos();
+                    Form cargarDatosEmpresa = new ABM_Usuario.CargarDatosEmpresa(this, textBox1.Text, textBox2.Text, idRol);
+                    this.abrirVentana(cargarDatosEmpresa);
+                }
+                catch (Exception excepcion)
+                {
+                    MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+                    this.limpiarCampos();
+                }
             }
            
         }
@@ -96,6 +105,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
+            textBox4.Clear();
         }
 
         private void button2_Click(object sender, EventArgs e)
