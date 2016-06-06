@@ -31,7 +31,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button2_Click(object sender, EventArgs e)
         {
             Form baja = new ABM_Rol.Baja();
-            Form listado = new ABM_Rol.Listado(baja);
+            Form listado = new ABM_Rol.ListadoRoles(baja);
             this.abrirVentana(listado);
             //-----completar-----//
         }
@@ -39,7 +39,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button3_Click(object sender, EventArgs e)
         {
             Form modificacion = new ABM_Rol.Modificacion();
-            Form listado = new ABM_Rol.Listado(modificacion);
+            Form listado = new ABM_Rol.ListadoRoles(modificacion);
             this.abrirVentana(listado);
         }
 

@@ -38,6 +38,12 @@ namespace WindowsFormsApplication1
             return this;
         }
 
+        public SQLManager agregarIntSP(string nombreVariable, int numero)
+        {
+            command.Parameters.AddWithValue(nombreVariable, Convert.ToInt32(numero));
+            return this;
+        }
+
 
     }
 }

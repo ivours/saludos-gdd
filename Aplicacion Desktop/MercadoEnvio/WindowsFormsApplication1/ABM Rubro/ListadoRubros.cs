@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
             InitializeComponent();
             this.inicializarCampos();
             this.formAnterior = formAnterior;
-            this.llenarDataGridConConsulta(this.getRubros());
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRubros(), dataGridView1);
         }
 
         private void inicializarCampos()
@@ -27,15 +27,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
             ConfiguradorDataGrid.configurar(dataGridView1);
         }
 
-        private void llenarDataGridConConsulta(SqlDataReader reader)
-        {
-            DataTable dt = new DataTable();
-            dt.Load(reader);
-            dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = dt;
-            dataGridView1.Refresh();
-        }
-
+        //TODO: agregar filtros
         private SqlDataReader getRubros()
         {
             SqlDataReader reader;
@@ -67,12 +59,6 @@ namespace WindowsFormsApplication1.ABM_Rubro
 
             this.Close();
         }
-
-        //private void setPropiedadesDataGrid()
-        //{
-        //    dataGridView1.AutoResizeColumns = 
-        //} TODO:terminar
-
 
     }
 }

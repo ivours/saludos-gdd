@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,14 +10,29 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class Listado : Form
+    public partial class ListadoRoles : Form
     {
         Form formAnterior;
 
-        public Listado(Form formAnterior)
+        public ListadoRoles(Form formAnterior)
         {
             InitializeComponent();
+            ConfiguradorDataGrid.configurar(dataGridView1);
             this.formAnterior = formAnterior;
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRoles(), dataGridView1);
+        }
+
+        //TODO: agregar filtros
+        private SqlDataReader getRoles()
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.ROLES";
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
         }
 
         private void Listado_Load(object sender, EventArgs e)

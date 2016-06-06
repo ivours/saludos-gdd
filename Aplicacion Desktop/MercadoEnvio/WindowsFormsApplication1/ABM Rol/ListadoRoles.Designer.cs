@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Rol
 {
-    partial class Listado
+    partial class ListadoRoles
     {
         /// <summary>
         /// Required designer variable.

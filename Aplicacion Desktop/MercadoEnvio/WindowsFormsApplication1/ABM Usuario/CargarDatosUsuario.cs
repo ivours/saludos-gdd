@@ -30,7 +30,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 try
                 {
                     this.validarCampos();
-                    Form cargarDatosCliente = new ABM_Usuario.CargarDatosCliente(this, textBox1.Text, textBox2.Text);
+                    Form cargarDatosCliente = new ABM_Usuario.CargarDatosCliente(this, textBox1.Text, textBox2.Text, idRol);
                     this.abrirVentana(cargarDatosCliente);
                 }
                 catch (Exception excepcion)
@@ -105,7 +105,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ABM_Rol.Listado listadoRoles = new ABM_Rol.Listado(this);
+            ABM_Rol.ListadoRoles listadoRoles = new ABM_Rol.ListadoRoles(this);
             listadoRoles.Show();
         }
 

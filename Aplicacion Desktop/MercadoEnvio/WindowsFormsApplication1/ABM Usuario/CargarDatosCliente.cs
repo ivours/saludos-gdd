@@ -14,13 +14,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
         Form formularioAnterior;
         String username;
         String password;
+        int idRol;
 
-        public CargarDatosCliente(Form formularioAnterior, String username, String password)
+        public CargarDatosCliente(Form formularioAnterior, String username, String password, int idRol)
         {
             InitializeComponent();
             this.formularioAnterior = formularioAnterior;
             this.username = username;
             this.password = password;
+            this.idRol = idRol;
             this.llenarComboBoxTiposDeDocumento();
             comboBox1.SelectedIndex = 0;
         }
@@ -35,6 +37,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             try
             {
                 this.validarCampos();
+                this.altaUsuarioCliente();
             }
             catch (Exception excepcion)
             {
@@ -213,7 +216,39 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void altaUsuarioCliente()
         {
+            String nombre = textBox1.Text;
+            String apellido = textBox2.Text;
+            String tipoDeDocumento = comboBox1.SelectedItem.ToString();
+            int nroDeDocumento = Convert.ToInt32(textBox4.Text);
+            DateTime fechaDeNacimiento = dateTimePicker1.Value;
+            String email = textBox6.Text;
+            int telefono = Convert.ToInt32(textBox7.Text);
+            String calle = textBox8.Text;
+            int nroCalle = Convert.ToInt32(textBox9.Text);
+            int piso = Convert.ToInt32(numericUpDown1.Value);
+            String depto = textBox11.Text;
+            String localidad = textBox12.Text;
+            String codigoPostal = textBox13.Text;
 
+            SQLManager manager = new SQLManager().generarSP("altaUsuarioCliente")
+                                 .agregarStringSP("@usernam", username)
+                                 .agregarStringSP("@password", password)
+                                 .agregarIntSP("@id_rol", idRol)
+                                 .agregarStringSP("@nombre", nombre)
+                                 .agregarStringSP("@apellido", apellido)
+                                 .agregarIntSP("@telefono", telefono)
+                                 .agregarStringSP("@calle", calle)
+                                 .agregarIntSP("@nro_calle", nroCalle)
+                                 .agregarFechaSP("@nacimiento", fechaDeNacimiento)
+                                 .agregarStringSP("@cod_postal", codigoPostal)
+                                 .agregarStringSP("@depto", depto)
+                                 .agregarIntSP("@piso", piso)
+                                 .agregarStringSP("@localidad", localidad)
+                                 .agregarIntSP("@documento", nroDeDocumento)
+                                 .agregarStringSP("@tipo_documento", tipoDeDocumento)
+                                 .agregarStringSP("@mail", email);
+
+            manager.ejecutarSP();
         }
         
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,16 @@ namespace WindowsFormsApplication1
             dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.MultiSelect = false;
             dataGridView.ReadOnly = true;
+            dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        public static void llenarDataGridConConsulta(SqlDataReader reader, DataGridView dataGridView)
+        {
+            DataTable dt = new DataTable();
+            dt.Load(reader);
+            dataGridView.AutoGenerateColumns = true;
+            dataGridView.DataSource = dt;
+            dataGridView.Refresh();
         }
     }
 }
