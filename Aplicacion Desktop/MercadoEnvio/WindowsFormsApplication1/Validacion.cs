@@ -46,6 +46,37 @@ namespace WindowsFormsApplication1
             return texto.Length >= longitudMinima;
         }
 
+        public static Boolean tieneFormatoDeCuit(String texto)
+        {
+            int i = 0;
+
+            for ( ; i < 2; i++)
+            {
+                if (!Char.IsNumber(texto[i]))
+                    return false;
+            }
+
+            if (!texto[i].Equals('-'))
+                return false;
+
+            for (i++; i < 11; i++)
+            {
+                if(!Char.IsNumber(texto[i]))
+                    return false;
+            }
+
+            if (!texto[i].Equals('-'))
+                return false;
+
+            for (i++; i < 14; i++)
+            {
+                if (!Char.IsNumber(texto[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
         //Validaciones de fechas
 
         public static Boolean esTrimestreMenorAlActual(int trimestre)
