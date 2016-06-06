@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -57,7 +58,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -97,6 +97,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Cliente";
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(457, 81);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(49, 20);
+            this.numericUpDown1.TabIndex = 28;
+            // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(127, 134);
@@ -106,6 +113,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(127, 81);
             this.comboBox1.Name = "comboBox1";
@@ -115,8 +123,9 @@
             // textBox13
             // 
             this.textBox13.Location = new System.Drawing.Point(457, 159);
+            this.textBox13.MaxLength = 4;
             this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(204, 20);
+            this.textBox13.Size = new System.Drawing.Size(49, 20);
             this.textBox13.TabIndex = 25;
             // 
             // textBox12
@@ -129,6 +138,7 @@
             // textBox11
             // 
             this.textBox11.Location = new System.Drawing.Point(457, 107);
+            this.textBox11.MaxLength = 1;
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(49, 20);
             this.textBox11.TabIndex = 23;
@@ -328,13 +338,7 @@
             this.button3.TabIndex = 28;
             this.button3.Text = "Limpiar";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(457, 81);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(49, 20);
-            this.numericUpDown1.TabIndex = 28;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // CargarDatosCliente
             // 

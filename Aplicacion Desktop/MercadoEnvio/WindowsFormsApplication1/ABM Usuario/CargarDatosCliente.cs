@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.username = username;
             this.password = password;
             this.llenarComboBoxTiposDeDocumento();
+            comboBox1.SelectedIndex = 0;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -31,7 +32,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                this.validarCampos();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -43,6 +51,22 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             siguienteFormulario.Visible = true;
             this.Visible = false;
+        }
+
+        private void limpiarCampos()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox4.Clear();
+            textBox6.Clear();
+            textBox7.Clear();
+            textBox8.Clear();
+            textBox9.Clear();
+            textBox11.Clear();
+            textBox12.Clear();
+            textBox13.Clear();
+            comboBox1.SelectedIndex = 0;
+            numericUpDown1.Value = 0;
         }
 
         private void llenarComboBoxTiposDeDocumento()
@@ -71,7 +95,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         //TODO: ver si hay que agregar alguna otra restriccion
         private void validarNombre()
         {
-            if (!Validacion.estaVacio(textBox1.Text))
+            if (Validacion.estaVacio(textBox1.Text))
                 throw new Exception("Debe ingresar un nombre");
 
             if (!Validacion.empiezaConCaracter(textBox1.Text))
@@ -83,7 +107,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarApellido()
         {
-            if (!Validacion.estaVacio(textBox2.Text))
+            if (Validacion.estaVacio(textBox2.Text))
                 throw new Exception("Debe ingresar un apellido");
 
             if (!Validacion.empiezaConCaracter(textBox2.Text))
@@ -95,7 +119,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarNroDocumento()
         {
-            if (!Validacion.estaVacio(textBox4.Text))
+            if (Validacion.estaVacio(textBox4.Text))
                 throw new Exception("Debe ingresar un nro. de documento");
 
             if (!Validacion.contieneSoloNumeros(textBox4.Text))
@@ -112,7 +136,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             Extras.EmailChecker emailChecker = new Extras.EmailChecker();
 
-            if (!Validacion.estaVacio(textBox6.Text))
+            if (Validacion.estaVacio(textBox6.Text))
                 throw new Exception("Debe ingresar un E-mail");
 
             if (!emailChecker.IsValidEmail(textBox6.Text))
@@ -121,7 +145,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarTelefono()
         {
-            if (!Validacion.estaVacio(textBox7.Text))
+            if (Validacion.estaVacio(textBox7.Text))
                 throw new Exception("Debe ingresar un teléfono");
 
             if (!Validacion.contieneSoloNumeros(textBox7.Text))
@@ -130,7 +154,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarCalle()
         {
-            if (!Validacion.estaVacio(textBox8.Text))
+            if (Validacion.estaVacio(textBox8.Text))
                 throw new Exception("Debe ingresar una calle");
 
             if (!Validacion.empiezaConCaracter(textBox8.Text))
@@ -142,7 +166,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarNroCalle()
         {
-            if (!Validacion.estaVacio(textBox9.Text))
+            if (Validacion.estaVacio(textBox9.Text))
                 throw new Exception("Debe ingresar un nro. de calle");
 
             if (!Validacion.contieneSoloNumeros(textBox9.Text))
@@ -151,12 +175,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarDepto()
         {
-            //TODO: hacer
+            if (Validacion.estaVacio(textBox11.Text))
+                throw new Exception("Debe ingresar un depto.");
+
+            if (!Validacion.contieneSoloLetras(textBox11.Text))
+                throw new Exception("El depto. debe ser una letra");
         }
 
         private void validarLocalidad()
         {
-            if (!Validacion.estaVacio(textBox12.Text))
+            if (Validacion.estaVacio(textBox12.Text))
                 throw new Exception("Debe ingresar una localidad");
 
             if (!Validacion.empiezaConCaracter(textBox12.Text))
@@ -168,7 +196,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarCodigoPostal()
         {
-            if (!Validacion.estaVacio(textBox13.Text))
+            if (Validacion.estaVacio(textBox13.Text))
                 throw new Exception("Debe ingresar un código postal");
 
             if (!Validacion.contieneSoloNumeros(textBox13.Text))
@@ -176,6 +204,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if (!textBox13.Text.Count().Equals(4))
                 throw new Exception("El código postal debe estar compuesto por 4 números");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.limpiarCampos();
+        }
+
+        private void altaUsuarioCliente()
+        {
+
         }
         
     }

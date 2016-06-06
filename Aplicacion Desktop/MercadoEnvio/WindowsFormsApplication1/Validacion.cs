@@ -21,6 +21,11 @@ namespace WindowsFormsApplication1
             return texto.Contains(" ");
         }
 
+        public static Boolean contieneSoloLetras(String texto)
+        {
+            return (texto.All(caracter => Char.IsLetter(caracter)));
+        }
+
         public static Boolean contieneSoloLetrasOEspacios(String texto)
         {
             return (texto.All(caracter => Char.IsLetter(caracter) || Char.IsWhiteSpace(caracter)));

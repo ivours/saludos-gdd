@@ -11,6 +11,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class CargarDatosUsuario : Form
     {
+        int idRol;
+
         public CargarDatosUsuario()
         {
             InitializeComponent();
@@ -76,7 +78,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (Validacion.estaVacio(textBox3.Text))
                 throw new Exception("Debe re-ingresar la password");
 
-            if (Validacion.tieneLongitudMayorOIgualA(textBox2.Text, 4))
+            if (!Validacion.tieneLongitudMayorOIgualA(textBox2.Text, 4))
                 throw new Exception("La password debe contener al menos 4 caracteres");
 
             if (!textBox2.Text.Equals(textBox3.Text))
@@ -94,6 +96,23 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.limpiarCampos();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ABM_Rol.Listado listadoRoles = new ABM_Rol.Listado(this);
+            listadoRoles.Show();
+        }
+
+        public void setRol(String nombreRol, int idRol)
+        {
+            textBox4.Text = nombreRol;
+            this.idRol = idRol;
         }
     }
 }
