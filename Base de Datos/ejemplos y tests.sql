@@ -1,3 +1,31 @@
+--compra (ya no se hace a mano, hay funciones y procedures)
+
+insert into saludos.usuarios(usua_username, usua_tipo)
+values('felipe', 'Cliente')
+
+insert into saludos.publicaciones(publ_precio, tipo_cod)
+values(1, 1)
+
+insert into saludos.transacciones(publ_cod, tipo_cod, usua_username, tran_adjudicada)
+values(71079, 1, 'felipe', 1)
+
+
+--subasta. la gana helipaz
+exec saludos.crearPublicacion 'odamartínez', 'Subasta', 'cacaaaaaaaa', 1, 40.00, 'Soportes', 'Activa', 1, 'Gratuita', 1
+
+exec saludos.ofertar 71079, 14.00, 'odamartínez'
+exec saludos.ofertar 71079, 15.00, 'rinaldogarcía'
+exec saludos.ofertar 71079, 1000, 'helipaz'
+
+exec saludos.adjudicarSubastas
+
+
+--prueba respecto a fechas y publicaciones finalizadas
+exec saludos.asignarfecha '2015-04-15 00:00:00.000' 
+exec saludos.actualizarEstadosDePublicaciones
+
+
+--ejemplo de cómo estaba hecha la creación de usuarios con dos cursores
 --Procedure que genera username y password para un cliente.
 CREATE PROCEDURE SALUDOS.generarUsuariosDeClientes
 	@dni nvarchar(255),
