@@ -52,6 +52,14 @@ namespace WindowsFormsApplication1.ABM_Rol
                     nombreRol = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                     (formAnterior as ABM_Usuario.CargarDatosUsuario).setRol(nombreRol,idRol);
                     break;
+
+                case "BajaRol":
+                    idRol = (int)dataGridView1.SelectedRows[0].Cells[0].Value;
+                    nombreRol = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as ABM_Rol.BajaRol).bajaRol(idRol);
+                    MessageBox.Show("Se ha eliminado el rol '" + nombreRol + "'");
+                    ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRoles(), dataGridView1);
+                    break;
             }
 
             this.Close();
