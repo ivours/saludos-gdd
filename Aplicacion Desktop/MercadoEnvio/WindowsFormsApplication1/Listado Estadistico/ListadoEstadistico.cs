@@ -17,6 +17,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         {
             InitializeComponent();
             ConfiguradorDataGrid.configurar(dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.llenarComboBoxDeTiposDeConsultas();
             this.llenarComboBoxVisibilidades();
             this.llenarComboBoxTrimestres();

@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
             InitializeComponent();
             this.inicializarCampos();
             this.formAnterior = formAnterior;
-            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRubros(), dataGridView1);
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRubros(), dataGridView1); //TODO: esto ponerlo en el click de buscar
         }
 
         private void inicializarCampos()
@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            dataGridView1.AutoResizeColumns();
         }
 
         private void button4_Click(object sender, EventArgs e)
