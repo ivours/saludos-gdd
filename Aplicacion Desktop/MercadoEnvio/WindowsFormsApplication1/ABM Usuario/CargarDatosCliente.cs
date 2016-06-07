@@ -231,7 +231,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             String codigoPostal = textBox13.Text;
 
             SQLManager manager = new SQLManager().generarSP("altaUsuarioCliente")
-                                 .agregarStringSP("@usernam", username)
+                                 .agregarStringSP("@username", username)
                                  .agregarStringSP("@password", password)
                                  .agregarIntSP("@id_rol", idRol)
                                  .agregarStringSP("@nombre", nombre)

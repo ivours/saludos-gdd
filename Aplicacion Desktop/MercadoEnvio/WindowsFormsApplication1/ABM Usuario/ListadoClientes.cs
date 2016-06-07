@@ -27,6 +27,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             dataGridView1.DataSource = null;
         }
 
+        //TODO: Estos filtros los valido?
         private SqlDataReader filtrarClientes()
         {
             SqlDataReader reader;

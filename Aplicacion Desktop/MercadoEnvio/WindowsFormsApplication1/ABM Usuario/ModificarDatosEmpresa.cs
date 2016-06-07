@@ -6,11 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Dominio;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class ModificarDatosEmpresa : Form
     {
+        int idRubro;
+
         public ModificarDatosEmpresa()
         {
             InitializeComponent();
@@ -23,12 +26,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            try
+            {
+                this.validarCampos();
+                this.modificarEmpresa();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
         }
 
         public void setRazonSocial(String razonSocial)
@@ -49,6 +55,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void setRubroPrincipal(String rubroPrincipal)
         {
             textBox5.Text = rubroPrincipal;
+            this.idRubro = Rubro.getIdRubro(rubroPrincipal);
         }
 
         public void setEmail(String email)
@@ -243,6 +250,57 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox12.Clear();
             textBox13.Clear();
             numericUpDown1.Value = 0;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ABM_Rubro.ListadoRubros listadoRubros = new ABM_Rubro.ListadoRubros(this);
+            listadoRubros.Show();
+        }
+
+        private void modificarEmpresa()
+        {
+            String razonSocial = textBox1.Text;
+            String nombreDeContacto = textBox3.Text;
+            String cuit = textBox4.Text;
+            String email = textBox6.Text;
+            int telefono = Convert.ToInt32(textBox7.Text);
+            String ciudad = textBox2.Text;
+            String calle = textBox8.Text;
+            int nroCalle = Convert.ToInt32(textBox9.Text);
+            int piso = Convert.ToInt32(numericUpDown1.Value);
+            String depto = textBox11.Text;
+            String localidad = textBox12.Text;
+            String codigoPostal = textBox13.Text;
+
+            SQLManager manager = new SQLManager().generarSP("modificarEmpresa")
+                     .agregarIntSP("@id_empresa", Dominio.Empresa.getIdEmpresa(razonSocial, cuit))
+                     .agregarStringSP("@razon_social", razonSocial)
+                     .agregarStringSP("@cuit", cuit)
+                     .agregarStringSP("@mail", email)
+                     .agregarIntSP("@telefono", telefono)
+                     .agregarStringSP("@calle", calle)
+                     .agregarIntSP("@nro_calle", nroCalle)
+                     .agregarIntSP("@piso", piso)
+                     .agregarStringSP("@depto", depto)
+                     .agregarStringSP("@ciudad", ciudad)
+                     .agregarStringSP("@contacto", nombreDeContacto)
+                     .agregarStringSP("@cod_postal", codigoPostal)
+                     .agregarStringSP("@localidad", localidad)
+                     .agregarIntSP("@id_rubro", idRubro);
+
+            manager.ejecutarSP();
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.limpiarCampos();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

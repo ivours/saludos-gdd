@@ -198,8 +198,10 @@
       <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Dominio\Cliente.cs" />
+    <Compile Include="Dominio\Empresa.cs" />
     <Compile Include="Dominio\Fecha.cs" />
     <Compile Include="Dominio\Rol.cs" />
+    <Compile Include="Dominio\Rubro.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Dominio\Visibilidad.cs" />
     <Compile Include="Extras\ConfiguradorDataGrid.cs" />

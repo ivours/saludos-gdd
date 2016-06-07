@@ -48,7 +48,6 @@ namespace WindowsFormsApplication1.ABM_Rubro
         private void button4_Click(object sender, EventArgs e)
         {
             String nombreRubro;
-            int idRubro;
 
             switch (formAnterior.Name)
             {
@@ -58,9 +57,13 @@ namespace WindowsFormsApplication1.ABM_Rubro
                     break;
 
                 case "CargarDatosEmpresa":
-                    idRubro = (int) dataGridView1.SelectedRows[0].Cells[0].Value;
                     nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as ABM_Usuario.CargarDatosEmpresa).setRubroPrincipal(nombreRubro, idRubro);
+                    (formAnterior as ABM_Usuario.CargarDatosEmpresa).setRubroPrincipal(nombreRubro);
+                    break;
+
+                case "ModificarDatosEmpresa":
+                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as ABM_Usuario.ModificarDatosEmpresa).setRubroPrincipal(nombreRubro);
                     break;
 
             }
