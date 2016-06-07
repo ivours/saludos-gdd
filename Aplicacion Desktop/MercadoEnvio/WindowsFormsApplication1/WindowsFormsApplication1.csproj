@@ -101,6 +101,12 @@
     <Compile Include="ABM Usuario\CargarDatosEmpresa.Designer.cs">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\ListadoUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoUsuarios.Designer.cs">
+      <DependentUpon>ListadoUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\ModificarDatosEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -338,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\CargarDatosEmpresa.resx">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ListadoUsuarios.resx">
+      <DependentUpon>ListadoUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ModificarDatosEmpresa.resx">
       <DependentUpon>ModificarDatosEmpresa.cs</DependentUpon>
