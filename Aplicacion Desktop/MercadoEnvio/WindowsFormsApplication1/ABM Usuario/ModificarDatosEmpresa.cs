@@ -11,12 +11,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class ModificarDatosEmpresa : Form
     {
-        Form formularioAnterior;
-
-        public ModificarDatosEmpresa(Form formularioAnterior)
+        public ModificarDatosEmpresa()
         {
             InitializeComponent();
-            this.formularioAnterior = formularioAnterior;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -31,13 +28,72 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.abrirVentana(formularioAnterior);
+
         }
 
-        private void abrirVentana(Form siguienteFormulario)
+        public void setRazonSocial(String razonSocial)
         {
-            siguienteFormulario.Visible = true;
-            this.Visible = false;
+            textBox1.Text = razonSocial;
+        }
+
+        public void setNombreDeContacto(String nombreDeContacto)
+        {
+            textBox3.Text = nombreDeContacto;
+        }
+
+        public void setCuit(String cuit)
+        {
+            textBox4.Text = cuit;
+        }
+
+        public void setRubroPrincipal(String rubroPrincipal)
+        {
+            textBox5.Text = rubroPrincipal;
+        }
+
+        public void setEmail(String email)
+        {
+            textBox6.Text = email;
+        }
+
+        public void setTelefono(String telefono)
+        {
+            textBox7.Text = telefono;
+        }
+
+        public void setCiudad(String ciudad)
+        {
+            textBox2.Text = ciudad;
+        }
+
+        public void setCalle(String calle)
+        {
+            textBox8.Text = calle;
+        }
+
+        public void setNroCalle(String nroCalle)
+        {
+            textBox9.Text = nroCalle;
+        }
+
+        public void setPiso(decimal piso)
+        {
+            numericUpDown1.Value = piso;
+        }
+
+        public void setDepto(String depto)
+        {
+            textBox11.Text = depto;
+        }
+
+        public void setLocalidad(String localidad)
+        {
+            textBox12.Text = localidad;
+        }
+
+        public void setCodigoPostal(String codigoPostal)
+        {
+            textBox13.Text = codigoPostal;
         }
     }
 }
