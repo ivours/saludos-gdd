@@ -119,7 +119,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "ABM Roles":
-                    formsFuncionalidades[nroBoton] = new ABM_Rol.Principal();
+                    formsFuncionalidades[nroBoton] = new ABM_Rol.PrincipalRol();
                     break;
 
                 case "ABM Usuarios":

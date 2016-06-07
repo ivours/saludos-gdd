@@ -47,11 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM Rol\Baja.cs">
+    <Compile Include="ABM Rol\BajaRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rol\Baja.Designer.cs">
-      <DependentUpon>Baja.cs</DependentUpon>
+    <Compile Include="ABM Rol\BajaRol.Designer.cs">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rol\ListadoFuncionalidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\ListadoFuncionalidades.Designer.cs">
+      <DependentUpon>ListadoFuncionalidades.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Rol\ListadoRoles.cs">
       <SubType>Form</SubType>
@@ -59,23 +65,23 @@
     <Compile Include="ABM Rol\ListadoRoles.Designer.cs">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rol\Modificacion.cs">
+    <Compile Include="ABM Rol\ModificacionRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rol\Modificacion.Designer.cs">
-      <DependentUpon>Modificacion.cs</DependentUpon>
+    <Compile Include="ABM Rol\ModificacionRol.Designer.cs">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rol\Principal.cs">
+    <Compile Include="ABM Rol\PrincipalRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rol\Principal.Designer.cs">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <Compile Include="ABM Rol\PrincipalRol.Designer.cs">
+      <DependentUpon>PrincipalRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rol\Alta.cs">
+    <Compile Include="ABM Rol\AltaRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rol\Alta.Designer.cs">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <Compile Include="ABM Rol\AltaRol.Designer.cs">
+      <DependentUpon>AltaRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Rubro\ListadoRubros.cs">
       <SubType>Form</SubType>
@@ -318,20 +324,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLManager.cs" />
     <Compile Include="Validacion.cs" />
-    <EmbeddedResource Include="ABM Rol\Alta.resx">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Rol\AltaRol.resx">
+      <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\Baja.resx">
-      <DependentUpon>Baja.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Rol\BajaRol.resx">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\ListadoFuncionalidades.resx">
+      <DependentUpon>ListadoFuncionalidades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ListadoRoles.resx">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\Modificacion.resx">
-      <DependentUpon>Modificacion.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Rol\ModificacionRol.resx">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\Principal.resx">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Rol\PrincipalRol.resx">
+      <DependentUpon>PrincipalRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rubro\ListadoRubros.resx">
       <DependentUpon>ListadoRubros.cs</DependentUpon>

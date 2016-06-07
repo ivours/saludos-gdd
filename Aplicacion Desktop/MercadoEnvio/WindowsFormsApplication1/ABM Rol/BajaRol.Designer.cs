@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Rol
 {
-    partial class Baja
+    partial class BajaRol
     {
         /// <summary>
         /// Required designer variable.

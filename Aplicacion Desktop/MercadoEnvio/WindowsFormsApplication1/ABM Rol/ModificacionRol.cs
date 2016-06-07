@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class Baja : Form
+    public partial class ModificacionRol : Form
     {
-
-        public Baja()
+        public ModificacionRol()
         {
             InitializeComponent();
+            textboxNuevoNombre.ReadOnly = true;
         }
     }
 }

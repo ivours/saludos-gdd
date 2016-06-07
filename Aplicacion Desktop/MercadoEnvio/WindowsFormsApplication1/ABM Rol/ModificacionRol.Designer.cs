@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Rol
 {
-    partial class Modificacion
+    partial class ModificacionRol
     {
         /// <summary>
         /// Required designer variable.

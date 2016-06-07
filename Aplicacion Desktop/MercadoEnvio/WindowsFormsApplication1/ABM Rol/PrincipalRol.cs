@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class Principal : Form
+    public partial class PrincipalRol : Form
     {
 
-        public Principal()
+        public PrincipalRol()
         {
             InitializeComponent();
         }
@@ -24,13 +24,13 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form alta = new ABM_Rol.Alta();
+            Form alta = new ABM_Rol.AltaRol();
             this.abrirVentana(alta);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form baja = new ABM_Rol.Baja();
+            Form baja = new ABM_Rol.BajaRol();
             Form listado = new ABM_Rol.ListadoRoles(baja);
             this.abrirVentana(listado);
             //-----completar-----//
@@ -38,7 +38,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form modificacion = new ABM_Rol.Modificacion();
+            Form modificacion = new ABM_Rol.ModificacionRol();
             Form listado = new ABM_Rol.ListadoRoles(modificacion);
             this.abrirVentana(listado);
         }

@@ -9,17 +9,12 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class Alta : Form
+    public partial class BajaRol : Form
     {
-        public Alta()
+
+        public BajaRol()
         {
             InitializeComponent();
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
