@@ -529,3 +529,16 @@ AS BEGIN
 END
 GO
 
+
+
+
+-------OBTENER ROLES------
+CREATE FUNCTION SALUDOS.getRoles
+(@nombreRol nvarchar(255), @habilitado nvarchar(50))
+RETURNS TABLE
+AS
+	RETURN
+		(SELECT ROL_NOMBRE FROM SALUDOS.ROLES WHERE	
+		(ROL_NOMBRE = @nombreRol OR @nombreRol is null) AND
+		(CONVERT(nvarchar, ROL_HABILITADO) = @habilitado OR @habilitado is null))
+GO
