@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1.Dominio
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getIdCliente(@nombreRubro)";
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getIdRubro(@nombreRubro)";
             consulta.Parameters.Add(new SqlParameter("@nombreRubro", nombreRubro));
 
             consulta.Connection = Program.conexionDB();
