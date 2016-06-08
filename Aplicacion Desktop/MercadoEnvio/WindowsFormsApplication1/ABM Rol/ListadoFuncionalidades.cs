@@ -21,6 +21,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             this.formAnterior = formAnterior;
             ConfiguradorDataGrid.configurar(dataGridView1);
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.getFuncionalidades(), dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         //TODO: agregar filtros
@@ -50,6 +51,11 @@ namespace WindowsFormsApplication1.ABM_Rol
                 case "AltaRol":
                     nombreFuncionalidad = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                     (formAnterior as ABM_Rol.AltaRol).addFuncionalidad(nombreFuncionalidad);
+                    break;
+
+                case "ModificarRol":
+                    nombreFuncionalidad = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as ABM_Rol.ModificarRol).addFuncionalidad(nombreFuncionalidad);
                     break;
             }
 

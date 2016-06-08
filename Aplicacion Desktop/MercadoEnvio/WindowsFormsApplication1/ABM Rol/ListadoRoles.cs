@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             ConfiguradorDataGrid.configurar(dataGridView1);
             this.formAnterior = formAnterior;
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRoles(), dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         //TODO: agregar filtros
@@ -54,13 +55,23 @@ namespace WindowsFormsApplication1.ABM_Rol
                     break;
 
                 case "BajaRol":
-                    idRol = (int)dataGridView1.SelectedRows[0].Cells[0].Value;
+                    idRol = (int) dataGridView1.SelectedRows[0].Cells[0].Value;
                     nombreRol = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                     (formAnterior as ABM_Rol.BajaRol).bajaRol(idRol);
                     MessageBox.Show("Se ha eliminado el rol '" + nombreRol + "'");
                     ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRoles(), dataGridView1);
                     break;
-            }
+
+                case "ModificarRol":
+                    idRol = (int) dataGridView1.SelectedRows[0].Cells[0].Value;
+                    nombreRol = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as ABM_Rol.ModificarRol).setIdRol(idRol);
+                    (formAnterior as ABM_Rol.ModificarRol).setNombreRol(nombreRol);
+                    (formAnterior as ABM_Rol.ModificarRol).setFuncionalidades();
+                    formAnterior.Show();
+                    //this.Close();
+                    break;
+                }
 
             this.Close();
         }
