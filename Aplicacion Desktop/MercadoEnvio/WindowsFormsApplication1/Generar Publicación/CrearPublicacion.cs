@@ -11,9 +11,12 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class CrearPublicacion : Form
     {
-        public CrearPublicacion()
+        String username;
+
+        public CrearPublicacion(String username)
         {
             InitializeComponent();
+            this.username = username;
             this.llenarComboBoxEstados();
             this.llenarComboBoxVisibilidades();
             comboBox1.SelectedIndex = 0;
@@ -36,7 +39,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDown1.ReadOnly = false;
-            numericUpDown1.Value = 0;
+            numericUpDown1.Value = 1;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -76,7 +79,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             textBox5.Clear();
             textBox6.Clear();
             textBox7.Clear();
-            numericUpDown1.Value = 0;
+            numericUpDown1.Value = 1;
             numericUpDown2.Value = 0;
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
@@ -87,6 +90,75 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void button2_Click(object sender, EventArgs e)
         {
             this.limpiarCampos();
+        }
+
+        private String getTipo()
+        {
+            if (radioButton1.Checked)
+                return radioButton1.Text;
+            else
+                return radioButton2.Text;
+        }
+
+        private int getBitCheckBox(CheckBox checkBox)
+        {
+            if (checkBox.Checked)
+                return 1;
+            else
+                return 0;
+        }
+
+        private void crearPublicacion()
+        {
+
+            String tipo = this.getTipo();
+            String descripcion = textBox4.Text;
+            int stock = Convert.ToInt32(numericUpDown1.Value);
+            decimal precio = numericUpDown2.Value;
+            String rubro = textBox1.Text;
+            String estado = comboBox1.SelectedItem.ToString();
+            int preguntas = this.getBitCheckBox(checkBox1);
+            String visibilidad = comboBox2.SelectedItem.ToString();
+            int envio = this.getBitCheckBox(checkBox2);
+
+            SQLManager manager = new SQLManager().generarSP("crearPublicacion")
+                                 .agregarStringSP("@tipo", tipo)
+                                 .agregarStringSP("@descripcion", descripcion)
+                                 .agregarIntSP("@stock", stock)
+                                 .agregarDecimalSP("@precio", precio)
+                                 .agregarStringSP("@rubro", rubro)
+                                 .agregarStringSP("@estado", estado)
+                                 .agregarIntSP("@preguntas", preguntas)
+                                 .agregarStringSP("@visibilidad", visibilidad)
+                                 .agregarIntSP("@envio", envio);
+
+            manager.ejecutarSP();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.crearPublicacion();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
+            
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.llenarCamposComisiones();
+
+        }
+
+        private void llenarCamposComisiones()
+        {
+            textBox7.Text = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString()).ToString();
+            textBox6.Text = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()).ToString();
+            textBox5.Text = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()).ToString();
         }
     }
 }

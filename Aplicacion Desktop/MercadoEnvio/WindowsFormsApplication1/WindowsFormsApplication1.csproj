@@ -53,6 +53,12 @@
     <Compile Include="ABM Rol\BajaRol.Designer.cs">
       <DependentUpon>BajaRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Rol\ModificarRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\ModificarRol.Designer.cs">
+      <DependentUpon>ModificarRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\ListadoFuncionalidades.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,12 +70,6 @@
     </Compile>
     <Compile Include="ABM Rol\ListadoRoles.Designer.cs">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM Rol\ModificacionRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Rol\ModificacionRol.Designer.cs">
-      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Rol\PrincipalRol.cs">
       <SubType>Form</SubType>
@@ -149,29 +149,35 @@
     <Compile Include="ABM Usuario\SeleccionarTipoDeUsuario.Designer.cs">
       <DependentUpon>SeleccionarTipoDeUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Alta.cs">
+    <Compile Include="ABM Visibilidad\AltaVisibilidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Visibilidad\Alta.Designer.cs">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <Compile Include="ABM Visibilidad\AltaVisibilidad.Designer.cs">
+      <DependentUpon>AltaVisibilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Modificacion.cs">
+    <Compile Include="ABM Visibilidad\BajaVisibilidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Visibilidad\Modificacion.Designer.cs">
-      <DependentUpon>Modificacion.cs</DependentUpon>
+    <Compile Include="ABM Visibilidad\BajaVisibilidad.Designer.cs">
+      <DependentUpon>BajaVisibilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Listado.cs">
+    <Compile Include="ABM Visibilidad\ModificarVisibilidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Visibilidad\Listado.Designer.cs">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <Compile Include="ABM Visibilidad\ModificarVisibilidad.Designer.cs">
+      <DependentUpon>ModificarVisibilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Principal.cs">
+    <Compile Include="ABM Visibilidad\ListadoVisibilidades.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Visibilidad\Principal.Designer.cs">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <Compile Include="ABM Visibilidad\ListadoVisibilidades.Designer.cs">
+      <DependentUpon>ListadoVisibilidades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\PrincipalVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\PrincipalVisibilidad.Designer.cs">
+      <DependentUpon>PrincipalVisibilidad.cs</DependentUpon>
     </Compile>
     <Compile Include="Calificar\Calificar.cs">
       <SubType>Form</SubType>
@@ -290,12 +296,6 @@
     <Compile Include="Generar Publicación\Principal.Designer.cs">
       <DependentUpon>Principal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\SeleccionarVisibilidad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Generar Publicación\SeleccionarVisibilidad.Designer.cs">
-      <DependentUpon>SeleccionarVisibilidad.cs</DependentUpon>
-    </Compile>
     <Compile Include="Historial Cliente\HistorialCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -330,14 +330,14 @@
     <EmbeddedResource Include="ABM Rol\BajaRol.resx">
       <DependentUpon>BajaRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\ModificarRol.resx">
+      <DependentUpon>ModificarRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ListadoFuncionalidades.resx">
       <DependentUpon>ListadoFuncionalidades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ListadoRoles.resx">
       <DependentUpon>ListadoRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\ModificacionRol.resx">
-      <DependentUpon>ModificacionRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\PrincipalRol.resx">
       <DependentUpon>PrincipalRol.cs</DependentUpon>
@@ -375,17 +375,17 @@
     <EmbeddedResource Include="ABM Usuario\SeleccionarTipoDeUsuario.resx">
       <DependentUpon>SeleccionarTipoDeUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Visibilidad\Alta.resx">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Visibilidad\AltaVisibilidad.resx">
+      <DependentUpon>AltaVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Visibilidad\Modificacion.resx">
-      <DependentUpon>Modificacion.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Visibilidad\ModificarVisibilidad.resx">
+      <DependentUpon>ModificarVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Visibilidad\Listado.resx">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Visibilidad\ListadoVisibilidades.resx">
+      <DependentUpon>ListadoVisibilidades.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Visibilidad\Principal.resx">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Visibilidad\PrincipalVisibilidad.resx">
+      <DependentUpon>PrincipalVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Calificar.resx">
       <DependentUpon>Calificar.cs</DependentUpon>
@@ -440,9 +440,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicación\SeleccionarVisibilidad.resx">
-      <DependentUpon>SeleccionarVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>

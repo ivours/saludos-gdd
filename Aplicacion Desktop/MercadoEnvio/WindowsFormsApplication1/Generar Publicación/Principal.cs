@@ -11,14 +11,17 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class Principal : Form
     {
-        public Principal()
+        String username;
+
+        public Principal(String username)
         {
             InitializeComponent();
+            this.username = username;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Generar_Publicación.CrearPublicacion crearPublicacion = new CrearPublicacion();
+            Generar_Publicación.CrearPublicacion crearPublicacion = new CrearPublicacion(username);
             crearPublicacion.Show();
             this.Close();
         }

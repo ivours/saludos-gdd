@@ -95,7 +95,7 @@ namespace WindowsFormsApplication1
             switch (funcionalidades[nroBoton])
             {
                 case "Vender":
-                    formsFuncionalidades[nroBoton] = new Generar_Publicación.Principal();
+                    formsFuncionalidades[nroBoton] = new Generar_Publicación.Principal(username);
                     break;
 
                 case "Comprar/Ofertar":
@@ -127,7 +127,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "ABM Visibilidades":
-                    formsFuncionalidades[nroBoton] = new ABM_Visibilidad.Principal();
+                    formsFuncionalidades[nroBoton] = new ABM_Visibilidad.PrincipalVisibilidad();
                     break;
             }
         }

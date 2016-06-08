@@ -66,6 +66,11 @@ namespace WindowsFormsApplication1.ABM_Rubro
                     (formAnterior as ABM_Usuario.ModificarDatosEmpresa).setRubroPrincipal(nombreRubro);
                     break;
 
+                case "CrearPublicacion":
+                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as Generar_Publicación.CrearPublicacion).setRubro(nombreRubro);
+                    break;
+
             }
 
             this.Close();

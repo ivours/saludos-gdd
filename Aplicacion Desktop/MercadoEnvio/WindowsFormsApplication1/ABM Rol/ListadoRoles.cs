@@ -69,7 +69,6 @@ namespace WindowsFormsApplication1.ABM_Rol
                     (formAnterior as ABM_Rol.ModificarRol).setNombreRol(nombreRol);
                     (formAnterior as ABM_Rol.ModificarRol).setFuncionalidades();
                     formAnterior.Show();
-                    //this.Close();
                     break;
                 }
 
