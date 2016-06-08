@@ -21,5 +21,17 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             ABM_Visibilidad.AltaVisibilidad altaVisibilidad = new AltaVisibilidad();
             altaVisibilidad.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ABM_Visibilidad.ModificarVisibilidad modificarVisibilidad = new ModificarVisibilidad();
+            ABM_Visibilidad.ListadoVisibilidades listadoVisibilidades = new ListadoVisibilidades(modificarVisibilidad);
+            listadoVisibilidades.Show();
+        }
     }
 }
