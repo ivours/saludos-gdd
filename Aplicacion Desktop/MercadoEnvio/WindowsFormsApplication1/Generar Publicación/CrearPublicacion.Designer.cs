@@ -232,6 +232,7 @@
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown2.TabIndex = 12;
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // label5
             // 
@@ -466,6 +467,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "CrearPublicacion";
             this.Text = "Crear Publicación";
+            this.Load += new System.EventHandler(this.CrearPublicacion_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

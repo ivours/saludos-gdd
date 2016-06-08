@@ -150,15 +150,31 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.llenarCamposComisiones();
+            if(!numericUpDown2.Value.Equals(0))
+                this.llenarCamposComisiones();
+        }
+
+        //TODO: Arreglar
+        private void llenarCamposComisiones()
+        {
+            decimal comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+            decimal comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+            decimal comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+
+            textBox7.Text = comisionPublicacion.ToString();
+            textBox6.Text = comisionVenta.ToString();
+            textBox5.Text = comisionEnvio.ToString();
+        }
+
+        private void CrearPublicacion_Load(object sender, EventArgs e)
+        {
 
         }
 
-        private void llenarCamposComisiones()
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            textBox7.Text = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString()).ToString();
-            textBox6.Text = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()).ToString();
-            textBox5.Text = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()).ToString();
+            if (!numericUpDown2.Value.Equals(0))
+                this.llenarCamposComisiones();
         }
     }
 }
