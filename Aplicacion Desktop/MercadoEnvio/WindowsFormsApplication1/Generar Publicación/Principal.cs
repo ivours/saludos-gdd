@@ -15,5 +15,12 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Generar_Publicación.CrearPublicacion crearPublicacion = new CrearPublicacion();
+            crearPublicacion.Show();
+            this.Close();
+        }
     }
 }
