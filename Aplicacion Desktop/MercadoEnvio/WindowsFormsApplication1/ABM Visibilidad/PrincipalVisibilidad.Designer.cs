@@ -41,6 +41,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Alta";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -60,7 +61,7 @@
             this.button3.Text = "Modificación";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // Principal
+            // PrincipalVisibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -68,7 +69,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Principal";
+            this.Name = "PrincipalVisibilidad";
             this.Text = "ABM Visibilidad";
             this.ResumeLayout(false);
 
