@@ -76,7 +76,7 @@ GO
 
 -------FUNCION PARA VER SI YA ESTA EN USO EL TIPO Y NRO DE DOC----------
 CREATE FUNCTION SALUDOS.existeTipoYNumeroDeDocumento
-(@nro_documento numeric(18,0), @tipo_documento nvarchar(50))
+(@username nvarchar(255), @nro_documento numeric(18,0), @tipo_documento nvarchar(50))
 RETURNS int
 AS
 BEGIN
@@ -84,7 +84,7 @@ BEGIN
 
 	SET @existe = (SELECT COUNT(*) 
 	FROM SALUDOS.CLIENTES
-	WHERE CLIE_NRO_DOCUMENTO = @nro_documento AND CLIE_TIPO_DOCUMENTO = @tipo_documento)
+	WHERE CLIE_NRO_DOCUMENTO = @nro_documento AND CLIE_TIPO_DOCUMENTO = @tipo_documento AND USUA_USERNAME <> @username)
 
 	RETURN @existe
 END
@@ -101,7 +101,7 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
  BEGIN TRANSACTION
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0) --NO EXISTE OTRO USERNAME IGUAL
 		BEGIN
-			IF (SALUDOS.existeTipoYNumeroDeDocumento(@documento, @tipo_documento) = 0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
+			IF (SALUDOS.existeTipoYNumeroDeDocumento(@username, @documento, @tipo_documento) = 0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
 				BEGIN
 					DECLARE @fecha_actual datetime
 					SET @fecha_actual = SALUDOS.fechaActual()
@@ -140,8 +140,9 @@ CREATE PROCEDURE SALUDOS.modificarCliente
  @localidad nvarchar(255), @documento numeric(18,0), @tipo_documento nvarchar(50), @mail nvarchar(50))
 AS
 BEGIN
-
-	IF SALUDOS.existeTipoYNumeroDeDocumento(@documento, @tipo_documento) = 0
+	DECLARE @username nvarchar(255)
+	SET @username = (SELECT USUA_USERNAME FROM SALUDOS.CLIENTES WHERE CLIE_COD = @id_cliente)
+	IF SALUDOS.existeTipoYNumeroDeDocumento(@username, @documento, @tipo_documento) = 0
 		BEGIN
 			UPDATE SALUDOS.CLIENTES
 			SET CLIE_NOMBRE = @nombre, CLIE_APELLIDO = @apellido, CLIE_TELEFONO = @telefono, CLIE_CALLE = @calle,
@@ -164,7 +165,7 @@ GO
 
 --------FUNCION PARA VER SI EXISTE EMPRESA CON MISMO RAZON SOCIAL Y CUIT---------
 CREATE FUNCTION SALUDOS.existeRazonSocialYCuit
-(@razon_social nvarchar(255), @cuit nvarchar(50))
+(@username nvarchar(255), @razon_social nvarchar(255), @cuit nvarchar(50))
 RETURNS int
 AS
 BEGIN
@@ -187,7 +188,7 @@ AS
 BEGIN TRANSACTION
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0)----No existe otro usuario igual
 		BEGIN
-			IF (SALUDOS.existeRazonSocialYCuit(@razon_social, @cuit) = 0)------No existe empresa con misma razon y cuit
+			IF (SALUDOS.existeRazonSocialYCuit(@username, @razon_social, @cuit) = 0)------No existe empresa con misma razon y cuit
 				BEGIN
 					DECLARE @fecha_actual datetime
 					SET @fecha_actual = SALUDOS.fechaActual()
@@ -225,7 +226,9 @@ CREATE PROCEDURE SALUDOS.modificarEmpresa
  @cod_postal nvarchar(50), @localidad nvarchar(50), @id_rubro int)
 AS
 BEGIN
-	IF(SALUDOS.existeRazonSocialYCuit(@razon_social, @cuit) = 0)---------No existe empresa con misma razon y cuit
+	DECLARE @username nvarchar(255)
+	SET @username = (SELECT USUA_USERNAME FROM SALUDOS.EMPRESAS WHERE EMPR_COD = @id_empresa)
+	IF(SALUDOS.existeRazonSocialYCuit(@username, @razon_social, @cuit) = 0)---------No existe empresa con misma razon y cuit
 		BEGIN
 			UPDATE SALUDOS.EMPRESAS
 			SET EMPR_RAZON_SOCIAL = @razon_social, EMPR_CUIT = @cuit, EMPR_MAIL = @mail, EMPR_TELEFONO = @telefono, 
@@ -326,9 +329,12 @@ GO
 
 --------AGREGAR FUNCIONALIDAD A ROL------
 CREATE PROCEDURE SALUDOS.agregarFuncionalidadARol
-(@id_rol int, @id_funcionalidad int)
+(@nombre_rol nvarchar(255), @nombre_funcionalidad nvarchar(255))
 AS 
 	BEGIN TRY
+		DECLARE @id_rol int, @id_funcionalidad int
+		SET @id_rol = (SELECT ROL_COD FROM SALUDOS.ROLES WHERE ROL_NOMBRE = @nombre_rol)
+		SET @id_funcionalidad = (SELECT FUNC_COD FROM SALUDOS.FUNCIONALIDADES WHERE FUNC_NOMBRE = @nombre_funcionalidad)
 		INSERT INTO SALUDOS.FUNCIONALIDADESXROL(ROL_COD, FUNC_COD)
 		VALUES(@id_rol, @id_funcionalidad)
 	END TRY
@@ -340,8 +346,11 @@ GO
 
 --------QUITAR FUNCIONALIDAD DE UN ROL-------
 CREATE PROCEDURE SALUDOS.quitarFuncionalidadDeRol
-(@id_rol int, @id_funcionalidad int)
+(@nombre_rol nvarchar(255), @nombre_funcionalidad nvarchar(255))
 AS BEGIN
+	DECLARE @id_rol int, @id_funcionalidad int
+	SET @id_rol = (SELECT ROL_COD FROM SALUDOS.ROLES WHERE ROL_NOMBRE = @nombre_rol)
+	SET @id_funcionalidad = (SELECT FUNC_COD FROM SALUDOS.FUNCIONALIDADES WHERE FUNC_NOMBRE = @nombre_funcionalidad)
 	DELETE FROM SALUDOS.FUNCIONALIDADESXROL
 	WHERE ROL_COD = @id_rol AND FUNC_COD = @id_funcionalidad
 END
@@ -529,3 +538,56 @@ AS BEGIN
 END
 GO
 
+------OBTENER USUARIOS-------
+CREATE FUNCTION SALUDOS.getUsuarios
+(@username nvarchar(255), @tipo nvarchar(255), @habilitado nvarchar(50))
+RETURNS TABLE
+AS
+	RETURN SELECT USUA_USERNAME FROM SALUDOS.USUARIOS WHERE 
+			(USUA_USERNAME = @username OR @username IS NULL) AND
+			(USUA_TIPO = @tipo OR @tipo IS NULL) AND
+			(CONVERT(NVARCHAR,USUA_HABILITADO) = @habilitado OR @habilitado IS NULL)
+GO
+
+
+------OBTENER ID RUBRO------
+CREATE FUNCTION SALUDOS.getIdRubro
+(@nombre_rubro nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN SELECT RUBR_COD FROM SALUDOS.RUBROS WHERE
+			RUBR_NOMBRE = @nombre_rubro
+GO
+
+
+------OBTENER ID EMPRESA-------
+CREATE FUNCTION SALUDOS.getIdEmpresa
+(@razon_social nvarchar(255), @cuit nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN SELECT EMPR_COD FROM SALUDOS.EMPRESAS WHERE
+			EMPR_RAZON_SOCIAL = @razon_social AND EMPR_CUIT = @cuit
+GO
+
+
+------OBTENER ID CLIENTE------
+CREATE FUNCTION SALUDOS.getIdCliente
+(@tipo_doc nvarchar(50), @nro_doc nvarchar(50))
+RETURNS TABLE
+AS
+	RETURN SELECT CLIE_COD FROM SALUDOS.CLIENTES WHERE
+			CLIE_TIPO_DOCUMENTO = @tipo_doc AND
+			CONVERT(nvarchar, CLIE_NRO_DOCUMENTO) = @nro_doc
+GO
+
+
+
+------OBTENER ROLES------
+CREATE FUNCTION SALUDOS.getRoles
+(@nombre_rol nvarchar(255), @habilitado nvarchar(50))
+RETURNS TABLE
+AS
+	RETURN SELECT ROL_NOMBRE FROM SALUDOS.ROLES WHERE (
+			(ROL_NOMBRE LIKE '%' + @nombre_rol +'%' OR @nombre_rol IS NULL) AND
+			(CONVERT(nvarchar,ROL_HABILITADO) = @habilitado OR @habilitado IS NULL))
+GO
