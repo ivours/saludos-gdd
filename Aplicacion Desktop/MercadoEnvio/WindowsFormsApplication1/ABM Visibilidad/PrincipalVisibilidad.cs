@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Visibilidad
 {
-    public partial class Principal : Form
+    public partial class PrincipalVisibilidad : Form
     {
-        public Principal()
+        public PrincipalVisibilidad()
         {
             InitializeComponent();
         }

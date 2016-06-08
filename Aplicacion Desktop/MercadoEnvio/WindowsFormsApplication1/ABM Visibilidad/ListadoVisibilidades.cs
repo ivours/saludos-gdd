@@ -9,16 +9,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Visibilidad
 {
-    public partial class Alta : Form
+    public partial class ListadoVisibilidades : Form
     {
-        public Alta()
+        public ListadoVisibilidades()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

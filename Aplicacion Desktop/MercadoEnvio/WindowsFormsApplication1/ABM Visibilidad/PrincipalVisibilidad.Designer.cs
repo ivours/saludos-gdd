@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Visibilidad
 {
-    partial class Principal
+    partial class PrincipalVisibilidad
     {
         /// <summary>
         /// Required designer variable.
