@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication1.Generar_Publicación
+{
+    public partial class CambiarEstadoPublicacion : Form
+    {
+        int codigoPubliacion;
+        String estadoActual;
+
+        public CambiarEstadoPublicacion()
+        {
+            InitializeComponent();
+        }
+
+        private void cambiarEstadoPublicacion()
+        {
+            String nuevoEstado = comboBox1.SelectedItem.ToString();
+
+            SQLManager manager = new SQLManager().generarSP("cambiarEstadoPublicacion")
+                                 .agregarIntSP("@codigoPublicacion", this.codigoPubliacion)
+                                 .agregarStringSP("@nuevoEstado", nuevoEstado);
+
+            manager.ejecutarSP();
+        }
+
+        public void setCodigoPublicacion(int codigoPublicacion)
+        {
+            this.codigoPubliacion = codigoPublicacion;
+        }
+
+        public void setEstadoActual(String estadoActual)
+        {
+            this.estadoActual = estadoActual;
+            this.llenarComboBoxEstados();
+        }
+
+        //Lleno el comboBox de estados con las distintas opciones permitidas segun el estado actual de la publicacion
+        //Inicializo como item seleccionado del comboBox al estado actual de la publicacion
+        private void llenarComboBoxEstados()
+        {
+            switch (this.estadoActual)
+            {
+                case "Borrador":
+                    comboBox1.Items.Add("Borrador");
+                    comboBox1.Items.Add("Activa");
+                    comboBox1.SelectedIndex = 0;
+                    break;
+
+                case "Activa":
+                    comboBox1.Items.Add("Activa");
+                    comboBox1.Items.Add("Pausada");
+                    comboBox1.Items.Add("Finalizada");
+                    comboBox1.SelectedIndex = 0;
+                    break;
+
+                case "Pausada":
+                    comboBox1.Items.Add("Pausada");
+                    comboBox1.Items.Add("Actuva");
+                    comboBox1.Items.Add("Finalizada");
+                    comboBox1.SelectedIndex = 0;
+                    break;
+
+                case "Finalizada":
+                    comboBox1.Items.Add("Finalizada");
+                    comboBox1.SelectedIndex = 0;
+                    break;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.cambiarEstadoPublicacion();
+        }
+    }
+}

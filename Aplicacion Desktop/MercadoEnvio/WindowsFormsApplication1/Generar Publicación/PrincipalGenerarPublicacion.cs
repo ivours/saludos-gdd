@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.Generar_Publicación
 {
-    public partial class Principal : Form
+    public partial class PrincipalGenerarPublicacion : Form
     {
         String username;
 
-        public Principal(String username)
+        public PrincipalGenerarPublicacion(String username)
         {
             InitializeComponent();
             this.username = username;
@@ -24,6 +24,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
             Generar_Publicación.CrearPublicacion crearPublicacion = new CrearPublicacion(username);
             crearPublicacion.Show();
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Generar_Publicación.CambiarEstadoPublicacion cambiarEstadoPublicacion = new CambiarEstadoPublicacion();
+            Generar_Publicación.ListadoPublicaciones listadoPublicaciones = new ListadoPublicaciones(cambiarEstadoPublicacion, username);
+            listadoPublicaciones.Show();
         }
     }
 }
