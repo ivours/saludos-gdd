@@ -42,11 +42,17 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             decimal comisionPorPublicar;
             decimal comisionPorVender;
             decimal comisionPorEnvio;
-            formAnterior.Name = "ModificarVisibilidad";
 
-            //Ver orden columnas
+            //TODO: Ver orden columnas
             switch (formAnterior.Name)
             {
+                case "BajaVisibilidad":
+                    nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                    (formAnterior as ABM_Visibilidad.BajaVisibilidad).bajaVisibilidad(nombreVisibilidad);
+                    MessageBox.Show("Se ha eliminado la visibilidad '" + nombreVisibilidad + "'");
+                    ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
+                    break;
+
                 case "ModificarVisibilidad":
 
                     nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();

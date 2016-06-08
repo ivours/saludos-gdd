@@ -24,7 +24,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            ABM_Visibilidad.BajaVisibilidad bajaVisibilidad = new BajaVisibilidad();
+            ABM_Visibilidad.ListadoVisibilidades listadoVisibilidades = new ListadoVisibilidades(bajaVisibilidad);
+            listadoVisibilidades.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
