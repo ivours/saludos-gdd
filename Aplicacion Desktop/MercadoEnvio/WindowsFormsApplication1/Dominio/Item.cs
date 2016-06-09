@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1.Dominio
 {
-    class Item
+    public class Item
     {
         String descripcion;
         decimal importe;

@@ -215,12 +215,23 @@ namespace WindowsFormsApplication1.Facturas
             DateTime fechaFacturacion = Convert.ToDateTime(dataGridView1.SelectedRows[0].Cells[4]);
             List<Item> itemsFactura = Dominio.Factura.getItemsFactura(codigoFactura);
 
-            //Si la factura tiene 1 item, entonces es factura por publicacion
-            if (itemsFactura.Count.Equals(1))
+            //Si el primer item de la factura tiene como descripcion "Publicacion", la factura corresponde a factura por publicacion
+            //en cualquier otro caso, corresponde a factura por venta
+            //TODO: IMPORTANTE. Ver formato descripcion de items!!!
+            if (itemsFactura.Count > 0 && itemsFactura[0].getDescripcion().Equals("Publicacion"))
             {
-                Facturas.FacturaPublicacion facturaPublicacion = new FacturaPublicacion(itemsFactura, codigoFactura, codigoPublicacion, 
+                Facturas.FacturaPublicacion facturaPublicacion = new FacturaPublicacion(itemsFactura, codigoFactura, codigoPublicacion,
                                                                                             destinatario, fechaFacturacion);
                 facturaPublicacion.Show();
+            }
+            else
+            {
+                if (itemsFactura.Count > 0)
+                {
+                    Facturas.FacturaVenta facturaVenta = new FacturaVenta(itemsFactura, codigoFactura, codigoPublicacion,
+                                                            destinatario, fechaFacturacion);
+                    facturaVenta.Show();
+                }
             }
         }
     }
