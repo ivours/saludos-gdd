@@ -55,7 +55,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void setRubroPrincipal(String rubroPrincipal)
         {
             textBox5.Text = rubroPrincipal;
-            this.idRubro = Rubro.getIdRubro(rubroPrincipal);
+
+            if(!rubroPrincipal.Equals(""))
+                this.idRubro = Rubro.getIdRubro(rubroPrincipal);
         }
 
         public void setEmail(String email)
