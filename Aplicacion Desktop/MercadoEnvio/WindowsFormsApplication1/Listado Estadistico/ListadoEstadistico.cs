@@ -68,7 +68,8 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
                     case 3:
                         this.llenarDataGridConConsulta(this.vendedoresConMayorFacturacion());
-                        dataGridView1.Columns[1].HeaderText = dataGridView1.Columns[1].HeaderText + " (ARS)";
+                        if(!dataGridView1.Columns[1].HeaderText.Contains("(ARS)"))
+                            dataGridView1.Columns[1].HeaderText = dataGridView1.Columns[1].HeaderText + " (ARS)";
                         break;
                 }
             }
