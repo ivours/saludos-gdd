@@ -95,7 +95,7 @@ namespace WindowsFormsApplication1
             switch (funcionalidades[nroBoton])
             {
                 case "Vender":
-                    formsFuncionalidades[nroBoton] = new Generar_Publicación.Principal(username);
+                    formsFuncionalidades[nroBoton] = new Generar_Publicación.PrincipalGenerarPublicacion(username);
                     break;
 
                 case "Comprar/Ofertar":
@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "Consulta de facturas":
-                    formsFuncionalidades[nroBoton] = new Facturas.Listado();
+                    formsFuncionalidades[nroBoton] = new Facturas.ListadoFacturas(username);
                     break;
 
                 case "Listado estadístico":

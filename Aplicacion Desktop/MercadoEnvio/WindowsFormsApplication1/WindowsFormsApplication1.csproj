@@ -217,7 +217,9 @@
     </Compile>
     <Compile Include="Dominio\Cliente.cs" />
     <Compile Include="Dominio\Empresa.cs" />
+    <Compile Include="Dominio\Factura.cs" />
     <Compile Include="Dominio\Fecha.cs" />
+    <Compile Include="Dominio\Item.cs" />
     <Compile Include="Dominio\Rol.cs" />
     <Compile Include="Dominio\Rubro.cs" />
     <Compile Include="Dominio\Usuario.cs" />
@@ -236,11 +238,17 @@
     <Compile Include="Facturas\FacturaVenta.Designer.cs">
       <DependentUpon>FacturaVenta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Facturas\Listado.cs">
+    <Compile Include="Facturas\ListadoFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturas\Listado.Designer.cs">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <Compile Include="Facturas\ListadoFacturas.Designer.cs">
+      <DependentUpon>ListadoFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas\SeleccionarFecha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturas\SeleccionarFecha.Designer.cs">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\DetalleProductosSinVender.cs">
       <SubType>Form</SubType>
@@ -260,11 +268,11 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\CambiarEstado.cs">
+    <Compile Include="Generar Publicación\CambiarEstadoPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Publicación\CambiarEstado.Designer.cs">
-      <DependentUpon>CambiarEstado.cs</DependentUpon>
+    <Compile Include="Generar Publicación\CambiarEstadoPublicacion.Designer.cs">
+      <DependentUpon>CambiarEstadoPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Generar Publicación\ModificarVisibilidad.cs">
       <SubType>Form</SubType>
@@ -284,17 +292,17 @@
     <Compile Include="Generar Publicación\CrearPublicacion.Designer.cs">
       <DependentUpon>CrearPublicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\Listado.cs">
+    <Compile Include="Generar Publicación\ListadoPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Publicación\Listado.Designer.cs">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <Compile Include="Generar Publicación\ListadoPublicaciones.Designer.cs">
+      <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\Principal.cs">
+    <Compile Include="Generar Publicación\PrincipalGenerarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Publicación\Principal.Designer.cs">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <Compile Include="Generar Publicación\PrincipalGenerarPublicacion.Designer.cs">
+      <DependentUpon>PrincipalGenerarPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Historial Cliente\HistorialCliente.cs">
       <SubType>Form</SubType>
@@ -411,8 +419,11 @@
     <EmbeddedResource Include="Facturas\FacturaVenta.resx">
       <DependentUpon>FacturaVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Facturas\Listado.resx">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <EmbeddedResource Include="Facturas\ListadoFacturas.resx">
+      <DependentUpon>ListadoFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\SeleccionarFecha.resx">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\DetalleProductosSinVender.resx">
       <DependentUpon>DetalleProductosSinVender.cs</DependentUpon>
@@ -423,8 +434,8 @@
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicación\CambiarEstado.resx">
-      <DependentUpon>CambiarEstado.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Publicación\CambiarEstadoPublicacion.resx">
+      <DependentUpon>CambiarEstadoPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\ModificarVisibilidad.resx">
       <DependentUpon>ModificarVisibilidad.cs</DependentUpon>
@@ -435,11 +446,11 @@
     <EmbeddedResource Include="Generar Publicación\CrearPublicacion.resx">
       <DependentUpon>CrearPublicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicación\Listado.resx">
-      <DependentUpon>Listado.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Publicación\ListadoPublicaciones.resx">
+      <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generar Publicación\Principal.resx">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <EmbeddedResource Include="Generar Publicación\PrincipalGenerarPublicacion.resx">
+      <DependentUpon>PrincipalGenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
