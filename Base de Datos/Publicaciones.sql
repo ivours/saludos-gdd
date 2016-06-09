@@ -200,3 +200,17 @@ RETURNS numeric(18,2) AS
 	END
 
 GO
+
+CREATE PROCEDURE SALUDOS.cambiarEstadoPublicacion
+	@codPublicacion numeric(18,0),
+	@nuevoEstado nvarchar(255)
+AS
+	DECLARE @codEstado int 
+	SET @codEstado	= (	SELECT ESTA_COD
+						FROM SALUDOS.ESTADOS
+						WHERE ESTA_NOMBRE = @nuevoEstado)
+
+	UPDATE SALUDOS.PUBLICACIONES
+	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codEstado
+	WHERE PUBL_COD = @codPublicacion
+GO
