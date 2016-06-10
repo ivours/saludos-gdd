@@ -16,19 +16,20 @@ RETURNS @calificaciones TABLE (Estrellas numeric(18,0), Descripción nvarchar(255
 GO
 
 CREATE FUNCTION SALUDOS.calificacionesPendientes(@usuario nvarchar(255))
-RETURNS @publicaciones TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2), Tipo nvarchar(255)) AS
+RETURNS @publicaciones TABLE (	Vendedor nvarchar(255), Código numeric(18,0),
+								Descripción nvarchar(255), Precio numeric(18,2),
+								Tipo nvarchar(255)) AS
 BEGIN
 	INSERT @publicaciones
-		SELECT publ.PUBL_COD, PUBL_DESCRIPCION, TRAN_PRECIO, TIPO_NOMBRE
-		FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.TIPOS tipo
-		WHERE	trns.PUBL_COD = publ.PUBL_COD AND
-				trns.TIPO_COD = tipo.TIPO_COD AND
-				trns.TRAN_ADJUDICADA = 1 AND
-				trns.USUA_USERNAME = @usuario AND
+		SELECT publ.USUA_USERNAME, publ.PUBL_COD, PUBL_DESCRIPCION, COMP_PRECIO, TIPO_NOMBRE
+		FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ, SALUDOS.TIPOS tipo
+		WHERE	comp.PUBL_COD = publ.PUBL_COD AND
+				publ.TIPO_COD = tipo.TIPO_COD AND
+				comp.USUA_USERNAME = @usuario AND
 				NOT EXISTS(	SELECT *
 							FROM SALUDOS.CALIFICACIONES cali
 							WHERE	publ.PUBL_COD = cali.PUBL_COD AND
-									cali.USUA_USERNAME = trns.USUA_USERNAME)
+									cali.USUA_USERNAME = comp.USUA_USERNAME)
 	RETURN;
 END
 GO
@@ -52,11 +53,10 @@ RETURNS int AS
 	BEGIN
 		RETURN (
 			SELECT COUNT(*)
-			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.TIPOS tipo
-			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
-					trns.TIPO_COD = tipo.TIPO_COD AND
-					trns.TRAN_ADJUDICADA = 1 AND
-					trns.USUA_USERNAME = @usuario AND
+			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ, SALUDOS.TIPOS tipo
+			WHERE	comp.PUBL_COD = publ.PUBL_COD AND
+					publ.TIPO_COD = tipo.TIPO_COD AND
+					comp.USUA_USERNAME = @usuario AND
 					NOT EXISTS(	SELECT *
 								FROM SALUDOS.CALIFICACIONES cali
 								WHERE	publ.PUBL_COD = cali.PUBL_COD AND
