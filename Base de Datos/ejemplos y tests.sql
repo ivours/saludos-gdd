@@ -6,6 +6,21 @@ values('felipe', 'Cliente')
 insert into saludos.publicaciones(publ_precio, tipo_cod)
 values(1, 1)
 
+insert into saludos.compras(publ_cod, usua_username)
+values(71079, 'felipe')
+
+insert into saludos.publicaciones(publ_precio, tipo_cod)
+values(2, 2)
+
+insert into saludos.compras(publ_cod, usua_username)
+values(71080, 'felipe')
+
+select * from saludos.publicaciones where publ_cod = 71079
+select * from saludos.compras
+
+select * from SALUDOS.CALIFICACIONESPENDIENTES('felipe')
+select saludos.cantidadCalificacionesPendientes('felipe')
+
 insert into saludos.transacciones(publ_cod, tipo_cod, usua_username, tran_adjudicada)
 values(71079, 1, 'felipe', 1)
 
