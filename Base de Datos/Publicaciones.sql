@@ -139,7 +139,7 @@ GO
 
 CREATE PROCEDURE SALUDOS.comprar
 	@codPublicacion numeric(18,0),
-	@cantidadComprada int,
+	@cantidadComprada numeric(18,0),
 	@usuario nvarchar(255),	
 	@optaEnvio bit
 AS
@@ -160,13 +160,18 @@ AS
 		EXEC SALUDOS.cambiarEstadoPublicacion @codPublicacion, 'Finalizada'
 	END
 
+	DECLARE @precio numeric(18,2)
+	SET @precio =	(SELECT PUBL_PRECIO
+					FROM SALUDOS.PUBLICACIONES
+					WHERE PUBL_COD = @codPublicacion)
+
 	IF @optaEnvio = 1
 		BEGIN
-			EXEC SALUDOS.facturarCompraYEnvio @codPublicacion
+			EXEC SALUDOS.facturarCompraYEnvio @codPublicacion, @cantidadComprada, @precio
 		END
 	ELSE
 		BEGIN
-			EXEC SALUDOS.facturarCompra	@codPublicacion
+			EXEC SALUDOS.facturarCompra	@codPublicacion, @cantidadComprada, @precio
 		END
 GO
 

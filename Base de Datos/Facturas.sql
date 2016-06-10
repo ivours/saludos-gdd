@@ -95,7 +95,8 @@ GO
 
 CREATE PROCEDURE SALUDOS.facturarCompra
 	@codPublicacion numeric(18,0),
-	@cantidadComprada numeric(18,0)
+	@cantidadComprada numeric(18,0),
+	@precio numeric(18,2)
 AS
 	DECLARE @comisionVenta numeric(18,2)
 	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
@@ -109,7 +110,7 @@ AS
 	FACT_FECHA, FACT_TOTAL, PUBL_COD, USUA_USERNAME)
 
 	VALUES(
-	saludos.fechaActual(), (@comisionVenta * @cantidadComprada), @codPublicacion,
+	saludos.fechaActual(), @comisionVenta * @cantidadComprada * @precio, @codPublicacion,
 
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.PUBLICACIONES
@@ -124,7 +125,7 @@ AS
 	ITEM_DESCRIPCION, FACT_COD)
 
 	VALUES(
-	@comisionVenta * @cantidadComprada, @cantidadComprada,
+	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
 	'Comisión por Venta', @codFactura
 	)
 
@@ -132,7 +133,8 @@ GO
 
 CREATE PROCEDURE SALUDOS.facturarCompraYEnvio
 	@codPublicacion numeric(18,0),
-	@cantidadComprada numeric(18,0)
+	@cantidadComprada numeric(18,0),
+	@precio numeric(18,2)
 AS
 	DECLARE @comisionVenta numeric(18,2)
 	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
@@ -153,7 +155,7 @@ AS
 	FACT_FECHA, FACT_TOTAL, PUBL_COD, USUA_USERNAME)
 
 	VALUES(
-	saludos.fechaActual(), (@comisionVenta * @cantidadComprada) + @comisionEnvio, @codPublicacion,
+	saludos.fechaActual(), (@comisionVenta * @cantidadComprada * @precio) + @comisionEnvio, @codPublicacion,
 
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.PUBLICACIONES
@@ -168,7 +170,7 @@ AS
 	ITEM_DESCRIPCION, FACT_COD)
 
 	VALUES(
-	@comisionVenta * @cantidadComprada, @cantidadComprada,
+	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
 	'Comisión por Venta', @codFactura
 	)
 
