@@ -138,27 +138,18 @@ CREATE PROCEDURE SALUDOS.comprar
 	@cantidadComprada int,
 	@usuario nvarchar(255)
 AS
-	INSERT INTO SALUDOS.TRANSACCIONES(
-	PUBL_COD, TIPO_COD, TRAN_ADJUDICADA,
-	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
-	TRAN_FORMA_PAGO, TRAN_PRECIO, USUA_USERNAME)
+	INSERT INTO SALUDOS.COMPRAS(
+	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
+	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
 
 	VALUES(
-	@codPublicacion,
-	
-	(SELECT TIPO_COD
-	FROM SALUDOS.TIPOS
-	WHERE TIPO_NOMBRE = 'Compra Inmediata'),
-	
-	1, @cantidadComprada,
-	SALUDOS.fechaActual(), 'Efectivo',
+	@cantidadComprada, SALUDOS.fechaActual(), 'Efectivo',
 
 	(SELECT PUBL_PRECIO
 	FROM SALUDOS.PUBLICACIONES
 	WHERE PUBL_COD = @codPublicacion),
 
-	@usuario
-	)
+	@codPublicacion, @usuario)
 GO
 
 CREATE PROCEDURE SALUDOS.ofertar
@@ -166,23 +157,13 @@ CREATE PROCEDURE SALUDOS.ofertar
 	@oferta numeric(18,2),
 	@usuario nvarchar(255)
 AS
-	INSERT INTO SALUDOS.TRANSACCIONES(
-	PUBL_COD, TIPO_COD, TRAN_ADJUDICADA,
-	TRAN_CANTIDAD_COMPRADA, TRAN_FECHA,
-	TRAN_FORMA_PAGO, TRAN_PRECIO, USUA_USERNAME)
+	INSERT INTO SALUDOS.OFERTAS(
+	OFER_FECHA, OFER_OFERTA,
+	PUBL_COD, USUA_USERNAME)
 
 	VALUES(
-	@codPublicacion,
-	
-	(SELECT TIPO_COD
-	FROM SALUDOS.TIPOS
-	WHERE TIPO_NOMBRE = 'Subasta'),
-	
-	0, 1,
-	SALUDOS.fechaActual(), 'Efectivo',
-
-	@oferta, @usuario
-	)
+	SALUDOS.fechaActual(), @oferta,
+	@codPublicacion, @usuario)
 GO
 
 CREATE FUNCTION SALUDOS.ultimaOferta(@codPublicacion numeric(18,0))
