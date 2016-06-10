@@ -59,6 +59,7 @@ CREATE TABLE SALUDOS.COMPRAS(
 	COMP_CANTIDAD	numeric(2,0),	--Compra_Cantidad.
 	COMP_FECHA		datetime,		--Compra_Fecha.
 	COMP_FORMA_PAGO	nvarchar(255),	--Forma_Pago_Desc.
+	COMP_OPTA_ENVIO	bit,			--new. Si quiere que se lo manden.
 	USUA_USERNAME	nvarchar(255),	--FK. Comprador.
 	PUBL_COD		numeric(18,0),	--FK. Qué compró.
 	CONSTRAINT PK_COMPRAS PRIMARY KEY (COMP_COD),
@@ -68,6 +69,7 @@ CREATE TABLE SALUDOS.OFERTAS(
 	OFER_COD		int IDENTITY,	--new
 	OFER_OFERTA		numeric(18,2),	--Oferta_Monto.
 	OFER_FECHA		datetime,		--Oferta_Fecha.
+	OFER_OPTA_ENVIO	bit,			--new. Si quiere que se lo manden.
 	USUA_USERNAME	nvarchar(255),	--FK. Ofertante.
 	PUBL_COD		numeric(18,0),	--FK. Qué ofertó.
 	CONSTRAINT PK_OFERTAS PRIMARY KEY (OFER_COD),
@@ -150,7 +152,7 @@ CREATE TABLE SALUDOS.ITEMS(
 	ITEM_DESCRIPCION		nvarchar(255),	--new. A qué corresponde el cobro.
 	FACT_COD				numeric(18,0),	--FK. Factura a la que pertenece.
 	CONSTRAINT CK_ITEM_DESCRIPCION CHECK
-		(ITEM_DESCRIPCION IN ('Comisión por Publicación', 'Comisión por Venta', 'Comisión por envío')), 
+		(ITEM_DESCRIPCION IN ('Comisión por Publicación', 'Comisión por Venta', 'Comisión por Envío')), 
 	CONSTRAINT PK_ITEMS PRIMARY KEY (ITEM_COD)
 )
 
@@ -527,11 +529,11 @@ WHERE Item_Factura_Monto IS NOT NULL
 
 --Migrando compras de publicaciones de tipo Compra Inmediata.
 INSERT INTO SALUDOS.COMPRAS(
-	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
+	COMP_CANTIDAD, COMP_OPTA_ENVIO, COMP_FECHA, COMP_FORMA_PAGO,
 	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
 
 SELECT DISTINCT
-	Compra_Cantidad, Compra_Fecha, 'Efectivo',
+	Compra_Cantidad, 0, Compra_Fecha, 'Efectivo',
 	Publicacion_Precio, Publicacion_Cod,
 	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
 FROM gd_esquema.Maestra
@@ -540,11 +542,11 @@ WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
 
 --Migrando compras de publicaciones de tipo Subasta.
 INSERT INTO SALUDOS.COMPRAS(
-	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
+	COMP_CANTIDAD, COMP_OPTA_ENVIO, COMP_FECHA, COMP_FORMA_PAGO,
 	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
 
 SELECT DISTINCT
-	1, Oferta_Fecha, 'Efectivo',
+	1, 0, Oferta_Fecha, 'Efectivo',
 	Oferta_Monto, Publicacion_Cod,
 	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
 FROM gd_esquema.Maestra t1
@@ -557,11 +559,11 @@ WHERE	Oferta_Fecha IS NOT NULL
 
 --Migrando ofertas de Subastas.
 INSERT INTO SALUDOS.OFERTAS(
-	OFER_FECHA, OFER_OFERTA, PUBL_COD,
+	OFER_FECHA, OFER_OFERTA, OFER_OPTA_ENVIO, PUBL_COD,
 	USUA_USERNAME)
 
 SELECT DISTINCT
-	Oferta_Fecha, Oferta_Monto, Publicacion_Cod,
+	Oferta_Fecha, Oferta_Monto, 0, Publicacion_Cod,
 	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
 FROM gd_esquema.Maestra
 WHERE Oferta_Fecha IS NOT NULL
