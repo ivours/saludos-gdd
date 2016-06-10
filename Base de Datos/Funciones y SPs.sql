@@ -538,6 +538,19 @@ AS BEGIN
 END
 GO
 
+
+
+-------OBTENER ROLES------
+CREATE FUNCTION SALUDOS.getRoles
+(@nombreRol nvarchar(255), @habilitado nvarchar(50))
+RETURNS TABLE
+AS
+	RETURN
+		(SELECT ROL_NOMBRE FROM SALUDOS.ROLES WHERE	
+		(ROL_NOMBRE = @nombreRol OR @nombreRol is null) AND
+		(CONVERT(nvarchar, ROL_HABILITADO) = @habilitado OR @habilitado is null))
+GO
+
 ------OBTENER USUARIOS-------
 CREATE FUNCTION SALUDOS.getUsuarios
 (@username nvarchar(255), @tipo nvarchar(255), @habilitado nvarchar(50))
@@ -591,3 +604,4 @@ AS
 			(ROL_NOMBRE LIKE '%' + @nombre_rol +'%' OR @nombre_rol IS NULL) AND
 			(CONVERT(nvarchar,ROL_HABILITADO) = @habilitado OR @habilitado IS NULL))
 GO
+
