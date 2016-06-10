@@ -20,9 +20,10 @@ namespace WindowsFormsApplication1.Facturas
         public ListadoFacturas(String username)
         {
             InitializeComponent();
+            ConfiguradorDataGrid.configurar(dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.username = username;
             this.inicializarCampos();
-            dataGridView1.RowCount = 10;
         }
 
         private void inicializarCampos()
@@ -112,29 +113,77 @@ namespace WindowsFormsApplication1.Facturas
 
         private SqlDataReader facturasRealizadasAlVendedor()
         {
-            DateTime fechaInicio = Convert.ToDateTime(textBox6.Text);
-            DateTime fechaFinalizacion = Convert.ToDateTime(textBox7.Text);
-            int codigoPublicacion = Convert.ToInt32(textBox1.Text);
-            int codigoFactura = Convert.ToInt32(textBox2.Text);
-            int importeMinimo = Convert.ToInt32(numericUpDown1.Value);
-            int importeMaximo = Convert.ToInt32(numericUpDown2.Value);
-            String destinatario = textBox3.Text; //TODO: Ver si tiene que ser el username o el nombre de cliente/empresa
-
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.facturasRealizadasAlVendedor(@fechaInicio, @fechaFinalizacion, @codigoPublicacion, @codigoFactura, @importeMinimo, @importeMaximo, @destinatario)";
-            consulta.Parameters.Add(new SqlParameter("@fechaInicio", fechaInicio));
-            consulta.Parameters.Add(new SqlParameter("@fechaFinalizacion", fechaFinalizacion));
-            consulta.Parameters.Add(new SqlParameter("@codigoPublicacion", codigoPublicacion));
-            consulta.Parameters.Add(new SqlParameter("@codigoFactura", codigoFactura));
-            consulta.Parameters.Add(new SqlParameter("@importeMinimo", importeMinimo));
-            consulta.Parameters.Add(new SqlParameter("@importeMaximo", importeMaximo));
-            consulta.Parameters.Add(new SqlParameter("@destinatario", destinatario));
+            consulta.Parameters.Add(new SqlParameter("@fechaInicio", this.filtrarFechaInicio()));
+            consulta.Parameters.Add(new SqlParameter("@fechaFinalizacion", this.filtrarFechaFinalizacion()));
+            consulta.Parameters.Add(new SqlParameter("@codigoPublicacion", this.filtrarCodigoPublicacion()));
+            consulta.Parameters.Add(new SqlParameter("@codigoFactura", this.filtrarCodigoFactura()));
+            consulta.Parameters.Add(new SqlParameter("@importeMinimo", this.filtrarImporteMinimo()));
+            consulta.Parameters.Add(new SqlParameter("@importeMaximo", this.filtrarImporteMaximo()));
+            consulta.Parameters.Add(new SqlParameter("@destinatario", this.filtrarDestinatario()));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
             return reader;
+        }
+
+        private Object filtrarDestinatario()
+        {
+            if (!textBox3.Text.Equals(""))
+                return textBox3.Text;
+            else
+                return DBNull.Value;
+        }
+
+        private Object filtrarImporteMaximo()
+        {
+            if (!numericUpDown2.Value.Equals(0))
+                return Convert.ToInt32(numericUpDown2.Value);
+            else
+                return DBNull.Value;
+        }
+
+        private Object filtrarImporteMinimo()
+        {
+            if (!numericUpDown1.Value.Equals(0))
+                return Convert.ToInt32(numericUpDown1.Value);
+            else
+                return DBNull.Value;
+        }
+
+        private Object filtrarCodigoFactura()
+        {
+            if (!textBox2.Text.Equals(""))
+                return Convert.ToInt32(textBox2.Text);
+            else
+                return DBNull.Value;
+        }
+
+        private Object filtrarCodigoPublicacion()
+        {
+            if(!textBox1.Text.Equals(""))
+                return Convert.ToInt32(textBox1.Text);
+            else 
+                return DBNull.Value;
+        }
+
+        private Object filtrarFechaInicio()
+        {
+            if (!textBox6.Text.Equals(""))
+                return Convert.ToDateTime(textBox6.Text);
+            else
+                return DBNull.Value;
+        }
+
+        private Object filtrarFechaFinalizacion()
+        {
+            if (!textBox7.Text.Equals(""))
+                return Convert.ToDateTime(textBox7.Text);
+            else
+                return DBNull.Value;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -145,8 +194,8 @@ namespace WindowsFormsApplication1.Facturas
             textBox4.Text = "0";
             int cantidadDeFacturas = dataGridView1.RowCount;
             int cantidadDePaginas = Convert.ToInt32(Convert.ToDouble(cantidadDeFacturas / 10));
-            textBox5.Text = cantidadDePaginas.ToString();
             this.ultimaPagina = cantidadDePaginas - 1;
+            textBox5.Text = this.ultimaPagina.ToString();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -209,29 +258,25 @@ namespace WindowsFormsApplication1.Facturas
 
         private void verDetalleFactura()
         {
-            int codigoFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0]);
-            int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1]);
-            String destinatario = this.username;
-            DateTime fechaFacturacion = Convert.ToDateTime(dataGridView1.SelectedRows[0].Cells[4]);
-            List<Item> itemsFactura = Dominio.Factura.getItemsFactura(codigoFactura);
+            int codigoFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+            int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
+            decimal total= Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[3].Value);
+            DateTime fechaFacturacion = Convert.ToDateTime(dataGridView1.SelectedRows[0].Cells[4].Value);
 
-            //TODO: IMPORTANTE. Ver formato descripcion de items!!!
-            for (int i = 0; i < itemsFactura.Count; i++)
-            {
-                if (itemsFactura[i].getDescripcion().Equals("Comisión por Publicación"))
-                {
-                    Facturas.FacturaPublicacion facturaPublicacion = new FacturaPublicacion(itemsFactura, codigoFactura, codigoPublicacion,
-                                                                                                destinatario, fechaFacturacion);
-                    facturaPublicacion.Show();
-                }
-                else
-                {
-                        Facturas.FacturaVenta facturaVenta = new FacturaVenta(itemsFactura, codigoFactura, codigoPublicacion,
-                                                                destinatario, fechaFacturacion);
-                        facturaVenta.Show();
-                }
-            }
+            String destinatario;
+            
+            if (Usuario.getTipoUsuario(username).Equals("Administrador"))
+                destinatario = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+            else
+                destinatario = textBox3.Text;
 
+            DetalleFactura detalleFactura = new DetalleFactura(codigoFactura, codigoPublicacion, destinatario, fechaFacturacion, total);
+            detalleFactura.Show();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            this.verDetalleFactura();
         }
     }
 }
