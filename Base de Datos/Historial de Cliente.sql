@@ -8,13 +8,22 @@ RETURNS int AS
 	BEGIN
 	DECLARE @cuenta decimal
 
-	SET	@cuenta = (	SELECT COUNT(*)
-					FROM SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
-					WHERE	trns.TIPO_COD = tipo.TIPO_COD AND
-							TIPO_NOMBRE = @tipoDePublicacion AND
-							USUA_USERNAME = @usuario)
+	IF @tipoDePublicacion = 'Compras'
+		BEGIN
+			SET	@cuenta = (	SELECT COUNT(*)
+							FROM SALUDOS.COMPRAS
+							WHERE USUA_USERNAME = @usuario
+							)
+		END
+	ELSE
+		BEGIN
+			SET	@cuenta = (	SELECT COUNT(*)
+							FROM SALUDOS.OFERTAS
+							WHERE USUA_USERNAME = @usuario
+							)
+		END
 	
-		SET @cuenta = CEILING(@cuenta / 10)
+	SET @cuenta = CEILING(@cuenta / 10)
 
 	RETURN CONVERT(int, @cuenta)
 
@@ -22,33 +31,28 @@ RETURNS int AS
 GO	
 
 CREATE FUNCTION SALUDOS.historialDeCompras(@usuario nvarchar(255))
-RETURNS @compras TABLE (Código numeric(18,0), Descripción nvarchar(255), Precio numeric(18,2), Fecha datetime) AS
+RETURNS @compras TABLE (Código_Transacción numeric(18,0), Código_Publicación numeric(18,0),
+						Descripción nvarchar(255), Precio numeric(18,2), Fecha datetime) AS
 	BEGIN
 		INSERT @compras
-			SELECT trns.TRAN_COD, PUBL_DESCRIPCION, TRAN_PRECIO, TRAN_FECHA
-			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
-			WHERE	publ.PUBL_COD = trns.PUBL_COD AND
-					trns.TIPO_COD = tipo.TIPO_COD AND
-					TIPO_NOMBRE = 'Compra Inmediata' AND
-					trns.USUA_USERNAME = @usuario
-			ORDER BY TRAN_FECHA DESC
+			SELECT COMP_COD, publ.PUBL_COD, PUBL_DESCRIPCION, COMP_PRECIO, COMP_FECHA
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.COMPRAS comp
+			WHERE	publ.PUBL_COD = comp.PUBL_COD AND
+					comp.USUA_USERNAME = @usuario
 		RETURN;
 	END
 GO
 
-CREATE FUNCTION SALUDOS.historialDeSubastas(@usuario nvarchar(255))
-RETURNS @subastas TABLE (	Código numeric(18,0), Descripción nvarchar(255),
-							Oferta numeric(18,2), Adjudicada nvarchar(2), Fecha datetime) AS
+CREATE FUNCTION SALUDOS.historialDeOfertas(@usuario nvarchar(255))
+RETURNS @subastas TABLE (	Código_Transacción numeric(18,0), Código_Publicación numeric(18,0),
+							Descripción nvarchar(255), Oferta numeric(18,2), Fecha datetime) AS
 	BEGIN
 		INSERT @subastas
-			SELECT	trns.TRAN_COD, PUBL_DESCRIPCION, TRAN_PRECIO,
-					CASE WHEN TRAN_ADJUDICADA = 1 THEN 'Sí' ELSE 'No' END, TRAN_FECHA
-			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.TRANSACCIONES trns, SALUDOS.TIPOS tipo
-			WHERE	publ.PUBL_COD = trns.PUBL_COD AND
-					trns.TIPO_COD = tipo.TIPO_COD AND
-					TIPO_NOMBRE = 'Subasta' AND
-					trns.USUA_USERNAME = @usuario
-			ORDER BY TRAN_FECHA DESC
+			SELECT OFER_COD, publ.PUBL_COD, PUBL_DESCRIPCION, OFER_OFERTA, OFER_FECHA
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.OFERTAS ofer
+			WHERE	publ.PUBL_COD = ofer.PUBL_COD AND
+					ofer.USUA_USERNAME = @usuario
 		RETURN;
 	END
 GO
+
