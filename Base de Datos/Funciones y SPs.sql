@@ -563,6 +563,7 @@ AS
 GO
 
 
+
 ------OBTENER ID RUBRO------
 CREATE FUNCTION SALUDOS.getIdRubro
 (@nombre_rubro nvarchar(255))
