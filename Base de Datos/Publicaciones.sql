@@ -105,6 +105,10 @@ AS
 
 	DATEADD(day, 7, SALUDOS.fechaActual())
 	)
+
+	DECLARE @codPublicacion numeric(18,0)
+	SET @codPublicacion = SCOPE_IDENTITY()
+	EXEC SALUDOS.facturarPublicacion @codPublicacion
 GO
 
 CREATE FUNCTION SALUDOS.stockActual(@codPublicacion numeric(18,0))
