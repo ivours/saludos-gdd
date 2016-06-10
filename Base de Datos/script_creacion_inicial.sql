@@ -584,6 +584,18 @@ WHERE	Oferta_Fecha IS NOT NULL
 						WHERE Oferta_Monto IS NOT NULL AND t2.Publicacion_Cod = t1.Publicacion_Cod)
 
 
+--Migrando ofertas de Subastas.
+INSERT INTO SALUDOS.OFERTAS(
+	OFER_FECHA, OFER_OFERTA, PUBL_COD,
+	USUA_USERNAME)
+
+SELECT DISTINCT
+	Oferta_Fecha, Oferta_Monto, Publicacion_Cod,
+	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
+FROM gd_esquema.Maestra
+WHERE Oferta_Fecha IS NOT NULL
+
+
 --Migrando transacciones de Compras Inmediatas.
 INSERT INTO SALUDOS.TRANSACCIONES(
 	PUBL_COD, TRAN_PRECIO, TRAN_FORMA_PAGO,
