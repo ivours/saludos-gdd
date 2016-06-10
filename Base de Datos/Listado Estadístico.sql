@@ -25,9 +25,9 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Productos_sin_vender int) AS
 					VISI_DESCRIPCION = @visibilidad AND
 					YEAR(publ.PUBL_FINALIZACION) = @anio AND
 					(MONTH(publ.PUBL_FINALIZACION) BETWEEN @primerMes AND @tercerMes) AND
-					NOT EXISTS (	SELECT trns.PUBL_COD
-									FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
-									WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
+					NOT EXISTS (	SELECT comp.PUBL_COD
+									FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ2
+									WHERE publ2.PUBL_COD = comp.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
 			GROUP BY usua.USUA_USERNAME
 			ORDER BY cantidad DESC
 		RETURN;
@@ -53,9 +53,9 @@ RETURNS @tabla TABLE (	Código numeric(18,0), Descripción nvarchar(255), Precio n
 					VISI_DESCRIPCION = @visibilidad AND
 					YEAR(publ.PUBL_FINALIZACION) = @anio AND
 					(MONTH(publ.PUBL_FINALIZACION) BETWEEN @primerMes AND @tercerMes) AND
-					NOT EXISTS (	SELECT trns.PUBL_COD
-								FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ2
-								WHERE publ2.PUBL_COD = trns.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
+					NOT EXISTS (	SELECT comp.PUBL_COD
+								FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ2
+								WHERE publ2.PUBL_COD = comp.PUBL_COD AND publ2.PUBL_COD = publ.PUBL_COD)
 			ORDER BY publ.PUBL_INICIO
 		RETURN;
 	END
@@ -71,15 +71,14 @@ RETURNS @tabla TABLE (Cliente nvarchar(255), Productos_comprados int) AS
 		SET @tercerMes = @trimestre * 3
 
 		INSERT @tabla
-			SELECT TOP 5 trns.USUA_USERNAME, COUNT(TRAN_COD) cantidad
-			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
-			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
+			SELECT TOP 5 comp.USUA_USERNAME, COUNT(COMP_COD) cantidad
+			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
+			WHERE	comp.PUBL_COD = publ.PUBL_COD AND
 					publ.RUBR_COD = rubr.RUBR_COD AND
-					TRAN_ADJUDICADA = 1 AND
-					YEAR(trns.TRAN_FECHA) = @anio AND
-					(MONTH(trns.TRAN_FECHA) BETWEEN @primerMes AND @tercerMes) AND
+					YEAR(comp.COMP_FECHA) = @anio AND
+					(MONTH(comp.COMP_FECHA) BETWEEN @primerMes AND @tercerMes) AND
 					RUBR_NOMBRE = @rubro
-			GROUP BY trns.USUA_USERNAME
+			GROUP BY comp.USUA_USERNAME
 			ORDER BY cantidad DESC 
 		RETURN;
 	END
