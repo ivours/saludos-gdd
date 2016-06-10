@@ -150,6 +150,9 @@ AS
 	WHERE PUBL_COD = @codPublicacion),
 
 	@codPublicacion, @usuario)
+
+	IF SALUDOS.stockActual(@codPublicacion) = 0
+		EXEC SALUDOS.cambiarEstadoPublicacion @codPublicacion, 'Finalizada'
 GO
 
 CREATE PROCEDURE SALUDOS.ofertar
