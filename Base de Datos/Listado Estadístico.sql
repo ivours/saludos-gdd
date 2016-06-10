@@ -114,12 +114,11 @@ RETURNS @tabla TABLE (Vendedor nvarchar(255), Monto_Facturado int) AS
 		SET @tercerMes = @trimestre * 3
 
 		INSERT @tabla
-			SELECT TOP 5 publ.USUA_USERNAME, SUM(TRAN_PRECIO * TRAN_CANTIDAD_COMPRADA) monto
-			FROM SALUDOS.TRANSACCIONES trns, SALUDOS.PUBLICACIONES publ
-			WHERE	trns.PUBL_COD = publ.PUBL_COD AND
-					TRAN_ADJUDICADA = 1 AND
-					YEAR(trns.TRAN_FECHA) = @anio AND
-					(MONTH(trns.TRAN_FECHA) BETWEEN @primerMes AND @tercerMes)
+			SELECT TOP 5 publ.USUA_USERNAME, SUM(COMP_PRECIO * COMP_CANTIDAD) monto
+			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+			WHERE	comp.PUBL_COD = publ.PUBL_COD AND
+					YEAR(comp.COMP_FECHA) = @anio AND
+					(MONTH(COMP.COMP_FECHA) BETWEEN @primerMes AND @tercerMes)
 			GROUP BY publ.USUA_USERNAME
 			ORDER BY monto DESC
 		RETURN;
