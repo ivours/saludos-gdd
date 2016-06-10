@@ -27,5 +27,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             siguienteFormulario.Visible = true;
             this.Visible = false;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ABM_Usuario.ListadoClientes listadoClientes = new ABM_Usuario.ListadoClientes();
+            listadoClientes.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ABM_Usuario.ListadoEmpresas listadoEmpresas = new ABM_Usuario.ListadoEmpresas();
+            listadoEmpresas.Show();
+        }
     }
 }

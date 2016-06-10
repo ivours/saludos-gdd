@@ -95,7 +95,7 @@ namespace WindowsFormsApplication1
             switch (funcionalidades[nroBoton])
             {
                 case "Vender":
-                    formsFuncionalidades[nroBoton] = new Generar_Publicación.Principal();
+                    formsFuncionalidades[nroBoton] = new Generar_Publicación.PrincipalGenerarPublicacion(username);
                     break;
 
                 case "Comprar/Ofertar":
@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "Consulta de facturas":
-                    formsFuncionalidades[nroBoton] = new Facturas.Listado();
+                    formsFuncionalidades[nroBoton] = new Facturas.ListadoFacturas(username);
                     break;
 
                 case "Listado estadístico":
@@ -119,7 +119,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "ABM Roles":
-                    formsFuncionalidades[nroBoton] = new ABM_Rol.Principal();
+                    formsFuncionalidades[nroBoton] = new ABM_Rol.PrincipalRol();
                     break;
 
                 case "ABM Usuarios":
@@ -127,7 +127,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "ABM Visibilidades":
-                    formsFuncionalidades[nroBoton] = new ABM_Visibilidad.Principal();
+                    formsFuncionalidades[nroBoton] = new ABM_Visibilidad.PrincipalVisibilidad();
                     break;
             }
         }

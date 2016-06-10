@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Dominio;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -241,12 +242,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
                                  .agregarStringSP("@cod_postal", codigoPostal)
                                  .agregarStringSP("@localidad", localidad)
                                  .agregarIntSP("@id_rubro", idRubro);
+
+            manager.ejecutarSP();
         }
 
-        public void setRubroPrincipal(String nombreRubro, int idRubro)
+        public void setRubroPrincipal(String nombreRubro)
         {
             textBox5.Text = nombreRubro;
-            this.idRubro = idRubro;
+            this.idRubro = Rubro.getIdRubro(nombreRubro);
         }
 
         private void button4_Click(object sender, EventArgs e)

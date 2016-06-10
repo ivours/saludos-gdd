@@ -44,6 +44,11 @@ namespace WindowsFormsApplication1
             return this;
         }
 
+        public SQLManager agregarDecimalSP(string nombreVariable, decimal numero)
+        {
+            command.Parameters.AddWithValue(nombreVariable, numero);
+            return this;
+        }
 
     }
 }

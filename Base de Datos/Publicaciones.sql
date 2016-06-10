@@ -200,3 +200,35 @@ RETURNS numeric(18,2) AS
 	END
 
 GO
+
+CREATE PROCEDURE SALUDOS.cambiarEstadoPublicacion
+	@codPublicacion numeric(18,0),
+	@nuevoEstado nvarchar(255)
+AS
+	DECLARE @codEstado int 
+	SET @codEstado	= (	SELECT ESTA_COD
+						FROM SALUDOS.ESTADOS
+						WHERE ESTA_NOMBRE = @nuevoEstado)
+
+	UPDATE SALUDOS.PUBLICACIONES
+	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codEstado
+	WHERE PUBL_COD = @codPublicacion
+GO
+
+CREATE FUNCTION SALUDOS.filtrarPublicacionesParaCambioDeEstado(
+	@descripcion nvarchar(255), @creador nvarchar(255), @estado nvarchar(255))
+RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
+								Vendedor nvarchar(255), Estado nvarchar(255)) AS
+	BEGIN
+		INSERT @publicaciones
+		SELECT PUBL_COD, PUBL_DESCRIPCION, USUA_USERNAME, ESTA_NOMBRE
+		FROM SALUDOS.PUBLICACIONES, SALUDOS.ESTADOS esta
+		WHERE	(USUA_USERNAME = @creador OR @creador IS NULL) AND
+				(PUBL_DESCRIPCION LIKE '%' + @descripcion + '%' OR @descripcion IS NULL) AND
+				(esta.ESTA_COD = (	SELECT ESTA_COD
+									FROM SALUDOS.ESTADOS
+									WHERE ESTA_NOMBRE = @estado) OR @estado IS NULL)
+		ORDER BY PUBL_COD
+		RETURN;
+	END
+GO

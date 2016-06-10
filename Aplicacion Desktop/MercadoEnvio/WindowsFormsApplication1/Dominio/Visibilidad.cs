@@ -25,5 +25,44 @@ namespace WindowsFormsApplication1.Dominio
 
             return visibilidades;
         }
+
+        public static decimal getComisionPublicacion(String nombreVisibilidad)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getComisionPublicacion(@nombreVisibilidad)";
+            consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return (decimal) reader.GetValue(0) ;
+        }
+
+        public static decimal getComisionVenta(String nombreVisibilidad)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getComisionVenta(@nombreVisibilidad)";
+            consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return (decimal)reader.GetValue(0);
+        }
+
+        public static decimal getComisionEnvio(String nombreVisibilidad)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getComisionEnvio(@nombreVisibilidad)";
+            consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return (decimal)reader.GetValue(0);
+        }
     }
 }
