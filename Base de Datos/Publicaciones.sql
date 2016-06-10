@@ -113,10 +113,10 @@ RETURNS int AS
 		DECLARE @cantidadComprada int
 		
 		SET @cantidadComprada = (
-			SELECT SUM(TRAN_CANTIDAD_COMPRADA)
-			FROM SALUDOS.TRANSACCIONES
+			SELECT SUM(COMP_CANTIDAD)
+			FROM SALUDOS.COMPRAS
 			WHERE	PUBL_COD = @codPublicacion AND
-					TRAN_FECHA <= SALUDOS.fechaActual()
+					COMP_FECHA <= SALUDOS.fechaActual()
 		)
 
 		IF @cantidadComprada IS NULL
@@ -191,8 +191,8 @@ RETURNS numeric(18,2) AS
 		DECLARE @oferta numeric(18,2)
 		
 		SET @oferta = (
-			SELECT MAX(TRAN_PRECIO)
-			FROM SALUDOS.TRANSACCIONES
+			SELECT MAX(OFER_OFERTA)
+			FROM SALUDOS.OFERTAS
 			WHERE PUBL_COD = @codPublicacion
 		)
 
