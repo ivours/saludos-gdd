@@ -333,7 +333,7 @@
             this.groupBox3.Controls.Add(this.radioButton1);
             this.groupBox3.Location = new System.Drawing.Point(12, 147);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(215, 51);
+            this.groupBox3.Size = new System.Drawing.Size(181, 51);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtro";
@@ -341,12 +341,11 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(134, 19);
+            this.radioButton2.Location = new System.Drawing.Point(106, 19);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(64, 17);
+            this.radioButton2.Size = new System.Drawing.Size(59, 17);
             this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Subasta";
+            this.radioButton2.Text = "Ofertas";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
@@ -354,10 +353,9 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(19, 19);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(109, 17);
+            this.radioButton1.Size = new System.Drawing.Size(66, 17);
             this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Compra inmediata";
+            this.radioButton1.Text = "Compras";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // groupBox4
