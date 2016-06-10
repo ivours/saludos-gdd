@@ -140,11 +140,12 @@ GO
 CREATE PROCEDURE SALUDOS.comprar
 	@codPublicacion numeric(18,0),
 	@cantidadComprada int,
-	@usuario nvarchar(255)
+	@usuario nvarchar(255),	
+	@optaEnvio bit
 AS
 	INSERT INTO SALUDOS.COMPRAS(
 	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
-	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
+	COMP_PRECIO, PUBL_COD, USUA_USERNAME, COMP_OPTA_ENVIO)
 
 	VALUES(
 	@cantidadComprada, SALUDOS.fechaActual(), 'Efectivo',
@@ -153,24 +154,35 @@ AS
 	FROM SALUDOS.PUBLICACIONES
 	WHERE PUBL_COD = @codPublicacion),
 
-	@codPublicacion, @usuario)
+	@codPublicacion, @usuario, @optaEnvio)
 
-	IF SALUDOS.stockActual(@codPublicacion) = 0
+	IF SALUDOS.stockActual(@codPublicacion) = 0 BEGIN
 		EXEC SALUDOS.cambiarEstadoPublicacion @codPublicacion, 'Finalizada'
+	END
+
+	IF @optaEnvio = 1
+		BEGIN
+			EXEC SALUDOS.facturarCompraYEnvio @codPublicacion
+		END
+	ELSE
+		BEGIN
+			EXEC SALUDOS.facturarCompra	@codPublicacion
+		END
 GO
 
 CREATE PROCEDURE SALUDOS.ofertar
 	@codPublicacion numeric(18,0),
 	@oferta numeric(18,2),
-	@usuario nvarchar(255)
+	@usuario nvarchar(255),
+	@optaEnvio bit
 AS
 	INSERT INTO SALUDOS.OFERTAS(
 	OFER_FECHA, OFER_OFERTA,
-	PUBL_COD, USUA_USERNAME)
+	PUBL_COD, USUA_USERNAME, OFER_OPTA_ENVIO)
 
 	VALUES(
 	SALUDOS.fechaActual(), @oferta,
-	@codPublicacion, @usuario)
+	@codPublicacion, @usuario, @optaEnvio)
 GO
 
 CREATE FUNCTION SALUDOS.ultimaOferta(@codPublicacion numeric(18,0))
