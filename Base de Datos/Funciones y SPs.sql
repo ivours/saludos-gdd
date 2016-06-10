@@ -563,7 +563,6 @@ AS
 GO
 
 
-
 ------OBTENER ID RUBRO------
 CREATE FUNCTION SALUDOS.getIdRubro
 (@nombre_rubro nvarchar(255))
@@ -606,3 +605,12 @@ AS
 			(CONVERT(nvarchar,ROL_HABILITADO) = @habilitado OR @habilitado IS NULL))
 GO
 
+
+CREATE FUNCTION SALUDOS.getItemsFactura
+(@cod_factura numeric(18,0))
+RETURNS TABLE
+AS
+	RETURN SELECT ITEM_DESCRIPCION, ITEM_IMPORTE, ITEM_CANTIDAD
+	FROM SALUDOS.ITEMS I 
+	WHERE I.FACT_COD = @cod_factura
+GO

@@ -8,5 +8,5 @@ DROP FUNCTION SALUDOS.existeTipoYNumeroDeDocumento, SALUDOS.existeRazonSocialYCu
 SALUDOS.obtenerUsuario, SALUDOS.obtenerRolesDeUsuario, SALUDOS.getTipoUsuario,SALUDOS.getFuncionalidadesRol, 
 SALUDOS.filtrarClientes, SALUDOS.filtrarEmpresas, SALUDOS.getRolesUsuario, SALUDOS.getRoles,
 SALUDOS.getNombresVisibilidades, SALUDOS.getUsuarios, SALUDOS.getIdRubro, SALUDOS.getIdCliente, 
-SALUDOS.getIdEmpresa, SALUDOS.getRoles
+SALUDOS.getIdEmpresa, SALUDOS.getRoles, SALUDOS.getItemsFactura
 GO
