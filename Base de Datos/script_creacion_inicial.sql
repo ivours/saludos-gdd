@@ -554,6 +554,36 @@ FROM gd_esquema.Maestra
 WHERE Item_Factura_Monto IS NOT NULL
 
 
+--Migrando compras de publicaciones de tipo Compra Inmediata.
+INSERT INTO SALUDOS.COMPRAS(
+	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
+	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
+
+SELECT DISTINCT
+	Compra_Cantidad, Compra_Fecha, 'Efectivo',
+	Publicacion_Precio, Publicacion_Cod,
+	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
+FROM gd_esquema.Maestra
+WHERE Compra_Fecha IS NOT NULL AND Publicacion_Tipo = 'Compra Inmediata'
+
+
+--Migrando compras de publicaciones de tipo Subasta.
+INSERT INTO SALUDOS.COMPRAS(
+	COMP_CANTIDAD, COMP_FECHA, COMP_FORMA_PAGO,
+	COMP_PRECIO, PUBL_COD, USUA_USERNAME)
+
+SELECT DISTINCT
+	1, Oferta_Fecha, 'Efectivo',
+	Oferta_Monto, Publicacion_Cod,
+	LOWER(Cli_Nombre) + LOWER(Cli_Apeliido)
+FROM gd_esquema.Maestra t1
+WHERE	Oferta_Fecha IS NOT NULL
+		AND Publicacion_Tipo = 'Subasta' AND
+		Oferta_Monto =	(SELECT MAX(Oferta_Monto)
+						FROM gd_esquema.Maestra t2
+						WHERE Oferta_Monto IS NOT NULL AND t2.Publicacion_Cod = t1.Publicacion_Cod)
+
+
 --Migrando transacciones de Compras Inmediatas.
 INSERT INTO SALUDOS.TRANSACCIONES(
 	PUBL_COD, TRAN_PRECIO, TRAN_FORMA_PAGO,
