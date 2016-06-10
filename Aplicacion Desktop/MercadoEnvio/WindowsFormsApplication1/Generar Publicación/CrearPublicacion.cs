@@ -152,9 +152,17 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             if(!numericUpDown2.Value.Equals(0))
                 this.llenarCamposComisiones();
+
+            if (comboBox2.SelectedItem.ToString().Equals("Gratis"))
+            {
+                checkBox2.Checked = false;
+                checkBox2.Hide();
+            }
+            else
+                checkBox2.Show();
         }
 
-        //TODO: Arreglar
+        //TODO: Terminar esto y testear
         private void llenarCamposComisiones()
         {
             decimal comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
