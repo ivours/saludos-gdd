@@ -38,6 +38,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 this.validarCampos();
                 this.altaUsuarioCliente();
+                MessageBox.Show("Cliente creado exitosamente");
+                this.Close();
             }
             catch (Exception excepcion)
             {

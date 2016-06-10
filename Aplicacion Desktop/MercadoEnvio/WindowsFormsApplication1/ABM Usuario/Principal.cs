@@ -39,5 +39,19 @@ namespace WindowsFormsApplication1.ABM_Usuario
             ABM_Usuario.ListadoEmpresas listadoEmpresas = new ABM_Usuario.ListadoEmpresas();
             listadoEmpresas.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Cambio_de_Password.CambiarPassword cambiarPassword = new Cambio_de_Password.CambiarPassword("Administrador");
+            ABM_Usuario.ListadoUsuarios listadoUsuarios = new ABM_Usuario.ListadoUsuarios(cambiarPassword);
+            listadoUsuarios.Show();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ABM_Usuario.HabilitarDeshabilitar habilitarDeshabilitar = new HabilitarDeshabilitar();
+            ABM_Usuario.ListadoUsuarios listadoUsuarios = new ABM_Usuario.ListadoUsuarios(habilitarDeshabilitar);
+            listadoUsuarios.Show();
+        }
     }
 }

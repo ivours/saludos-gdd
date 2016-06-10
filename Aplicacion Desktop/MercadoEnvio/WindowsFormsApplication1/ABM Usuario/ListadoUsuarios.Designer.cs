@@ -29,18 +29,19 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -60,21 +61,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
-            // label1
+            // label3
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Username";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(444, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Habilitado";
             // 
-            // textBox1
+            // comboBox2
             // 
-            this.textBox1.Location = new System.Drawing.Point(67, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 20);
-            this.textBox1.TabIndex = 1;
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(504, 22);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(53, 21);
+            this.comboBox2.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(253, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Tipo";
             // 
             // comboBox1
             // 
@@ -85,14 +97,21 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 2;
             // 
-            // label2
+            // textBox1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(253, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Tipo";
+            this.textBox1.Location = new System.Drawing.Point(67, 23);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(160, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Username";
             // 
             // button1
             // 
@@ -106,7 +125,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(998, 78);
+            this.button2.Location = new System.Drawing.Point(508, 78);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -138,32 +157,25 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 107);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1061, 290);
+            this.dataGridView1.Size = new System.Drawing.Size(571, 290);
             this.dataGridView1.TabIndex = 5;
             // 
-            // label3
+            // button5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(444, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Habilitado";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(504, 22);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(53, 21);
-            this.comboBox2.TabIndex = 4;
+            this.button5.Location = new System.Drawing.Point(508, 403);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "Seleccionar";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // ListadoUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1085, 438);
+            this.ClientSize = new System.Drawing.Size(598, 438);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -194,5 +206,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button5;
     }
 }
