@@ -143,10 +143,11 @@ AS
 											 )
 	
 	INSERT INTO SALUDOS.FACTURAS(
-	FACT_FECHA, FACT_TOTAL, PUBL_COD, USUA_USERNAME)
+	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
 
 	VALUES(
-	saludos.fechaActual(), @comisionVenta * @cantidadComprada * @precio, @codPublicacion,
+	saludos.fechaActual(), @codPublicacion,
+	@comisionVenta * @cantidadComprada * @precio, 
 
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.PUBLICACIONES
@@ -188,10 +189,11 @@ AS
 											 )
 
 	INSERT INTO SALUDOS.FACTURAS(
-	FACT_FECHA, FACT_TOTAL, PUBL_COD, USUA_USERNAME)
+	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
 
 	VALUES(
-	saludos.fechaActual(), (@comisionVenta * @cantidadComprada * @precio) + @comisionEnvio, @codPublicacion,
+	saludos.fechaActual(), @codPublicacion,
+	(@comisionVenta * @cantidadComprada * @precio) + (@comisionEnvio * @precio),
 
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.PUBLICACIONES
@@ -215,7 +217,7 @@ AS
 	ITEM_DESCRIPCION, FACT_COD)
 
 	VALUES(
-	@comisionEnvio, 1,
+	@comisionEnvio * @precio, 1,
 	'Comisión por Envío', @codFactura
 	)
 
