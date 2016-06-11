@@ -614,3 +614,72 @@ AS
 	FROM SALUDOS.ITEMS I 
 	WHERE I.FACT_COD = @cod_factura
 GO
+
+
+-------ALTA VISIBILIDAD------
+CREATE PROCEDURE SALUDOS.altaVisibilidad
+(@nombre_visibilidad nvarchar(255), @comision_publicacion numeric(18,2), @comision_venta numeric (18,2), @comision_envio numeric(18,2))
+AS BEGIN
+	INSERT INTO SALUDOS.VISIBILIDADES(VISI_COMISION_ENVIO, VISI_COMISION_PUBLICACION, VISI_COMISION_VENTA, VISI_DESCRIPCION)
+	VALUES(@comision_envio, @comision_publicacion, @comision_venta, @nombre_visibilidad)
+END
+GO
+
+
+
+
+--------MODIFICAR VISIBILIDAD---------
+CREATE PROCEDURE SALUDOS.modificarVisibilidad
+(@nombre_visibilidad nvarchar(255), @comision_publicacion numeric(18,2), @comision_venta numeric (18,2), @comision_envio numeric(18,2))
+AS BEGIN
+	UPDATE SALUDOS.VISIBILIDADES
+	SET VISI_COMISION_ENVIO = @comision_envio, VISI_COMISION_PUBLICACION = @comision_publicacion, 
+		VISI_COMISION_VENTA = @comision_venta, VISI_DESCRIPCION = @nombre_visibilidad
+	WHERE VISI_DESCRIPCION = @nombre_visibilidad
+END
+GO
+
+
+--------BAJA VISIBILIDAD---------
+CREATE PROCEDURE SALUDOS.bajaVisibilidad
+(@nombre_visibilidad nvarchar(255))
+AS BEGIN
+	DELETE SALUDOS.VISIBILIDADES
+	WHERE VISI_DESCRIPCION = @nombre_visibilidad
+END
+GO
+
+
+----------------------------COMISIONES-----------------------
+
+-------COMISION POR PUBLICACION----------
+CREATE FUNCTION SALUDOS.getComisionPublicacion
+(@nombre_visibilidad nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN 
+		SELECT VISI_COMISION_PUBLICACION FROM SALUDOS.VISIBILIDADES
+		WHERE VISI_DESCRIPCION = @nombre_visibilidad
+GO
+
+
+--------COMISION POR VENTA--------------
+CREATE FUNCTION SALUDOS.getComisionVenta
+(@nombre_visibilidad nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN
+		SELECT VISI_COMISION_VENTA FROM SALUDOS.VISIBILIDADES
+		WHERE VISI_DESCRIPCION = @nombre_visibilidad
+GO
+
+
+--------COMISION POR ENVIO--------------
+CREATE FUNCTION SALUDOS.getComisionEnvio
+(@nombre_visibilidad nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN
+		SELECT VISI_COMISION_ENVIO FROM SALUDOS.VISIBILIDADES
+		WHERE VISI_DESCRIPCION = @nombre_visibilidad
+GO
