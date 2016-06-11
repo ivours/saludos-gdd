@@ -58,20 +58,87 @@ GO
 
 CREATE PROCEDURE SALUDOS.facturarSubastasAdjudicadas AS
 	BEGIN
-		DECLARE cursorSubastasSinAdjudicar CURSOR FOR
-			SELECT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
-			FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp
+		DECLARE cursorSubastasSinFacturar CURSOR FOR
+
+			SELECT DISTINCT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
+			FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
 			WHERE	fact.PUBL_COD = comp.PUBL_COD AND
-					NOT EXISTS (SELECT ITEM_COD
-								FROM SALUDOS.ITEMS item
-								WHERE item.FACT_COD = fact.FACT_COD AND ITEM_DESCRIPCION LIKE ('Comisión por Venta'))
+					fact.PUBL_COD = publ.PUBL_COD AND
+					publ.TIPO_COD = (	SELECT TIPO_COD
+										FROM SALUDOS.TIPOS
+										WHERE TIPO_NOMBRE = 'Subasta') AND
+					publ.PUBL_COD IN (	SELECT p.PUBL_COD
+										FROM SALUDOS.ITEMS i, SALUDOS.FACTURAS f, SALUDOS.PUBLICACIONES p
+										WHERE	i.FACT_COD = f.FACT_COD AND
+												f.PUBL_COD = p.PUBL_COD
+										GROUP BY p.PUBL_COD
+										HAVING COUNT(*) = 1)
+
+			--código que creo que no sirve pero me da miedo borrar--
+			--SELECT DISTINCT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
+			--FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+			--WHERE	fact.PUBL_COD = comp.PUBL_COD AND
+			--		fact.PUBL_COD = publ.PUBL_COD AND
+			--		publ.TIPO_COD = (	SELECT TIPO_COD
+			--							FROM SALUDOS.TIPOS
+			--							WHERE TIPO_NOMBRE = 'Subasta') AND
+			--		NOT EXISTS (SELECT ITEM_COD
+			--					FROM SALUDOS.ITEMS item
+			--					WHERE	item.FACT_COD = fact.FACT_COD AND
+			--							fact.PUBL_COD = comp.PUBL_COD AND
+			--							ITEM_DESCRIPCION LIKE ('Comisión por Venta'))
+
+
+			--SELECT DISTINCT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
+			--FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+			--WHERE	fact.PUBL_COD = comp.PUBL_COD AND
+			--		fact.PUBL_COD = publ.PUBL_COD AND
+			--		publ.TIPO_COD = (	SELECT TIPO_COD
+			--							FROM SALUDOS.TIPOS
+			--							WHERE TIPO_NOMBRE = 'Subasta') AND
+			--		NOT EXISTS (SELECT COUNT(ITEM_COD)
+			--					FROM SALUDOS.ITEMS item
+			--					WHERE	item.FACT_COD = fact.FACT_COD AND
+			--							fact.PUBL_COD = comp.PUBL_COD AND
+			--							ITEM_DESCRIPCION LIKE ('Comisión por Venta')
+			--					GROUP BY ITEM_COD
+			--					HAVING COUNT(ITEM_COD) = 1)
+							
+			
+			--select * from saludos.items where fact_cod = 180059
+								
+			----cantidad de items para una publicación
+			--select p.publ_cod
+			--from saludos.items i, saludos.facturas f, saludos.publicaciones p
+			--where i.fact_cod = f.fact_cod AND f.publ_cod = p.publ_cod
+			--group by p.publ_cod
+			--having count(*) = 1
+	
+			--select * from saludos.facturas where publ_cod = 71079 -41 42 46 51 56
+
+			--					select item_cod, count(item_cod)
+			--					from saludos.items i, saludos.facturas f, saludos.publicaciones p
+			--					where	f.publ_cod = p.publ_cod
+			--					group by item_cod
+										
+
+			--SELECT publ_cod, COUNT(FACT_COD)
+			--FROM SALUDOS.FACTURAS
+			
+			--group by publ_cod having count(fact_cod) >1 order by publ_cod
+			--SELECT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
+			--FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp
+			--WHERE COMP.publ_COD = fact.PUBL_COD AND 0 = (SELECT COUNT(ITEM_COD)
+			--			FROM SALUDOS.ITEMS i, SALUDOS.FACTURAS f, SALUDOS.PUBLICACIONES p
+			--			WHERE p.PUBL_COD = f.PUBL_COD AND f.FACT_COD = i.FACT_COD/* and f.publ_cod = fact.publ_cod*/
+			--			AND item_descripcion like ('Comisión por Venta')) 
 
 			DECLARE @codPublicacion numeric(18,0)
 			DECLARE @precio numeric(18,2)
 			DECLARE @optaEnvio bit
 
-			OPEN cursorSubastasSinAdjudicar
-				FETCH NEXT FROM cursorSubastasSinAdjudicar INTO @codPublicacion, @precio, @optaEnvio
+			OPEN cursorSubastasSinFacturar
+				FETCH NEXT FROM cursorSubastasSinFacturar INTO @codPublicacion, @precio, @optaEnvio
 				WHILE (@@FETCH_STATUS = 0)
 	
 				BEGIN
@@ -84,13 +151,13 @@ CREATE PROCEDURE SALUDOS.facturarSubastasAdjudicadas AS
 							EXEC SALUDOS.facturarCompra @codPublicacion, 1, @precio
 						END
 
-					FETCH NEXT FROM cursorSubastasSinAdjudicar INTO @codPublicacion, @precio, @optaEnvio
+					FETCH NEXT FROM cursorSubastasSinFacturar INTO @codPublicacion, @precio, @optaEnvio
 				END
 
-			CLOSE cursorSubastasSinAdjudicar
-		DEALLOCATE cursorSubastasSinAdjudicar
+			CLOSE cursorSubastasSinFacturar
+		DEALLOCATE cursorSubastasSinFacturar
 	END
-GO
+GO 
 
 CREATE PROCEDURE SALUDOS.facturarPublicacion
 	@codPublicacion numeric(18,0)
