@@ -19,6 +19,10 @@ namespace WindowsFormsApplication1.Historial_Cliente
             InitializeComponent();
             this.username = username;
             this.inicializarCampos();
+            ConfiguradorDataGrid.configurar(dataGridView1);
+            ConfiguradorDataGrid.configurar(dataGridView2);
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.ultimasCincoCalificaciones(), dataGridView2);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -115,6 +119,19 @@ namespace WindowsFormsApplication1.Historial_Cliente
             reader.Read();
 
             return (int)reader.GetValue(0);
+        }
+
+        private SqlDataReader ultimasCincoCalificaciones()
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.ultimasCincoCalificaciones(@usuario)";
+            consulta.Parameters.Add(new SqlParameter("@usuario", this.username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
         }
     }
 }

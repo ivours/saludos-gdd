@@ -89,7 +89,7 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(140, 97);
+            this.textBox11.Location = new System.Drawing.Point(165, 97);
             this.textBox11.Name = "textBox11";
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(58, 20);
@@ -106,7 +106,7 @@
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(140, 71);
+            this.textBox10.Location = new System.Drawing.Point(165, 71);
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(58, 20);
@@ -123,7 +123,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(140, 45);
+            this.textBox6.Location = new System.Drawing.Point(165, 46);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(58, 20);
@@ -134,9 +134,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 48);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 13);
+            this.label3.Size = new System.Drawing.Size(151, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "Compras realizadas";
+            this.label3.Text = "Compras inmediatas realizadas";
             // 
             // groupBox2
             // 
@@ -244,7 +244,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(140, 19);
+            this.textBox3.Location = new System.Drawing.Point(165, 19);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(58, 20);
