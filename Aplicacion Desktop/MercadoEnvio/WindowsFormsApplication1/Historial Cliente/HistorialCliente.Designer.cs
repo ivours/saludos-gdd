@@ -264,12 +264,12 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 204);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(641, 224);
+            this.dataGridView1.Size = new System.Drawing.Size(641, 243);
             this.dataGridView1.TabIndex = 3;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(283, 436);
+            this.textBox4.Location = new System.Drawing.Point(283, 457);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(38, 20);
@@ -278,7 +278,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(327, 439);
+            this.label9.Location = new System.Drawing.Point(327, 460);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(12, 13);
             this.label9.TabIndex = 14;
@@ -286,7 +286,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(345, 436);
+            this.textBox5.Location = new System.Drawing.Point(345, 457);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(38, 20);
@@ -294,34 +294,37 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(251, 434);
+            this.button3.Location = new System.Drawing.Point(251, 455);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(26, 23);
             this.button3.TabIndex = 16;
             this.button3.Text = "<";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(389, 434);
+            this.button4.Location = new System.Drawing.Point(389, 455);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(26, 23);
             this.button4.TabIndex = 17;
             this.button4.Text = ">";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(219, 434);
+            this.button5.Location = new System.Drawing.Point(219, 455);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(26, 23);
             this.button5.TabIndex = 18;
             this.button5.Text = "< |";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(421, 434);
+            this.button6.Location = new System.Drawing.Point(421, 455);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(26, 23);
             this.button6.TabIndex = 19;
@@ -348,6 +351,7 @@
             this.radioButton2.TabIndex = 1;
             this.radioButton2.Text = "Ofertas";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
@@ -358,13 +362,14 @@
             this.radioButton1.TabIndex = 0;
             this.radioButton1.Text = "Compras";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.dataGridView2);
-            this.groupBox4.Location = new System.Drawing.Point(10, 473);
+            this.groupBox4.Location = new System.Drawing.Point(12, 480);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(643, 178);
+            this.groupBox4.Size = new System.Drawing.Size(643, 162);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Últimas 5 publicaciones calificadas";
@@ -374,14 +379,14 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(6, 19);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(631, 148);
+            this.dataGridView2.Size = new System.Drawing.Size(631, 134);
             this.dataGridView2.TabIndex = 22;
             // 
             // HistorialCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 660);
+            this.ClientSize = new System.Drawing.Size(665, 649);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button6);
