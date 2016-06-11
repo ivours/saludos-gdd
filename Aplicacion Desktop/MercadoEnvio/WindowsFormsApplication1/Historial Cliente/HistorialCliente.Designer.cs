@@ -117,9 +117,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 74);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(111, 13);
+            this.label7.Size = new System.Drawing.Size(95, 13);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Subastas adjudicadas";
+            this.label7.Text = "Subastas ganadas";
             // 
             // textBox6
             // 
@@ -271,6 +271,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(283, 436);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(38, 20);
             this.textBox4.TabIndex = 4;
             // 
