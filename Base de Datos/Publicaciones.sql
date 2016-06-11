@@ -112,7 +112,24 @@ AS
 
 	DECLARE @codPublicacion numeric(18,0)
 	SET @codPublicacion = SCOPE_IDENTITY()
-	EXEC SALUDOS.facturarPublicacion @codPublicacion
+
+	DECLARE @usuarioNuevo bit
+	SET @usuarioNuevo = (	SELECT USUA_NUEVO
+							FROM SALUDOS.USUARIOS
+							WHERE USUA_USERNAME = @usuario)
+
+	IF (@visibilidad <> 'Gratis' AND @usuarioNuevo = 1)
+		BEGIN
+			EXEC SALUDOS.facturarPublicacionGratuita @codPublicacion
+
+			UPDATE SALUDOS.USUARIOS
+			SET USUA_NUEVO = 0
+			WHERE USUA_USERNAME = @usuario
+		END
+	ELSE BEGIN
+		EXEC SALUDOS.facturarPublicacion @codPublicacion
+	END
+
 GO
 
 CREATE FUNCTION SALUDOS.stockActual(@codPublicacion numeric(18,0))
