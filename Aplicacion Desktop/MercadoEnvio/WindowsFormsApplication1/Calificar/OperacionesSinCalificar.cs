@@ -57,12 +57,15 @@ namespace WindowsFormsApplication1.Calificar
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String vendedor = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            int codigoPublicacion =  Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
+            if (!dataGridView1.SelectedRows.Count.Equals(0))
+            {
+                String vendedor = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
 
-            Calificar.CalificarOperacion calificarOperacion = new CalificarOperacion(username, vendedor, codigoPublicacion);
-            calificarOperacion.Show();
-            this.Close();
+                Calificar.CalificarOperacion calificarOperacion = new CalificarOperacion(username, vendedor, codigoPublicacion);
+                calificarOperacion.Show();
+                this.Close();
+            }
         }
     }
 }

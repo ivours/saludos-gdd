@@ -19,6 +19,7 @@ namespace WindowsFormsApplication1.Calificar
         {
             InitializeComponent();
             this.inicializarComboBoxEstrellas();
+            this.username = username;
             this.vendedor = vendedor;
             this.codigoPublicacion = codigoPublicacion;
             this.inicializarCampos();
