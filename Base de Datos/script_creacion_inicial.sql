@@ -515,7 +515,7 @@ SET IDENTITY_INSERT SALUDOS.FACTURAS OFF;
 INSERT INTO SALUDOS.ITEMS(
 	ITEM_IMPORTE, ITEM_CANTIDAD,
 	FACT_COD, ITEM_DESCRIPCION)
-SELECT DISTINCT
+SELECT
 	Item_Factura_Monto, Item_Factura_Cantidad,
 	Factura_Nro,
 	CASE
@@ -525,6 +525,14 @@ SELECT DISTINCT
 	END
 FROM gd_esquema.Maestra
 WHERE Item_Factura_Monto IS NOT NULL
+
+UPDATE items
+SET items.ITEM_DESCRIPCION = 'Comisión por Venta' 
+FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY FACT_COD ORDER BY (SELECT NULL)) filas
+    FROM SALUDOS.ITEMS
+) items
+WHERE filas > 1
 
 
 --Migrando compras de publicaciones de tipo Compra Inmediata.
