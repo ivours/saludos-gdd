@@ -1,3 +1,36 @@
+CREATE FUNCTION SALUDOS.mostrarPublicaciones(
+	@descripcion nvarchar(255), @rubro nvarchar(255))
+RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
+								Precio numeric(18,2), Rubro nvarchar(255),
+								Tipo nvarchar(255), Envío nvarchar(2)) AS
+	BEGIN
+		--Requisitos para mostrar una publicación:
+		--#El usuario debe estar habilitado,
+		--#La descripción tiene que incluir el texto que se busca,
+		--#La publicación debe pertenecer al rubro pedido,
+		--#La publicación debe estar activa.
+
+		INSERT @publicaciones
+		SELECT	PUBL_COD, PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, TIPO_NOMBRE,
+				CASE WHEN PUBL_PERMITE_ENVIO = 1 THEN 'Sí' ELSE 'No' END
+		FROM SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr, SALUDOS.TIPOS tipo
+		WHERE	1 = (	SELECT USUA_HABILITADO
+						FROM SALUDOS.USUARIOS usua
+						WHERE usua.USUA_USERNAME = publ.USUA_USERNAME) AND
+				(PUBL_DESCRIPCION LIKE '%' + @descripcion + '%' OR @descripcion IS NULL) AND
+				publ.RUBR_COD = rubr.RUBR_COD AND
+				(publ.RUBR_COD = (	SELECT RUBR_COD
+									FROM SALUDOS.RUBROS
+									WHERE RUBR_NOMBRE = @rubro) OR @rubro IS NULL) AND
+				publ.TIPO_COD =	tipo.TIPO_COD AND
+				ESTA_COD = (	SELECT ESTA_COD
+								FROM SALUDOS.ESTADOS
+								WHERE ESTA_NOMBRE = 'Activa')
+		ORDER BY PUBL_COD
+		RETURN;
+	END
+GO
+
 CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	DECLARE @fecha datetime
 	DECLARE @codActiva int
