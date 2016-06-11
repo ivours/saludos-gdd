@@ -31,7 +31,7 @@ RETURNS int AS
 GO	
 
 CREATE FUNCTION SALUDOS.historialDeCompras(@usuario nvarchar(255))
-RETURNS @compras TABLE (Código_Transacción numeric(18,0), Código_Publicación numeric(18,0),
+RETURNS @compras TABLE (Código_Compra numeric(18,0), Código_Publicación numeric(18,0),
 						Descripción nvarchar(255), Precio numeric(18,2), Fecha datetime) AS
 	BEGIN
 		INSERT @compras
@@ -44,7 +44,7 @@ RETURNS @compras TABLE (Código_Transacción numeric(18,0), Código_Publicación num
 GO
 
 CREATE FUNCTION SALUDOS.historialDeOfertas(@usuario nvarchar(255))
-RETURNS @subastas TABLE (	Código_Transacción numeric(18,0), Código_Publicación numeric(18,0),
+RETURNS @subastas TABLE (	Código_Oferta numeric(18,0), Código_Publicación numeric(18,0),
 							Descripción nvarchar(255), Oferta numeric(18,2), Fecha datetime) AS
 	BEGIN
 		INSERT @subastas
@@ -93,7 +93,3 @@ RETURNS int AS
 		RETURN @cuenta
 	END
 GO
-
-
-
-
