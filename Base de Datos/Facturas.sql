@@ -196,6 +196,35 @@ AS
 
 GO
 
+CREATE PROCEDURE SALUDOS.facturarPublicacionGratuita
+	@codPublicacion numeric(18,0)
+AS
+
+INSERT INTO SALUDOS.FACTURAS(
+	FACT_FECHA, FACT_TOTAL, PUBL_COD, USUA_USERNAME)
+
+	VALUES(
+	saludos.fechaActual(), 0.00, @codPublicacion,
+
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.PUBLICACIONES
+	WHERE PUBL_COD = @codPublicacion)
+	)
+
+	DECLARE @codFactura numeric(18,0)
+	SET @codFactura = SCOPE_IDENTITY()
+
+	INSERT INTO SALUDOS.ITEMS(
+	ITEM_IMPORTE, ITEM_CANTIDAD,
+	ITEM_DESCRIPCION, FACT_COD)
+
+	VALUES(
+	0, 1,
+	'Comisión por Publicación', @codFactura
+	)
+
+GO
+
 CREATE PROCEDURE SALUDOS.facturarCompra
 	@codPublicacion numeric(18,0),
 	@cantidadComprada numeric(18,0),
