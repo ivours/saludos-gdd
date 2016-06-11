@@ -56,3 +56,44 @@ RETURNS @subastas TABLE (	Código_Transacción numeric(18,0), Código_Publicación n
 	END
 GO
 
+CREATE FUNCTION SALUDOS.cantidadComprasRealizadas(@username nvarchar(255))
+RETURNS int AS
+	BEGIN
+		
+		DECLARE @compra int
+		SET @compra = (	SELECT TIPO_COD
+						FROM SALUDOS.TIPOS
+						WHERE TIPO_NOMBRE = 'Compra Inmediata')
+		
+		DECLARE @cuenta int
+		SET @cuenta = (SELECT COUNT(*)
+					   FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+					   WHERE	comp.PUBL_COD = publ.PUBL_COD AND
+								comp.USUA_USERNAME = @username AND
+								publ.TIPO_COD = @compra)	
+		RETURN @cuenta
+	END
+GO
+
+CREATE FUNCTION SALUDOS.cantidadSubastasGanadas(@username nvarchar(255))
+RETURNS int AS
+	BEGIN
+		
+		DECLARE @subasta int
+		SET @subasta = (	SELECT TIPO_COD
+						FROM SALUDOS.TIPOS
+						WHERE TIPO_NOMBRE = 'Subasta')
+		
+		DECLARE @cuenta int
+		SET @cuenta = (SELECT COUNT(*)
+					   FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+					   WHERE	comp.PUBL_COD = publ.PUBL_COD AND
+								comp.USUA_USERNAME = @username AND
+								publ.TIPO_COD = @subasta)	
+		RETURN @cuenta
+	END
+GO
+
+
+
+
