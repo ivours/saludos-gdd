@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.Calificar
 {
-    partial class Calificar
+    partial class OperacionesSinCalificar
     {
         /// <summary>
         /// Required designer variable.
@@ -43,6 +43,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Calificar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox1
             // 
@@ -60,16 +61,16 @@
             this.dataGridView1.Location = new System.Drawing.Point(6, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(629, 237);
-            this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.TabIndex = 0;
             // 
-            // Calificar
+            // OperacionesSinCalificar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 350);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
-            this.Name = "Calificar";
+            this.Name = "OperacionesSinCalificar";
             this.Text = "Calificar";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

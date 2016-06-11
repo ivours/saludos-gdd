@@ -31,6 +31,8 @@ namespace WindowsFormsApplication1
             string configuracion = ConfigurationManager.AppSettings["configuracionSQL"].ToString();
             SqlConnection conexion = new SqlConnection(configuracion);
             conexion.Open();
+            SqlCommand comm = new SqlCommand("SET ARITHABORT ON", conexion);
+            comm.ExecuteNonQuery();
             return conexion;
         }
 

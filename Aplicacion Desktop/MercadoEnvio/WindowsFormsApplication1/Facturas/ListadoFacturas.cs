@@ -34,8 +34,8 @@ namespace WindowsFormsApplication1.Facturas
                 textBox3.ReadOnly = true;
             }
 
-            this.paginaActual = 0;
-            this.ultimaPagina = 0;
+            this.paginaActual = 1;
+            this.ultimaPagina = 1;
 
         }
 
@@ -116,7 +116,27 @@ namespace WindowsFormsApplication1.Facturas
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.facturasRealizadasAlVendedor(@fechaInicio, @fechaFinalizacion, @codigoPublicacion, @codigoFactura, @importeMinimo, @importeMaximo, @destinatario)";
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.facturasRealizadasAlVendedor(@fechaInicio, @fechaFinalizacion, @codigoPublicacion, @codigoFactura, @importeMinimo, @importeMaximo, @destinatario) ORDER BY Fecha,Código_Factura OFFSET ((@NUM_PAG - 1) * 10) ROWS FETCH NEXT 10 ROWS ONLY";
+            consulta.Parameters.Add(new SqlParameter("@fechaInicio", this.filtrarFechaInicio()));
+            consulta.Parameters.Add(new SqlParameter("@fechaFinalizacion", this.filtrarFechaFinalizacion()));
+            consulta.Parameters.Add(new SqlParameter("@codigoPublicacion", this.filtrarCodigoPublicacion()));
+            consulta.Parameters.Add(new SqlParameter("@codigoFactura", this.filtrarCodigoFactura()));
+            consulta.Parameters.Add(new SqlParameter("@importeMinimo", this.filtrarImporteMinimo()));
+            consulta.Parameters.Add(new SqlParameter("@importeMaximo", this.filtrarImporteMaximo()));
+            consulta.Parameters.Add(new SqlParameter("@destinatario", this.filtrarDestinatario()));
+            consulta.Parameters.Add(new SqlParameter("@NUM_PAG", paginaActual));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+
+            return reader;
+        }
+
+        private int getCantidadDeFacturas()
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.cantidadDeFacturas(@fechaInicio, @fechaFinalizacion, @codigoPublicacion, @codigoFactura, @importeMinimo, @importeMaximo, @destinatario)";
             consulta.Parameters.Add(new SqlParameter("@fechaInicio", this.filtrarFechaInicio()));
             consulta.Parameters.Add(new SqlParameter("@fechaFinalizacion", this.filtrarFechaFinalizacion()));
             consulta.Parameters.Add(new SqlParameter("@codigoPublicacion", this.filtrarCodigoPublicacion()));
@@ -126,8 +146,9 @@ namespace WindowsFormsApplication1.Facturas
             consulta.Parameters.Add(new SqlParameter("@destinatario", this.filtrarDestinatario()));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
+            reader.Read();
 
-            return reader;
+            return (int)reader.GetValue(0);
         }
 
         private Object filtrarDestinatario()
@@ -188,13 +209,12 @@ namespace WindowsFormsApplication1.Facturas
 
         private void button2_Click(object sender, EventArgs e)
         {
+            this.paginaActual = 1;
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(),dataGridView1);
-            this.paginaActual = 0;
-            dataGridView1.FirstDisplayedScrollingRowIndex = 0;
-            textBox4.Text = "0";
+            textBox4.Text = this.paginaActual.ToString();
             int cantidadDeFacturas = dataGridView1.RowCount;
             int cantidadDePaginas = Convert.ToInt32(Convert.ToDouble(cantidadDeFacturas / 10));
-            this.ultimaPagina = cantidadDePaginas - 1;
+            this.ultimaPagina = this.getCantidadDeFacturas();
             textBox5.Text = this.ultimaPagina.ToString();
         }
 
@@ -209,19 +229,17 @@ namespace WindowsFormsApplication1.Facturas
             {
                 paginaActual = paginaActual + 1;
                 textBox4.Text = paginaActual.ToString();
-                dataGridView1.FirstDisplayedScrollingRowIndex = paginaActual * 10;
-                dataGridView1.Refresh();
+                ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(), dataGridView1);
             }
         }
 
         private void retrocederPagina()
         {
-            if (paginaActual > 0)
+            if (paginaActual > 1)
             {
                 paginaActual = paginaActual - 1;
                 textBox4.Text = paginaActual.ToString();
-                dataGridView1.FirstDisplayedScrollingRowIndex = paginaActual * 10;
-                dataGridView1.Refresh();
+                ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(), dataGridView1);
             }
         }
 
@@ -232,18 +250,16 @@ namespace WindowsFormsApplication1.Facturas
 
         private void irAPrimeraPagina()
         {
-            dataGridView1.FirstDisplayedScrollingRowIndex = 0;
-            paginaActual = 0;
+            paginaActual = 1;
             textBox4.Text = paginaActual.ToString();
-            dataGridView1.Refresh();
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(), dataGridView1);
         }
 
         private void irAUltimaPagina()
         {
-            dataGridView1.FirstDisplayedScrollingRowIndex = ultimaPagina * 10;
             paginaActual = ultimaPagina;
             textBox4.Text = paginaActual.ToString();
-            dataGridView1.Refresh();
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(), dataGridView1);
         }
 
         private void button5_Click(object sender, EventArgs e)
