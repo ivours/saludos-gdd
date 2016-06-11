@@ -53,17 +53,28 @@ namespace WindowsFormsApplication1.Facturas
         
         private void validarIntervaloFechas()
         {
-            DateTime extremoInferiorIntervaloFecha = Convert.ToDateTime(textBox6.Text);
-            DateTime extremoSuperiorIntervaloFecha = Convert.ToDateTime(textBox7.Text);
+            if (!textBox6.Text.Length.Equals(0))
+            {
+                DateTime extremoInferiorIntervaloFecha = Convert.ToDateTime(textBox6.Text);
+                if (extremoInferiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
+                    throw new Exception("La fecha del extremo inferior del intervalo de fechas no puede ser mayor a la fecha actual");
+            }
 
-            if (extremoInferiorIntervaloFecha.CompareTo(extremoSuperiorIntervaloFecha) > 0)
-                throw new Exception("El extremo inferior del intervalo de fechas no puede ser mayor al extremo superior");
+            if (!textBox7.Text.Length.Equals(0))
+            {
+                DateTime extremoSuperiorIntervaloFecha = Convert.ToDateTime(textBox7.Text);
+                if (extremoSuperiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
+                    throw new Exception("La fecha del extremo superior del intervalo de fechas no puede ser mayor a la fecha actual");
+            }
 
-            if (extremoInferiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
-                throw new Exception("La fecha del extremo inferior del intervalo de fechas no puede ser mayor a la fecha actual");
+            if ((!textBox6.Text.Length.Equals(0)) && (!textBox7.Text.Length.Equals(0)))
+            {
+                DateTime extremoInferiorIntervaloFecha = Convert.ToDateTime(textBox6.Text);
+                DateTime extremoSuperiorIntervaloFecha = Convert.ToDateTime(textBox7.Text);
 
-            if (extremoSuperiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
-                throw new Exception("La fecha del extremo superior del intervalo de fechas no puede ser mayor a la fecha actual");
+                if (extremoInferiorIntervaloFecha.CompareTo(extremoSuperiorIntervaloFecha) > 0)
+                    throw new Exception("El extremo inferior del intervalo de fechas no puede ser mayor al extremo superior");
+            }
         }
 
         private void validarIntervaloImportes()
@@ -209,13 +220,23 @@ namespace WindowsFormsApplication1.Facturas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.paginaActual = 1;
-            ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(),dataGridView1);
-            textBox4.Text = this.paginaActual.ToString();
-            int cantidadDeFacturas = dataGridView1.RowCount;
-            int cantidadDePaginas = Convert.ToInt32(Convert.ToDouble(cantidadDeFacturas / 10));
-            this.ultimaPagina = this.getCantidadDeFacturas();
-            textBox5.Text = this.ultimaPagina.ToString();
+            try
+            {
+                this.validarCampos();
+                this.paginaActual = 1;
+                ConfiguradorDataGrid.llenarDataGridConConsulta(this.facturasRealizadasAlVendedor(), dataGridView1);
+                textBox4.Text = this.paginaActual.ToString();
+                int cantidadDeFacturas = dataGridView1.RowCount;
+                int cantidadDePaginas = Convert.ToInt32(Convert.ToDouble(cantidadDeFacturas / 10));
+                this.ultimaPagina = this.getCantidadDeFacturas();
+                textBox5.Text = this.ultimaPagina.ToString();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
+
+
         }
 
         private void button4_Click(object sender, EventArgs e)
