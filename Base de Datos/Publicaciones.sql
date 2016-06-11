@@ -56,6 +56,8 @@ CREATE PROCEDURE SALUDOS.adjudicarSubastas AS
 			AND NOT EXISTS (SELECT PUBL_COD
 							FROM SALUDOS.COMPRAS comp
 							WHERE comp.PUBL_COD = publ.PUBL_COD)
+
+	EXEC SALUDOS.facturarSubastasAdjudicadas
 GO
 
 CREATE PROCEDURE SALUDOS.crearPublicacion

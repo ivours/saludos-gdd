@@ -56,6 +56,42 @@ RETURNS @facturas TABLE (	Código_Factura numeric(18,0), Código_Publicación numer
 	END
 GO
 
+CREATE PROCEDURE SALUDOS.facturarSubastasAdjudicadas AS
+	BEGIN
+		DECLARE cursorSubastasSinAdjudicar CURSOR FOR
+			SELECT fact.PUBL_COD, COMP_PRECIO, COMP_OPTA_ENVIO
+			FROM SALUDOS.FACTURAS fact, SALUDOS.COMPRAS comp
+			WHERE	fact.PUBL_COD = comp.PUBL_COD AND
+					NOT EXISTS (SELECT ITEM_COD
+								FROM SALUDOS.ITEMS item
+								WHERE item.FACT_COD = fact.FACT_COD AND ITEM_DESCRIPCION LIKE ('Comisión por Venta'))
+
+			DECLARE @codPublicacion numeric(18,0)
+			DECLARE @precio numeric(18,2)
+			DECLARE @optaEnvio bit
+
+			OPEN cursorSubastasSinAdjudicar
+				FETCH NEXT FROM cursorSubastasSinAdjudicar INTO @codPublicacion, @precio, @optaEnvio
+				WHILE (@@FETCH_STATUS = 0)
+	
+				BEGIN
+					IF @optaEnvio = 1
+						BEGIN
+							EXEC SALUDOS.facturarCompraYEnvio @codPublicacion, 1, @precio
+						END
+					ELSE
+						BEGIN
+							EXEC SALUDOS.facturarCompra @codPublicacion, 1, @precio
+						END
+
+					FETCH NEXT FROM cursorSubastasSinAdjudicar INTO @codPublicacion, @precio, @optaEnvio
+				END
+
+			CLOSE cursorSubastasSinAdjudicar
+		DEALLOCATE cursorSubastasSinAdjudicar
+	END
+GO
+
 CREATE PROCEDURE SALUDOS.facturarPublicacion
 	@codPublicacion numeric(18,0)
 AS
