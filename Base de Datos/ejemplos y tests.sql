@@ -26,19 +26,36 @@ values(71079, 1, 'felipe', 1)
 
 
 --subasta. la gana helipaz
-exec saludos.crearPublicacion 'odamartínez', 'Subasta', 'cacaaaaaaaa', 1, 40.00, 'Soportes', 'Activa', 1, 'Gratuita', 1
+exec saludos.crearPublicacion 'odamartínez', 'Compra Inmediata', 'cacaaaaaaaa', 1, 40.00, 'Soportes', 'Activa', 1, 'Oro', 1
 
-exec saludos.ofertar 71079, 14.00, 'odamartínez'
-exec saludos.ofertar 71079, 15.00, 'rinaldogarcía'
-exec saludos.ofertar 71079, 1000, 'helipaz'
+exec saludos.ofertar 71082, 14.00, 'odamartínez', 1
+exec saludos.ofertar 71082, 15.00, 'rinaldogarcía', 1
+exec saludos.ofertar 71082, 1000, 'helipaz', 1
 
 exec saludos.adjudicarSubastas
 
+select * from SALUDOS.publicaciones
+delete from saludos.publicaciones where publ_cod = 71079
+select * from saludos.compras order by publ_cod
+
+select * from saludos.facturas where publ_cod = 71079
+select * from saludos.items where fact_cod = 180042
 
 --prueba respecto a fechas y publicaciones finalizadas
-exec saludos.asignarfecha '2015-04-15 00:00:00.000' 
+exec saludos.asignarfecha '2015-06-30 00:00:00.000' 
 exec saludos.actualizarEstadosDePublicaciones
 
+exec saludos.facturarsubastasadjudicadas
+
+select * from saludos.ofertas
+select * from saludos.publicaciones
+select * from saludos.facturas --97265 select * from saludos.compras --41 43 45 44 50
+select * from saludos.items where fact_cod = 180050
+select * from saludos.visibilidades
+exec saludos.facturarSubastasAdjudicadas
+
+select * from saludos.facturas
+select * from saludos.items where fact_cod = 180042
 
 --ejemplo de cómo estaba hecha la creación de usuarios con dos cursores
 --Procedure que genera username y password para un cliente.
