@@ -20,4 +20,87 @@ DROP TABLE SALUDOS.FECHA
 DROP FUNCTION SALUDOS.fechaActual
 DROP PROCEDURE SALUDOS.asignarFecha
 
+DROP FUNCTION SALUDOS.mostrarPublicaciones
+DROP FUNCTION SALUDOS.cantidadDePaginasPublicaciones
+DROP PROCEDURE SALUDOS.actualizarEstadosDePublicaciones
+DROP PROCEDURE SALUDOS.adjudicarSubastas
+DROP PROCEDURE SALUDOS.crearPublicacion
+DROP FUNCTION SALUDOS.stockActual
+DROP PROCEDURE SALUDOS.cambiarEstadoPublicacion
+DROP FUNCTION SALUDOS.filtrarPublicacionesParaCambioDeEstado
+DROP FUNCTION SALUDOS.detallesPublicacionCompraInmediata
+DROP FUNCTION SALUDOS.detallesPublicacionSubasta
+
+DROP PROCEDURE SALUDOS.comprar
+DROP PROCEDURE SALUDOS.ofertar
+DROP FUNCTION SALUDOS.ultimaOferta
+
+DROP FUNCTION SALUDOS.cantidadDeFacturas
+DROP FUNCTION SALUDOS.facturasRealizadasAlVendedor
+DROP PROCEDURE SALUDOS.facturarSubastasAdjudicadas
+DROP PROCEDURE SALUDOS.facturarPublicacion
+DROP PROCEDURE SALUDOS.facturarPublicacionGratuita
+DROP PROCEDURE SALUDOS.facturarCompra
+DROP PROCEDURE SALUDOS.facturarCompraYEnvio
+
+DROP FUNCTION SALUDOS.cantidadDePaginasHistorialDe
+DROP FUNCTION SALUDOS.historialDeCompras
+DROP FUNCTION SALUDOS.historialDeOfertas
+DROP FUNCTION SALUDOS.cantidadComprasRealizadas
+DROP FUNCTION SALUDOS.cantidadSubastasGanadas
+
+DROP FUNCTION SALUDOS.vendedoresConMayorCantidadDeProductosNoVendidos
+DROP FUNCTION SALUDOS.productosSinVenderDeUnVendedor
+DROP FUNCTION SALUDOS.clientesMasCompradoresEnUnRubro
+DROP FUNCTION SALUDOS.vendedoresConMasFacturas
+DROP FUNCTION SALUDOS.vendedoresConMayorFacturacion
+
+DROP FUNCTION SALUDOS.ultimasCincoCalificaciones
+DROP FUNCTION SALUDOS.calificacionesPendientes
+DROP FUNCTION SALUDOS.cuantasEstrellasPara
+DROP FUNCTION SALUDOS.cantidadCalificacionesPendientes
+DROP PROCEDURE SALUDOS.calificarPublicacion
+
+DROP PROCEDURE SALUDOS.login
+DROP PROCEDURE SALUDOS.cambiarPassword
+DROP PROCEDURE SALUDOS.cambiarPasswordAdmin
+
+DROP FUNCTION SALUDOS.existeTipoYNumeroDeDocumento
+DROP PROCEDURE SALUDOS.altaUsuarioCliente
+DROP PROCEDURE SALUDOS.modificarCliente
+DROP FUNCTION SALUDOS.existeRazonSocialYCuit
+DROP PROCEDURE SALUDOS.altaUsuarioEmpresa
+DROP PROCEDURE SALUDOS.modificarEmpresa
+DROP PROCEDURE SALUDOS.borrarUsuario
+DROP PROCEDURE SALUDOS.habilitarUsuario
+DROP FUNCTION SALUDOS.filtrarEmpresas
+DROP FUNCTION SALUDOS.filtrarClientes
+
+DROP FUNCTION SALUDOS.existeRol
+DROP PROCEDURE SALUDOS.crearRol
+DROP PROCEDURE SALUDOS.borrarRol
+DROP PROCEDURE SALUDOS.modificarRol
+DROP PROCEDURE SALUDOS.agregarFuncionalidadARol
+DROP PROCEDURE SALUDOS.quitarFuncionalidadDeRol
+
+DROP PROCEDURE SALUDOS.altaVisibilidad
+DROP PROCEDURE SALUDOS.modificarVisibilidad
+DROP PROCEDURE SALUDOS.bajaVisibilidad
+DROP PROCEDURE SALUDOS.asignarVisibilidadAPublicacion
+
+DROP FUNCTION SALUDOS.getTipoUsuario
+DROP FUNCTION SALUDOS.getRolesUsuario
+DROP FUNCTION SALUDOS.getFuncionalidadesRol
+DROP FUNCTION SALUDOS.getNombresVisibilidades
+DROP FUNCTION SALUDOS.getRoles
+DROP FUNCTION SALUDOS.getUsuarios
+DROP FUNCTION SALUDOS.getIdRubro
+DROP FUNCTION SALUDOS.getIdEmpresa
+DROP FUNCTION SALUDOS.getIdCliente
+DROP FUNCTION SALUDOS.getRoles
+DROP FUNCTION SALUDOS.getItemsFactura
+DROP FUNCTION SALUDOS.getComisionPublicacion
+DROP FUNCTION SALUDOS.getComisionVenta
+DROP FUNCTION SALUDOS.getComisionEnvio
+
 DROP SCHEMA SALUDOS
