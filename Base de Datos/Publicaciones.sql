@@ -336,11 +336,11 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 GO
 
 CREATE FUNCTION SALUDOS.detallesPublicacionCompraInmediata(@codigo numeric(18,0))
-RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2),
-								Rubro nvarchar(255), Stock numeric(18,0), Envío bit) AS
+RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2), Rubro nvarchar(255),
+								Stock numeric(18,0), Envío bit, Vendedor nvarchar(255)) AS
 	BEGIN
 		INSERT @publicaciones
-		SELECT PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, SALUDOS.stockActual(@codigo), PUBL_PERMITE_ENVIO
+		SELECT PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, SALUDOS.stockActual(@codigo), PUBL_PERMITE_ENVIO, USUA_USERNAME
 		FROM SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
 		WHERE	PUBL_COD = @codigo AND
 				publ.RUBR_COD = rubr.RUBR_COD
@@ -349,11 +349,11 @@ RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2),
 GO
 
 CREATE FUNCTION SALUDOS.detallesPublicacionSubasta(@codigo numeric(18,0))
-RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2),
-								Rubro nvarchar(255), Última_Oferta numeric(18,2), Envío bit) AS
+RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2), Rubro nvarchar(255),
+								Última_Oferta numeric(18,2), Envío bit, Vendedor nvarchar(255)) AS
 	BEGIN
 		INSERT @publicaciones
-		SELECT PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, SALUDOS.ultimaOferta(@codigo), PUBL_PERMITE_ENVIO
+		SELECT PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, SALUDOS.ultimaOferta(@codigo), PUBL_PERMITE_ENVIO, USUA_USERNAME
 		FROM SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
 		WHERE	PUBL_COD = @codigo AND
 				publ.RUBR_COD = rubr.RUBR_COD
