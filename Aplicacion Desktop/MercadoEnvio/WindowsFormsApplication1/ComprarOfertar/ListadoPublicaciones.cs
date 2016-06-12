@@ -257,7 +257,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 }
                 else
                 {
-                    ComprarOfertar.Ofertar ofertar = new Ofertar();
+                    ComprarOfertar.Ofertar ofertar = new Ofertar(codigoPublicacion, this.username);
                     ofertar.Show();
                 }
             }
