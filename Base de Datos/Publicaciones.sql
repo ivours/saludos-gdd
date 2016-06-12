@@ -324,3 +324,16 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 		RETURN;
 	END
 GO
+
+CREATE FUNCTION SALUDOS.detallesPublicacionCompraInmediata(@codigo numeric(18,0))
+RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2),
+								Rubro nvarchar(255), Stock numeric(18,0), Envío bit) AS
+	BEGIN
+		INSERT @publicaciones
+		SELECT PUBL_DESCRIPCION, PUBL_PRECIO, RUBR_NOMBRE, SALUDOS.stockActual(@codigo), PUBL_PERMITE_ENVIO
+		FROM SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr
+		WHERE	PUBL_COD = @codigo AND
+				publ.RUBR_COD = rubr.RUBR_COD
+		RETURN;
+	END
+GO
