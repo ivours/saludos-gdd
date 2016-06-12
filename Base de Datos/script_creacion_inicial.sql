@@ -392,6 +392,10 @@ SELECT DISTINCT
 	Publicacion_Visibilidad_Precio, Publicacion_Visibilidad_Porcentaje
 FROM gd_esquema.Maestra
 
+UPDATE SALUDOS.VISIBILIDADES
+SET VISI_COMISION_ENVIO = 0.00
+WHERE VISI_DESCRIPCION = 'Gratis'
+
 GO
 
 
