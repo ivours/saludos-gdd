@@ -25,8 +25,7 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 				publ.TIPO_COD =	tipo.TIPO_COD AND
 				ESTA_COD = (	SELECT ESTA_COD
 								FROM SALUDOS.ESTADOS
-								WHERE ESTA_NOMBRE = 'Activa') AND
-				SALUDOS.stockActual(PUBL_COD) > 0
+								WHERE ESTA_NOMBRE = 'Activa')
 		ORDER BY VISI_COD
 		RETURN;
 	END
@@ -87,6 +86,30 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	WHERE  (PUBL_INICIO > @fecha OR
 			PUBL_FINALIZACION <= @fecha) AND
 			ESTA_COD IN (@codActiva, @codFinalizada)
+
+	UPDATE SALUDOS.PUBLICACIONES
+	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codFinalizada
+	FROM 	(SELECT comp.PUBL_COD, PUBL_STOCK, SUM(COMP_CANTIDAD) as COMP_ACTUALES
+			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+			WHERE comp.PUBL_COD = publ.PUBL_COD AND COMP_FECHA <= SALUDOS.fechaactual() 
+			GROUP BY comp.PUBL_COD, PUBL_STOCK) COMPRAS
+	WHERE COMPRAS.COMP_ACTUALES = COMPRAS.PUBL_STOCK
+
+--select *
+--from SALUDOS.publicaciones
+--where PUBL_COD IN (
+
+--			(SELECT comp.PUBL_COD, PUBL_STOCK, SUM(COMP_CANTIDAD) as COMPRAS
+--			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
+--			WHERE comp.PUBL_COD = publ.PUBL_COD AND COMP_FECHA <= SALUDOS.fechaactual() 
+--			GROUP BY comp.PUBL_COD, PUBL_STOCK)
+--			HAVING (SUM(COMP_CANTIDAD) > PUBL_STOCK)
+--			)
+				
+--			), 0) < PUBL_STOCK
+
+--select saludos.fechaactual()
+
 GO
 
 CREATE PROCEDURE SALUDOS.adjudicarSubastas AS
