@@ -21,6 +21,8 @@ namespace WindowsFormsApplication1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Fecha.asignarFecha();
+            Extras.Inicio.actualizarEstadosDePublicaciones();
+            Extras.Inicio.adjudicarSubastas();
             Application.Run(new Login.Login());
 
             return;

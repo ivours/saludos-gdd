@@ -42,5 +42,19 @@ namespace WindowsFormsApplication1.Dominio
 
             return rolesUsuario;
         }
+
+        public static int cantidadCalificacionesPendientes(String username)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.cantidadCalificacionesPendientes(@usuario)";
+            consulta.Parameters.Add(new SqlParameter("@usuario", username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+            reader.Read();
+
+            return (int)reader.GetValue(0);
+        }
     }
 }

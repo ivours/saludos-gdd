@@ -47,6 +47,25 @@ namespace WindowsFormsApplication1.ComprarOfertar
             this.inicializarStock(detallesPublicacionCompraInmediata);
             this.inicializarPermiteEnvio(detallesPublicacionCompraInmediata);
             this.inicializarPrecioTotal(detallesPublicacionCompraInmediata);
+            this.inicializarBotonComprar(detallesPublicacionCompraInmediata);
+        }
+
+        private void inicializarBotonComprar(SqlDataReader detallesPublicacionCompraInmediata)
+        {
+            int cantidadCalificacionesPendientes = Dominio.Usuario.cantidadCalificacionesPendientes(this.username);
+            String creadorPublicacion = detallesPublicacionCompraInmediata.GetValue(5).ToString();
+
+            if ( (cantidadCalificacionesPendientes > 2) )
+            {
+                button1.Enabled = false;
+                label7.Show();
+            }
+
+            if(creadorPublicacion.Equals(this.username))
+            {
+                button1.Enabled = false;
+                label6.Show();
+            }
         }
 
         private void inicializarDescripcion(SqlDataReader detallesPublicacionCompraInmediata)
@@ -123,6 +142,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void button1_Click(object sender, EventArgs e)
         {
             this.comprar();
+            this.Close();
         }
     }
 }

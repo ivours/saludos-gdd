@@ -150,6 +150,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Impact", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label1.Location = new System.Drawing.Point(12, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(403, 80);
@@ -168,11 +169,15 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.LightGray;
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.button9);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(26, 78);
             this.groupBox1.Name = "groupBox1";
+            this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(370, 51);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
@@ -203,7 +208,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(423, 325);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -216,6 +221,7 @@
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Menu";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Menu_Load);

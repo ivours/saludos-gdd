@@ -71,6 +71,11 @@ namespace WindowsFormsApplication1.ABM_Rubro
                     (formAnterior as Generar_Publicación.CrearPublicacion).setRubro(nombreRubro);
                     break;
 
+                case "ListadoPublicaciones":
+                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    (formAnterior as ComprarOfertar.ListadoPublicaciones).addRubro(nombreRubro);
+                    break;
+
             }
 
             this.Close();

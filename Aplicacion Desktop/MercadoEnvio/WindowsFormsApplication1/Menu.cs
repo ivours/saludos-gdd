@@ -84,7 +84,8 @@ namespace WindowsFormsApplication1
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Cambio_de_Password.CambiarPassword cambiarPassword = new Cambio_de_Password.CambiarPassword(username);
+            Cambio_de_Password.CambiarPassword cambiarPassword = new Cambio_de_Password.CambiarPassword("Propio");
+            cambiarPassword.setUsername(username);
             cambiarPassword.Show();
         }
 
@@ -99,15 +100,15 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "Comprar/Ofertar":
-                    formsFuncionalidades[nroBoton] = new ComprarOfertar.ListadoPublicaciones();
+                    formsFuncionalidades[nroBoton] = new ComprarOfertar.ListadoPublicaciones(username);
                     break;
 
                 case "Historial de cliente":
-                    formsFuncionalidades[nroBoton] = new Historial_Cliente.HistorialCliente();
+                    formsFuncionalidades[nroBoton] = new Historial_Cliente.HistorialCliente(username);
                     break;
 
                 case "Calificar al vendedor":
-                    formsFuncionalidades[nroBoton] = new Calificar.Calificar();
+                    formsFuncionalidades[nroBoton] = new Calificar.OperacionesSinCalificar(username);
                     break;
 
                 case "Consulta de facturas":

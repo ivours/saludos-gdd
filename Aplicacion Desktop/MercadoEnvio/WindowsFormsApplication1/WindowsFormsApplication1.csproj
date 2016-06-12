@@ -107,6 +107,12 @@
     <Compile Include="ABM Usuario\CargarDatosEmpresa.Designer.cs">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\HabilitarDeshabilitar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\HabilitarDeshabilitar.Designer.cs">
+      <DependentUpon>HabilitarDeshabilitar.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\ListadoUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,17 +185,17 @@
     <Compile Include="ABM Visibilidad\PrincipalVisibilidad.Designer.cs">
       <DependentUpon>PrincipalVisibilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar\Calificar.cs">
+    <Compile Include="Calificar\OperacionesSinCalificar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar\Calificar.Designer.cs">
-      <DependentUpon>Calificar.cs</DependentUpon>
+    <Compile Include="Calificar\OperacionesSinCalificar.Designer.cs">
+      <DependentUpon>OperacionesSinCalificar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar\CalificarVendedor.cs">
+    <Compile Include="Calificar\CalificarOperacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar\CalificarVendedor.Designer.cs">
-      <DependentUpon>CalificarVendedor.cs</DependentUpon>
+    <Compile Include="Calificar\CalificarOperacion.Designer.cs">
+      <DependentUpon>CalificarOperacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Cambio de Password\CambiarPassword.cs">
       <SubType>Form</SubType>
@@ -217,26 +223,20 @@
     </Compile>
     <Compile Include="Dominio\Cliente.cs" />
     <Compile Include="Dominio\Empresa.cs" />
-    <Compile Include="Dominio\Factura.cs" />
     <Compile Include="Dominio\Fecha.cs" />
-    <Compile Include="Dominio\Item.cs" />
     <Compile Include="Dominio\Rol.cs" />
     <Compile Include="Dominio\Rubro.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Dominio\Visibilidad.cs" />
+    <Compile Include="Extras\ConcatenadorDeStrings.cs" />
     <Compile Include="Extras\ConfiguradorDataGrid.cs" />
     <Compile Include="Extras\EmailChecker.cs" />
-    <Compile Include="Facturas\FacturaPublicacion.cs">
+    <Compile Include="Extras\Inicio.cs" />
+    <Compile Include="Facturas\DetalleFactura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturas\FacturaPublicacion.Designer.cs">
-      <DependentUpon>FacturaPublicacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Facturas\FacturaVenta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Facturas\FacturaVenta.Designer.cs">
-      <DependentUpon>FacturaVenta.cs</DependentUpon>
+    <Compile Include="Facturas\DetalleFactura.Designer.cs">
+      <DependentUpon>DetalleFactura.cs</DependentUpon>
     </Compile>
     <Compile Include="Facturas\ListadoFacturas.cs">
       <SubType>Form</SubType>
@@ -362,6 +362,9 @@
     <EmbeddedResource Include="ABM Usuario\CargarDatosEmpresa.resx">
       <DependentUpon>CargarDatosEmpresa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\HabilitarDeshabilitar.resx">
+      <DependentUpon>HabilitarDeshabilitar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ListadoUsuarios.resx">
       <DependentUpon>ListadoUsuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,11 +398,11 @@
     <EmbeddedResource Include="ABM Visibilidad\PrincipalVisibilidad.resx">
       <DependentUpon>PrincipalVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar\Calificar.resx">
-      <DependentUpon>Calificar.cs</DependentUpon>
+    <EmbeddedResource Include="Calificar\OperacionesSinCalificar.resx">
+      <DependentUpon>OperacionesSinCalificar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar\CalificarVendedor.resx">
-      <DependentUpon>CalificarVendedor.cs</DependentUpon>
+    <EmbeddedResource Include="Calificar\CalificarOperacion.resx">
+      <DependentUpon>CalificarOperacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cambio de Password\CambiarPassword.resx">
       <DependentUpon>CambiarPassword.cs</DependentUpon>
@@ -413,11 +416,8 @@
     <EmbeddedResource Include="ComprarOfertar\ListadoPublicaciones.resx">
       <DependentUpon>ListadoPublicaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Facturas\FacturaPublicacion.resx">
-      <DependentUpon>FacturaPublicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Facturas\FacturaVenta.resx">
-      <DependentUpon>FacturaVenta.cs</DependentUpon>
+    <EmbeddedResource Include="Facturas\DetalleFactura.resx">
+      <DependentUpon>DetalleFactura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Facturas\ListadoFacturas.resx">
       <DependentUpon>ListadoFacturas.cs</DependentUpon>

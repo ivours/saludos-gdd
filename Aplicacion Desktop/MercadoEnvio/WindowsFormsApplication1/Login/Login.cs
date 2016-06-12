@@ -52,8 +52,10 @@ namespace WindowsFormsApplication1.Login
                 //String username = textBox1.Text;
                 //String password = textBox2.Text;
                 //TODO: Dejo hardcodeado usuario admin para tests, sacar despues
-                String username = "admin2";
-                String password = "w23e";
+                //String username = "admin";
+                //String password = "w23e";
+                String username = "naibijara";
+                String password = "87691964";
 
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", username)

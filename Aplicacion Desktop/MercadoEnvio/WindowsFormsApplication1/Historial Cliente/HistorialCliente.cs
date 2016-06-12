@@ -291,7 +291,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
             this.avanzarPagina();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click_1(object sender, EventArgs e)
         {
             this.irAUltimaPagina();
         }

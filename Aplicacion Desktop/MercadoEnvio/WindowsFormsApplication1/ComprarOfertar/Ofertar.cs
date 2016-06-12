@@ -45,6 +45,25 @@ namespace WindowsFormsApplication1.ComprarOfertar
             this.inicializarPermiteEnvio(detallesPublicacionSubasta);
             this.inicializarUltimaOferta(detallesPublicacionSubasta);
             this.inicializarPrecioSugerido(detallesPublicacionSubasta);
+            this.inicializarBotonComprar(detallesPublicacionSubasta);
+        }
+
+        private void inicializarBotonComprar(SqlDataReader detallesPublicacionSubasta)
+        {
+            int cantidadCalificacionesPendientes = Dominio.Usuario.cantidadCalificacionesPendientes(this.username);
+            String creadorPublicacion = detallesPublicacionSubasta.GetValue(5).ToString();
+
+            if ((cantidadCalificacionesPendientes > 2))
+            {
+                button1.Enabled = false;
+                label7.Show();
+            }
+
+            if (creadorPublicacion.Equals(this.username))
+            {
+                button1.Enabled = false;
+                label3.Show();
+            }
         }
 
         private void inicializarUltimaOferta(SqlDataReader detallesPublicacionSubasta)

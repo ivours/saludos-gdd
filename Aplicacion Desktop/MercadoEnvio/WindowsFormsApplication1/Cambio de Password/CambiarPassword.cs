@@ -14,9 +14,16 @@ namespace WindowsFormsApplication1.Cambio_de_Password
     {
         String username;
 
-        public CambiarPassword(String username)
+        public CambiarPassword(String modo)
         {
             InitializeComponent();
+
+            if (modo.Equals("Administrador"))
+                textBox1.ReadOnly = true;
+        }
+
+        public void setUsername(String username)
+        {
             this.username = username;
         }
 

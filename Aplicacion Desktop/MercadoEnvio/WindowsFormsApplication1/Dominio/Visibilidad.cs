@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1.Dominio
             consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
+            reader.Read();
 
             return (decimal) reader.GetValue(0) ;
         }
@@ -48,6 +49,7 @@ namespace WindowsFormsApplication1.Dominio
             consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
+            reader.Read();
 
             return (decimal)reader.GetValue(0);
         }
@@ -61,6 +63,7 @@ namespace WindowsFormsApplication1.Dominio
             consulta.Parameters.Add(new SqlParameter("@nombreVisibilidad", nombreVisibilidad));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
+            reader.Read();
 
             return (decimal)reader.GetValue(0);
         }

@@ -229,6 +229,11 @@
             // 
             this.numericUpDown2.DecimalPlaces = 2;
             this.numericUpDown2.Location = new System.Drawing.Point(91, 214);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown2.TabIndex = 12;
