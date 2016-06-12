@@ -25,7 +25,8 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 				publ.TIPO_COD =	tipo.TIPO_COD AND
 				ESTA_COD = (	SELECT ESTA_COD
 								FROM SALUDOS.ESTADOS
-								WHERE ESTA_NOMBRE = 'Activa')
+								WHERE ESTA_NOMBRE = 'Activa') AND
+				SALUDOS.stockActual(PUBL_COD) > 0
 		ORDER BY VISI_COD
 		RETURN;
 	END
@@ -350,3 +351,4 @@ RETURNS @publicaciones TABLE (	Descripción nvarchar(255), Precio numeric(18,2),
 		RETURN;
 	END
 GO
+
