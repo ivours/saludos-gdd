@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1.Calificar
         {
             SQLManager manager = new SQLManager().generarSP("calificarPublicacion")
                      .agregarStringSP("@usuario", this.username)
-                     .agregarIntSP("@pubicacion", this.codigoPublicacion)
+                     .agregarIntSP("@publicacion", this.codigoPublicacion)
                      .agregarIntSP("@estrellas", (int)comboBox1.SelectedItem)
                      .agregarStringSP("@descripcion", textBox3.Text);
 
