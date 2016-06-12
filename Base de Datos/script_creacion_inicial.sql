@@ -2222,12 +2222,17 @@ GO
 
 CREATE FUNCTION SALUDOS.getUsuarios
 (@username nvarchar(255), @tipo nvarchar(255), @habilitado nvarchar(50))
-RETURNS TABLE
+RETURNS @usuarios TABLE (Usuario nvarchar(255), Tipo nvarchar(255), Habilitado bit)
 AS
-	RETURN SELECT USUA_USERNAME FROM SALUDOS.USUARIOS WHERE 
-			(USUA_USERNAME = @username OR @username IS NULL) AND
-			(USUA_TIPO = @tipo OR @tipo IS NULL) AND
-			(CONVERT(NVARCHAR,USUA_HABILITADO) = @habilitado OR @habilitado IS NULL)
+	BEGIN
+		INSERT @usuarios
+			SELECT USUA_USERNAME, USUA_TIPO, USUA_HABILITADO
+			FROM SALUDOS.USUARIOS
+			WHERE	(USUA_USERNAME = @username OR @username IS NULL) AND
+					(USUA_TIPO = @tipo OR @tipo IS NULL) AND
+					(CONVERT(NVARCHAR,USUA_HABILITADO) = @habilitado OR @habilitado IS NULL)
+		RETURN;
+	END
 GO
 
 CREATE FUNCTION SALUDOS.getIdRubro
