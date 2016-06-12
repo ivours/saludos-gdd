@@ -12,12 +12,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class HabilitarDeshabilitar : Form
     {
+        String usuarioLogueado;
         String username;
         int habilitado;
 
-        public HabilitarDeshabilitar()
+        public HabilitarDeshabilitar(String usuarioLogueado)
         {
             InitializeComponent();
+            this.usuarioLogueado = usuarioLogueado;
             this.llenarComboBox();
         }
 
@@ -64,10 +66,27 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void deshabilitarUsuario()
         {
-            SQLManager manager = new SQLManager().generarSP("borrarUsuario")
-            .agregarStringSP("@username", this.username);
 
-            manager.ejecutarSP();
+            try
+            {
+                this.validarQueElUsuarioADeshabilitarNoSeaElUsuarioLogueado();
+
+                SQLManager manager = new SQLManager().generarSP("borrarUsuario")
+                .agregarStringSP("@username", this.username);
+
+                manager.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
+ 
+        }
+
+        private void validarQueElUsuarioADeshabilitarNoSeaElUsuarioLogueado()
+        {
+            if(this.username.Equals(this.usuarioLogueado))
+                throw new Exception("Un usuario no se puede deshabilitar a sí mismo.");
         }
 
         private void button2_Click(object sender, EventArgs e)

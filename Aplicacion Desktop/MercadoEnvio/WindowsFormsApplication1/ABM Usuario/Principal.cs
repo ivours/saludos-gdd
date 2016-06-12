@@ -11,9 +11,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class Principal : Form
     {
-        public Principal()
+        String username;
+
+        public Principal(String username)
         {
             InitializeComponent();
+            this.username = username;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,7 +52,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button6_Click(object sender, EventArgs e)
         {
-            ABM_Usuario.HabilitarDeshabilitar habilitarDeshabilitar = new HabilitarDeshabilitar();
+            ABM_Usuario.HabilitarDeshabilitar habilitarDeshabilitar = new HabilitarDeshabilitar(this.username);
             ABM_Usuario.ListadoUsuarios listadoUsuarios = new ABM_Usuario.ListadoUsuarios(habilitarDeshabilitar);
             listadoUsuarios.Show();
         }

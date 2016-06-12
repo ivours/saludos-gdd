@@ -41,26 +41,26 @@ namespace WindowsFormsApplication1.ABM_Usuario
         }
 
         //TODO: ver si el filtro tiene que ser exacto o like
-        private String filtrarUsername()
+        private Object filtrarUsername()
         {
-            if (textBox1.Text.Equals(""))
-                return "";
+            if (textBox1.Text.Length.Equals(0))
+                return DBNull.Value;
             else
                 return textBox1.Text;
         }
 
-        private String filtrarTipo()
+        private Object filtrarTipo()
         {
             if (comboBox1.SelectedIndex.Equals(-1))
-                return "";
+                return DBNull.Value;
             else
                 return comboBox1.SelectedItem.ToString();
         }
 
-        private String filtrarHabilitado()
+        private Object filtrarHabilitado()
         {
             if (comboBox2.SelectedIndex.Equals(-1))
-                return "";
+                return DBNull.Value;
             else
             {
                 if(comboBox2.SelectedItem.Equals("SI"))
@@ -116,8 +116,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button5_Click(object sender, EventArgs e)
         {
-            String usernameSeleccionado = dataGridView1.Rows[0].Cells[0].Value.ToString();
-            int habilitado = Convert.ToInt32(dataGridView1.Rows[0].Cells[2].Value);
+            String usernameSeleccionado = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+            int habilitado = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[2].Value);
 
             switch (formAnterior.Name)
             {

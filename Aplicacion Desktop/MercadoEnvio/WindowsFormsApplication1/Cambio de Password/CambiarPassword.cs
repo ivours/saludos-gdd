@@ -45,6 +45,8 @@ namespace WindowsFormsApplication1.Cambio_de_Password
                 this.limpiarCampos();
             }
 
+            this.Close();
+
         }
 
         private void validarPasswordNueva()
@@ -62,10 +64,9 @@ namespace WindowsFormsApplication1.Cambio_de_Password
 
         private void cambiarPassword()
         {
-            SQLManager manager = new SQLManager().generarSP("cambiarPassword")
-                 .agregarStringSP("@usuario", username)
-                 .agregarStringSP("@passwordIngresada", textBox1.Text)
-                 .agregarStringSP("@passwordNueva", textBox2.Text);
+            SQLManager manager = new SQLManager().generarSP("cambiarPasswordAdmin")
+                 .agregarStringSP("@username", username)
+                 .agregarStringSP("@nuevaPassword", textBox2.Text);
 
             manager.ejecutarSP();
         }

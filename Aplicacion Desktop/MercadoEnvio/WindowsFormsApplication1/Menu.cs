@@ -124,7 +124,7 @@ namespace WindowsFormsApplication1
                     break;
 
                 case "ABM Usuarios":
-                    formsFuncionalidades[nroBoton] = new ABM_Usuario.Principal();
+                    formsFuncionalidades[nroBoton] = new ABM_Usuario.Principal(username);
                     break;
 
                 case "ABM Visibilidades":
@@ -161,7 +161,6 @@ namespace WindowsFormsApplication1
             menu.Visible = true;
         }
 
-        //TODO: ver si esto es muy rancio
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Application.Exit();

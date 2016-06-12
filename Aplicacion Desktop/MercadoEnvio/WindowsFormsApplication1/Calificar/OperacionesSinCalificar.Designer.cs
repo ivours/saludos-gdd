@@ -37,7 +37,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(275, 280);
+            this.button1.Location = new System.Drawing.Point(274, 138);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 58);
             this.button1.TabIndex = 4;
@@ -50,7 +50,7 @@
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(641, 262);
+            this.groupBox1.Size = new System.Drawing.Size(641, 120);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Operaciones sin calificar";
@@ -60,14 +60,14 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(6, 19);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(629, 237);
+            this.dataGridView1.Size = new System.Drawing.Size(629, 95);
             this.dataGridView1.TabIndex = 0;
             // 
             // OperacionesSinCalificar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 350);
+            this.ClientSize = new System.Drawing.Size(665, 203);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Name = "OperacionesSinCalificar";
