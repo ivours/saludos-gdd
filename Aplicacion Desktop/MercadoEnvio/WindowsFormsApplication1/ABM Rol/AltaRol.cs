@@ -55,15 +55,15 @@ namespace WindowsFormsApplication1.ABM_Rol
             System.Windows.Forms.ListBox.ObjectCollection funcionalidades = listBox1.Items;
 
             SQLManager manager = new SQLManager().generarSP("crearRol")
-                                 .agregarStringSP("@nombreRol", nombreRol);
+                                 .agregarStringSP("@nombre", nombreRol);
 
             manager.ejecutarSP();
 
             for(int i = 0; i<funcionalidades.Count; i++)
             {
                 manager = new SQLManager().generarSP("agregarFuncionalidadARol")
-                    .agregarStringSP("@nombreRol", nombreRol)
-                    .agregarStringSP("@nombreFuncionalidad", funcionalidades[i].ToString());
+                    .agregarStringSP("@nombre_rol", nombreRol)
+                    .agregarStringSP("@nombre_funcionalidad", funcionalidades[i].ToString());
 
                     manager.ejecutarSP();
             }
@@ -104,6 +104,9 @@ namespace WindowsFormsApplication1.ABM_Rol
             {
                 MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
             }
+
+            this.Close();
+
         }
 
         private void button2_Click(object sender, EventArgs e)

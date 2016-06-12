@@ -138,7 +138,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "ModificarRol";
-            this.Text = "Crear rol";
+            this.Text = "Modificar rol";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
