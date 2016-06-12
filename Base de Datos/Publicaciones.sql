@@ -31,6 +31,35 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 	END
 GO
 
+CREATE FUNCTION SALUDOS.cantidadDePaginasPublicaciones(
+	@descripcion nvarchar(255), @rubro nvarchar(255))
+RETURNS int AS
+	BEGIN
+		
+		DECLARE @cuenta decimal
+		
+		SET @cuenta = (
+			SELECT COUNT(*)
+			FROM SALUDOS.PUBLICACIONES publ, SALUDOS.RUBROS rubr, SALUDOS.TIPOS tipo
+			WHERE	1 = (	SELECT USUA_HABILITADO
+							FROM SALUDOS.USUARIOS usua
+							WHERE usua.USUA_USERNAME = publ.USUA_USERNAME) AND
+					(PUBL_DESCRIPCION LIKE '%' + @descripcion + '%' OR @descripcion IS NULL) AND
+					publ.RUBR_COD = rubr.RUBR_COD AND
+					(publ.RUBR_COD = (	SELECT RUBR_COD
+										FROM SALUDOS.RUBROS
+										WHERE RUBR_NOMBRE = @rubro) OR @rubro IS NULL) AND
+					publ.TIPO_COD =	tipo.TIPO_COD AND
+					ESTA_COD = (	SELECT ESTA_COD
+									FROM SALUDOS.ESTADOS
+									WHERE ESTA_NOMBRE = 'Activa')
+		)
+
+		SET @cuenta = CEILING(@cuenta / 10)
+		RETURN CONVERT(int, @cuenta)
+	END
+GO
+
 CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	DECLARE @fecha datetime
 	DECLARE @codActiva int
