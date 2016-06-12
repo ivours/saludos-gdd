@@ -14,10 +14,12 @@ namespace WindowsFormsApplication1.ComprarOfertar
     {
         int paginaActual;
         int ultimaPagina;
+        String username;
 
-        public ListadoPublicaciones()
+        public ListadoPublicaciones(String username)
         {
             InitializeComponent();
+            this.username = username;
             ConfiguradorDataGrid.configurar(dataGridView1);
             paginaActual = 1;
             ultimaPagina = 1;
@@ -234,6 +236,33 @@ namespace WindowsFormsApplication1.ComprarOfertar
             listBox1.Items.Clear();
             dataGridView1.DataSource = null;
             dataGridView1.Refresh();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (!dataGridView1.SelectedRows.Count.Equals(0))
+            {
+                int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+                String tipoPublicacion = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
+
+                if (tipoPublicacion.Equals("Compra Inmediata"))
+                {
+                    ComprarOfertar.Comprar comprar = new Comprar(codigoPublicacion, this.username);
+                    comprar.Show();
+                }
+                else
+                {
+                    ComprarOfertar.Ofertar ofertar = new Ofertar();
+                    ofertar.Show();
+                }
+            }
+
+            this.Close();
         }
 
         
