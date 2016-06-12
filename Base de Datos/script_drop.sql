@@ -20,6 +20,14 @@ DROP TABLE SALUDOS.FECHA
 DROP FUNCTION SALUDOS.fechaActual
 DROP PROCEDURE SALUDOS.asignarFecha
 
+DROP FUNCTION SALUDOS.cantidadDeFacturas
+DROP FUNCTION SALUDOS.facturasRealizadasAlVendedor
+DROP PROCEDURE SALUDOS.facturarSubastasAdjudicadas
+DROP PROCEDURE SALUDOS.facturarPublicacion
+DROP PROCEDURE SALUDOS.facturarPublicacionGratuita
+DROP PROCEDURE SALUDOS.facturarCompra
+DROP PROCEDURE SALUDOS.facturarCompraYEnvio
+
 DROP FUNCTION SALUDOS.mostrarPublicaciones
 DROP FUNCTION SALUDOS.cantidadDePaginasPublicaciones
 DROP PROCEDURE SALUDOS.actualizarEstadosDePublicaciones
@@ -34,14 +42,6 @@ DROP FUNCTION SALUDOS.detallesPublicacionSubasta
 DROP PROCEDURE SALUDOS.comprar
 DROP PROCEDURE SALUDOS.ofertar
 DROP FUNCTION SALUDOS.ultimaOferta
-
-DROP FUNCTION SALUDOS.cantidadDeFacturas
-DROP FUNCTION SALUDOS.facturasRealizadasAlVendedor
-DROP PROCEDURE SALUDOS.facturarSubastasAdjudicadas
-DROP PROCEDURE SALUDOS.facturarPublicacion
-DROP PROCEDURE SALUDOS.facturarPublicacionGratuita
-DROP PROCEDURE SALUDOS.facturarCompra
-DROP PROCEDURE SALUDOS.facturarCompraYEnvio
 
 DROP FUNCTION SALUDOS.cantidadDePaginasHistorialDe
 DROP FUNCTION SALUDOS.historialDeCompras
