@@ -530,6 +530,7 @@ AS BEGIN
 		BEGIN
 			UPDATE SALUDOS.USUARIOS
 			SET USUA_PASSWORD = HASHBYTES('SHA2_256', @nuevaPassword)
+			WHERE USUA_USERNAME = @username
 		END
 	ELSE
 		BEGIN
@@ -537,6 +538,20 @@ AS BEGIN
 		END
 END
 GO
+
+----------CAMBIAR PASSWORD ADMIN------------
+CREATE PROCEDURE [SALUDOS].[cambiarPasswordAdmin]
+(@username nvarchar(255), @nuevaPassword nvarchar(255))
+AS BEGIN
+	IF (SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0	---No existe el usuario----
+		BEGIN
+			RAISERROR('No existe el usuario.',16,1) 
+		END
+	
+	UPDATE SALUDOS.USUARIOS
+	SET USUA_PASSWORD = HASHBYTES('SHA2_256', @nuevaPassword)
+	WHERE USUA_USERNAME = @username
+END
 
 
 
