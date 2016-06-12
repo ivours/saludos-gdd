@@ -26,7 +26,7 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 				ESTA_COD = (	SELECT ESTA_COD
 								FROM SALUDOS.ESTADOS
 								WHERE ESTA_NOMBRE = 'Activa')
-		ORDER BY PUBL_COD
+		ORDER BY VISI_COD
 		RETURN;
 	END
 GO
