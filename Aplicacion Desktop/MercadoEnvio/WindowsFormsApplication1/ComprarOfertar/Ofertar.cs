@@ -85,5 +85,55 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private int optaPorEnvio()
+        {
+            if (checkBox1.Checked)
+                return 1;
+            else
+                return 0;
+        }
+
+        private void validarOferta(int oferta)
+        {
+            SqlDataReader detallesPublicacionSubasta = this.detallesPublicacionSubasta();
+            int ultimaOferta = Convert.ToInt32(detallesPublicacionSubasta.GetValue(3));
+
+            if (oferta < ultimaOferta)
+                throw new Exception("El monto a ofertar debe ser mayor a la ultima oferta realizada");
+        }
+
+        private void ofertar()
+        {
+            int oferta = Convert.ToInt32(numericUpDown1.Value);
+
+            try
+            {
+                this.validarOferta(oferta);
+
+                SQLManager manager = new SQLManager().generarSP("comprar")
+                     .agregarIntSP("@codPublicacion", this.codigoPublicacion)
+                     .agregarIntSP("@oferta", oferta)
+                     .agregarStringSP("@usuario", this.username)
+                     .agregarIntSP("@optaEnvio", this.optaPorEnvio());
+
+                manager.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.ofertar();
+        }
     }
 }
