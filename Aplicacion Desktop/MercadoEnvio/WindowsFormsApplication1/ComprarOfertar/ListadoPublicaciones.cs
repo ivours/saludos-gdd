@@ -265,6 +265,11 @@ namespace WindowsFormsApplication1.ComprarOfertar
             this.Close();
         }
 
+        private void ListadoPublicaciones_Load(object sender, EventArgs e)
+        {
+
+        }
+
         
     }
 }

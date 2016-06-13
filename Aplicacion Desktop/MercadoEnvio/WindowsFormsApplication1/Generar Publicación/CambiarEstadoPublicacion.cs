@@ -62,7 +62,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
                 case "Pausada":
                     comboBox1.Items.Add("Pausada");
-                    comboBox1.Items.Add("Actuva");
+                    comboBox1.Items.Add("Activa");
                     comboBox1.Items.Add("Finalizada");
                     comboBox1.SelectedIndex = 0;
                     break;

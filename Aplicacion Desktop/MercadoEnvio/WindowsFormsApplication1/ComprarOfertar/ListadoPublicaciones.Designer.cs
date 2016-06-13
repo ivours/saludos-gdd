@@ -119,7 +119,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(578, 59);
+            this.button2.Location = new System.Drawing.Point(604, 59);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -132,12 +132,12 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 132);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(641, 224);
+            this.dataGridView1.Size = new System.Drawing.Size(667, 250);
             this.dataGridView1.TabIndex = 3;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(284, 362);
+            this.textBox4.Location = new System.Drawing.Point(295, 401);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(38, 20);
@@ -146,7 +146,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(328, 365);
+            this.label9.Location = new System.Drawing.Point(339, 404);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(12, 13);
             this.label9.TabIndex = 14;
@@ -154,7 +154,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(346, 362);
+            this.textBox5.Location = new System.Drawing.Point(357, 401);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(38, 20);
@@ -162,7 +162,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(252, 360);
+            this.button3.Location = new System.Drawing.Point(263, 399);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(26, 23);
             this.button3.TabIndex = 16;
@@ -172,7 +172,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(390, 360);
+            this.button4.Location = new System.Drawing.Point(401, 399);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(26, 23);
             this.button4.TabIndex = 17;
@@ -182,7 +182,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(220, 360);
+            this.button5.Location = new System.Drawing.Point(231, 399);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(26, 23);
             this.button5.TabIndex = 18;
@@ -192,7 +192,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(422, 360);
+            this.button6.Location = new System.Drawing.Point(433, 399);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(26, 23);
             this.button6.TabIndex = 19;
@@ -202,7 +202,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(12, 360);
+            this.button8.Location = new System.Drawing.Point(13, 399);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 20;
@@ -212,7 +212,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(578, 360);
+            this.button9.Location = new System.Drawing.Point(604, 398);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 21;
@@ -224,7 +224,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 387);
+            this.ClientSize = new System.Drawing.Size(690, 429);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button6);
@@ -240,6 +240,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ListadoPublicaciones";
             this.Text = "Publicaciones";
+            this.Load += new System.EventHandler(this.ListadoPublicaciones_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

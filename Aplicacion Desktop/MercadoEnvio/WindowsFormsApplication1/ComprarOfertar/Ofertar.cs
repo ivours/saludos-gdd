@@ -146,6 +146,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 manager.ejecutarSP();
 
                 textBox1.Text = oferta.ToString() + ",00";
+                numericUpDown1.Value = (Convert.ToDecimal(textBox1.Text)) + 1;
             }
             catch (Exception excepcion)
             {
