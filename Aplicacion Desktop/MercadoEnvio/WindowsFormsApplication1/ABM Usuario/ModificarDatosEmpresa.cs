@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
     public partial class ModificarDatosEmpresa : Form
     {
         int idRubro;
+        String emailViejo;
 
         public ModificarDatosEmpresa()
         {
@@ -30,11 +31,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 this.validarCampos();
                 this.modificarEmpresa();
+                this.Close();
             }
             catch (Exception excepcion)
             {
                 MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
             }
+        }
+
+        public void setEmailViejo(String emailViejo)
+        {
+            this.emailViejo = emailViejo;
         }
 
         public void setRazonSocial(String razonSocial)
@@ -154,13 +161,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void validarEmail()
         {
-            Extras.EmailChecker emailChecker = new Extras.EmailChecker();
+            if (!textBox6.Text.Equals(this.emailViejo))
+            {
+                Extras.EmailChecker emailChecker = new Extras.EmailChecker();
 
-            if (Validacion.estaVacio(textBox6.Text))
-                throw new Exception("Debe ingresar un E-mail");
+                if (Validacion.estaVacio(textBox6.Text))
+                    throw new Exception("Debe ingresar un E-mail");
 
-            if (!emailChecker.IsValidEmail(textBox6.Text))
-                throw new Exception("El formato del E-mail no es válido. Por favor utilice un formato correcto");
+                if (!emailChecker.IsValidEmail(textBox6.Text))
+                    throw new Exception("El formato del E-mail no es válido. Por favor utilice un formato correcto");
+            }
         }
 
         private void validarTelefono()

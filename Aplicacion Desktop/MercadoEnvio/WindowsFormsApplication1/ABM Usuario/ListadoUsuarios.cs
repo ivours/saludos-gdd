@@ -116,24 +116,27 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button5_Click(object sender, EventArgs e)
         {
-            String usernameSeleccionado = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            int habilitado = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[2].Value);
-
-            switch (formAnterior.Name)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                case "CambiarPassword":
-                    (formAnterior as Cambio_de_Password.CambiarPassword).setUsername(usernameSeleccionado);
-                    formAnterior.Show();
-                    break;
+                String usernameSeleccionado = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                int habilitado = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[2].Value);
 
-                case "HabilitarDeshabilitar":
-                    (formAnterior as ABM_Usuario.HabilitarDeshabilitar).setUsername(usernameSeleccionado);
-                    (formAnterior as ABM_Usuario.HabilitarDeshabilitar).setHabilitado(habilitado);
-                    formAnterior.Show();
-                    break;
+                switch (formAnterior.Name)
+                {
+                    case "CambiarPassword":
+                        (formAnterior as Cambio_de_Password.CambiarPassword).setUsername(usernameSeleccionado);
+                        formAnterior.Show();
+                        break;
+
+                    case "HabilitarDeshabilitar":
+                        (formAnterior as ABM_Usuario.HabilitarDeshabilitar).setUsername(usernameSeleccionado);
+                        (formAnterior as ABM_Usuario.HabilitarDeshabilitar).setHabilitado(habilitado);
+                        formAnterior.Show();
+                        break;
+                }
+
+                this.Close();
             }
-
-            this.Close();
         }
     }
 }
