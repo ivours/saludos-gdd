@@ -70,6 +70,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void inicializarUltimaOferta(SqlDataReader detallesPublicacionSubasta)
         {
             textBox1.Text = detallesPublicacionSubasta.GetValue(3).ToString();
+            numericUpDown1.Value = Convert.ToDecimal(textBox1.Text) + 1;
         }
 
         private void inicializarPrecioSugerido(SqlDataReader detallesPublicacionSubasta)
@@ -124,7 +125,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             SqlDataReader detallesPublicacionSubasta = this.detallesPublicacionSubasta();
             int ultimaOferta = Convert.ToInt32(detallesPublicacionSubasta.GetValue(3));
 
-            if (oferta < ultimaOferta)
+            if (oferta <= ultimaOferta)
                 throw new Exception("El monto a ofertar debe ser mayor a la última oferta realizada");
         }
 
@@ -136,13 +137,15 @@ namespace WindowsFormsApplication1.ComprarOfertar
             {
                 this.validarOferta(oferta);
 
-                SQLManager manager = new SQLManager().generarSP("comprar")
+                SQLManager manager = new SQLManager().generarSP("ofertar")
                      .agregarIntSP("@codPublicacion", this.codigoPublicacion)
                      .agregarIntSP("@oferta", oferta)
                      .agregarStringSP("@usuario", this.username)
                      .agregarIntSP("@optaEnvio", this.optaPorEnvio());
 
                 manager.ejecutarSP();
+
+                textBox1.Text = oferta.ToString() + ",00";
             }
             catch (Exception excepcion)
             {
