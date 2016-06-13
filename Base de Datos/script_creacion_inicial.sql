@@ -57,11 +57,12 @@ CREATE TABLE SALUDOS.TIPOS(
 )
 
 CREATE TABLE SALUDOS.VISIBILIDADES(
-	VISI_COD					int,	--reemplaza Publiacion_Visibilidad_Cod
+	VISI_COD					int,			--reemplaza Publiacion_Visibilidad_Cod
 	VISI_COMISION_PUBLICACION	numeric(18,2),	--Publicacion_Visibilidad_Precio
 	VISI_COMISION_VENTA			numeric(18,2),	--Publicacion_Visibilidad_Porcentaje
 	VISI_COMISION_ENVIO			numeric(18,2),	--new. 10% del valor inicial de la publicación.
 	VISI_DESCRIPCION			nvarchar(255),	--Publicacion_Visibilidad_Desc
+	VISI_HABILITADO				bit DEFAULT 1,	--new. Para la baja lógica.
 	CONSTRAINT PK_VISIBILIDADES PRIMARY KEY (VISI_COD),
 )
 
@@ -2166,8 +2167,29 @@ GO
 CREATE PROCEDURE SALUDOS.bajaVisibilidad
 (@nombre_visibilidad nvarchar(255))
 AS BEGIN
-	DELETE SALUDOS.VISIBILIDADES
-	WHERE VISI_DESCRIPCION = @nombre_visibilidad
+	DECLARE @codActiva int
+	SET @codActiva = (	SELECT ESTA_COD 
+						FROM SALUDOS.ESTADOS
+						WHERE ESTA_NOMBRE = 'Activa')
+
+	DECLARE @codVisibilidad int
+	SET @codVisibilidad = (	SELECT VISI_COD
+							FROM SALUDOS.VISIBILIDADES
+							WHERE VISI_DESCRIPCION = @nombre_visibilidad)
+
+	IF NOT EXISTS (	SELECT *
+					FROM SALUDOS.PUBLICACIONES
+					WHERE	ESTA_COD = @codActiva AND
+							VISI_COD = @codVisibilidad)
+		BEGIN
+			UPDATE SALUDOS.VISIBILIDADES
+			SET VISI_HABILITADO = 0
+			WHERE VISI_DESCRIPCION = @nombre_visibilidad
+		END
+	ELSE
+		BEGIN
+			RAISERROR('Hay al menos una publicación activa con esa visibilidad', 16, 1)
+		END
 END
 GO
 
