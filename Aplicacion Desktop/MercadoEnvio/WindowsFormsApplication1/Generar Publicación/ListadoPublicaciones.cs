@@ -19,9 +19,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             InitializeComponent();
             ConfiguradorDataGrid.configurar(dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.formAnterior = formAnterior;
             this.username = username;
             this.llenarComboBoxEstados();
+            this.inicializarTextBoxUsuario();
         }
 
         private Object filtrarDescripcion()
@@ -104,9 +106,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void limpiarCampos()
         {
             textBox1.Clear();
-            textBox2.Clear();
             comboBox1.SelectedIndex = -1;
             comboBox1.SelectedItem = null;
+
+            if (Dominio.Usuario.getTipoUsuario(username).Equals("Administrador"))
+            {
+                textBox2.Clear();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
