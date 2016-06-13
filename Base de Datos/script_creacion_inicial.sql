@@ -2295,6 +2295,19 @@ AS
 	END
 GO
 
+CREATE FUNCTION SALUDOS.esUsuarioNuevo
+(@username nvarchar(255)) 
+RETURNS int
+AS
+	BEGIN
+		DECLARE @nuevo int
+		SET @nuevo = (	SELECT USUA_NUEVO
+						FROM SALUDOS.USUARIOS
+						WHERE USUA_USERNAME = @username)
+		RETURN @nuevo
+	END
+GO
+
 CREATE FUNCTION SALUDOS.getIdRol
 (@nombre_rol nvarchar(255))
 RETURNS TABLE
