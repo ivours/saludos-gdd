@@ -108,6 +108,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
             textBox1.Clear();
             comboBox1.SelectedIndex = -1;
             comboBox1.SelectedItem = null;
+            dataGridView1.DataSource = null;
+            dataGridView1.Refresh();
 
             if (Dominio.Usuario.getTipoUsuario(username).Equals("Administrador"))
             {
