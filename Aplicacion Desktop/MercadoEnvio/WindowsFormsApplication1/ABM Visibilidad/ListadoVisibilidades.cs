@@ -19,7 +19,6 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             InitializeComponent();
             ConfiguradorDataGrid.configurar(dataGridView1);
             this.formAnterior = formAnterior;
-            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
@@ -56,10 +55,20 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             switch (formAnterior.Name)
             {
                 case "BajaVisibilidad":
+                    
                     nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as ABM_Visibilidad.BajaVisibilidad).bajaVisibilidad(nombreVisibilidad);
-                    MessageBox.Show("Se ha dado de baja la visibilidad '" + nombreVisibilidad + "'");
-                    ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
+
+                    try
+                    {
+                        (formAnterior as ABM_Visibilidad.BajaVisibilidad).bajaVisibilidad(nombreVisibilidad);
+                        MessageBox.Show("Se ha dado de baja la visibilidad '" + nombreVisibilidad + "'");
+                        ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
+                    }
+                    catch(Exception excepcion)
+                    {
+                        MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+                    }
+
                     break;
 
                 case "ModificarVisibilidad":
@@ -75,10 +84,10 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                     (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setComisionPorVender(comisionPorVender);
                     (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setComisionPorEnvio(comisionPorEnvio);
                     formAnterior.Show();
+                    this.Close();
                     break;
             }
-
-            this.Close();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -91,7 +100,17 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
         }
 
-        
+        private void limpiarCampos()
+        {
+            textBox1.Clear();
+            dataGridView1.DataSource = null;
+            dataGridView1.Refresh();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.limpiarCampos();
+        }
         
     }
 }
