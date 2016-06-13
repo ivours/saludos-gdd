@@ -259,7 +259,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             String apellido = textBox2.Text;
             String tipoDeDocumento = comboBox1.SelectedItem.ToString();
             int nroDeDocumento = Convert.ToInt32(textBox4.Text);
-            DateTime fechaDeNacimiento = dateTimePicker1.Value;
+            DateTime fechaDeNacimiento = dateTimePicker1.Value.Date;
             String email = textBox6.Text;
             int telefono = Convert.ToInt32(textBox7.Text);
             String calle = textBox8.Text;
