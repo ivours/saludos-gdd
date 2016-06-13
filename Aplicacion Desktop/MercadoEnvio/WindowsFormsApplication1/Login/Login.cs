@@ -59,6 +59,8 @@ namespace WindowsFormsApplication1.Login
                 //String username = "odamartínez";
                 //String password = "2927009";
 
+                this.validarQueElUsuarioTengaRoles(username);
+
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", username)
                                                  .agregarStringSP("@password_ingresada", password);
@@ -122,6 +124,12 @@ namespace WindowsFormsApplication1.Login
             Form seleccionDeRol = new SeleccionarRol(username,this);
             seleccionDeRol.Show();
             this.Hide();
+        }
+
+        private void validarQueElUsuarioTengaRoles(String username)
+        {
+            if (Dominio.Usuario.getRolesUsuario(username).Count.Equals(0))
+                throw new Exception("El usuario no puede iniciar sesión ya que no tiene ningún rol.");
         }
 
     }
