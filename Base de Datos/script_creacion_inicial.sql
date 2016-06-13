@@ -958,7 +958,7 @@ AS
 	)
 GO
 
-
+select * from saludos.mostrarpublicaciones(null, null)
 -------------------------------------------------------------
 -----Funciones y procedures relacionadas a Publicaciones-----
 -------------------------------------------------------------
@@ -1030,6 +1030,7 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	DECLARE @fecha datetime
 	DECLARE @codActiva int
 	DECLARE @codFinalizada int
+	DECLARE @codCompras int
 	
 	SET @fecha = SALUDOS.fechaActual()
 
@@ -1040,6 +1041,10 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	SET @codFinalizada = (	SELECT ESTA_COD 
 							FROM SALUDOS.ESTADOS
 							WHERE ESTA_NOMBRE = 'Finalizada')
+
+	SET @codCompras = (	SELECT TIPO_COD
+						FROM SALUDOS.TIPOS
+						WHERE TIPO_NOMBRE = 'Compra Inmediata')
 
 	UPDATE SALUDOS.PUBLICACIONES
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codActiva
@@ -1055,13 +1060,14 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 
 	UPDATE SALUDOS.PUBLICACIONES
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codFinalizada
-	FROM 	(SELECT comp.PUBL_COD, PUBL_STOCK, SUM(COMP_CANTIDAD) AS COMP_ACTUALES, ESTA_COD
+	FROM 	(SELECT comp.PUBL_COD, PUBL_STOCK, SUM(COMP_CANTIDAD) AS COMP_ACTUALES, ESTA_COD, TIPO_COD
 			FROM SALUDOS.COMPRAS comp, SALUDOS.PUBLICACIONES publ
 			WHERE comp.PUBL_COD = publ.PUBL_COD AND COMP_FECHA <= SALUDOS.fechaActual() 
-			GROUP BY comp.PUBL_COD, PUBL_STOCK, ESTA_COD) COMPRAS
+			GROUP BY comp.PUBL_COD, PUBL_STOCK, ESTA_COD, TIPO_COD) COMPRAS
 	WHERE	COMPRAS.ESTA_COD = @codActiva AND
 			COMPRAS.COMP_ACTUALES = COMPRAS.PUBL_STOCK AND
-			COMPRAS.PUBL_COD = SALUDOS.PUBLICACIONES.PUBL_COD
+			COMPRAS.PUBL_COD = SALUDOS.PUBLICACIONES.PUBL_COD AND
+			COMPRAS.TIPO_COD = @codCompras
 GO
 
 --Al iniciar la publicación se adjudican las subastas terminadas a sus ganadores.
