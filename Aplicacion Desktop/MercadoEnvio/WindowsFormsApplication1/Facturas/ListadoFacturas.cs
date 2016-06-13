@@ -295,20 +295,23 @@ namespace WindowsFormsApplication1.Facturas
 
         private void verDetalleFactura()
         {
-            int codigoFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
-            decimal total= Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[3].Value);
-            DateTime fechaFacturacion = Convert.ToDateTime(dataGridView1.SelectedRows[0].Cells[4].Value);
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int codigoFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+                int codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
+                decimal total = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[3].Value);
+                DateTime fechaFacturacion = Convert.ToDateTime(dataGridView1.SelectedRows[0].Cells[4].Value);
 
-            String destinatario;
-            
-            if (Usuario.getTipoUsuario(username).Equals("Administrador"))
-                destinatario = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-            else
-                destinatario = textBox3.Text;
+                String destinatario;
 
-            DetalleFactura detalleFactura = new DetalleFactura(codigoFactura, codigoPublicacion, destinatario, fechaFacturacion, total);
-            detalleFactura.Show();
+                if (Usuario.getTipoUsuario(username).Equals("Administrador"))
+                    destinatario = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+                else
+                    destinatario = textBox3.Text;
+
+                DetalleFactura detalleFactura = new DetalleFactura(codigoFactura, codigoPublicacion, destinatario, fechaFacturacion, total);
+                detalleFactura.Show();
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
