@@ -42,10 +42,10 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             decimal comisionPorEnvio = numericUpDown3.Value;
 
             SQLManager manager = new SQLManager().generarSP("altaVisibilidad")
-                                 .agregarStringSP("@nombreVisibilidad", nombreVisibilidad)
-                                 .agregarDecimalSP("@comisionPorPublicar", comisionPorPublicar)
-                                 .agregarDecimalSP("@comisionPorVender", comisionPorVender)
-                                 .agregarDecimalSP("@comisionPorEnvio", comisionPorEnvio);
+                                 .agregarStringSP("@nombre_visibilidad", nombreVisibilidad)
+                                 .agregarDecimalSP("@comision_publicacion", comisionPorPublicar)
+                                 .agregarDecimalSP("@comision_venta", comisionPorVender)
+                                 .agregarDecimalSP("@comision_envio", comisionPorEnvio);
 
             manager.ejecutarSP();
         }

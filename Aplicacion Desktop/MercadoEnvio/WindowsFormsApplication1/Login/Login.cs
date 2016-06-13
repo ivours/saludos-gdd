@@ -55,7 +55,7 @@ namespace WindowsFormsApplication1.Login
                 String username = "admin";
                 String password = "w23e";
                 //String username = "odamartínez";
-                //String password = "caco";
+                //String password = "2927009";
 
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", username)

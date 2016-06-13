@@ -38,6 +38,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 this.validarCampos();
                 this.altaUsuarioEmpresa();
+                MessageBox.Show("Empresa creada exitosamente.");
+                this.Close();
             }
             catch (Exception excepcion)
             {
@@ -222,7 +224,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             String localidad = textBox12.Text;
             String codigoPostal = textBox13.Text;
 
-            SQLManager manager = new SQLManager().generarSP("altaUsuarioCliente")
+            SQLManager manager = new SQLManager().generarSP("altaUsuarioEmpresa")
                                  .agregarStringSP("@username", username)
                                  .agregarStringSP("@password", password)
                                  .agregarIntSP("@id_rol", idRol)
