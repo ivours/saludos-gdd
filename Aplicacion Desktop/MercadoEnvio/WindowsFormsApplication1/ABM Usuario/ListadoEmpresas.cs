@@ -81,6 +81,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             modificarDatosEmpresa.setRazonSocial(razonSocial);
             modificarDatosEmpresa.setCuit(cuit);
             modificarDatosEmpresa.setEmail(email);
+            modificarDatosEmpresa.setEmailViejo(email);
             modificarDatosEmpresa.setTelefono(telefono);
             modificarDatosEmpresa.setCalle(calle);
             modificarDatosEmpresa.setNroCalle(nroCalle);
