@@ -2266,6 +2266,20 @@ AS
 		(CONVERT(nvarchar, ROL_HABILITADO) = @habilitado OR @habilitado is null))
 GO
 
+CREATE FUNCTION SALUDOS.getRubros
+(@nombreRubro nvarchar(255), @descripcion nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN
+		(SELECT RUBR_COD AS 'Código',
+				RUBR_NOMBRE AS 'Nombre',
+				RUBR_DESCRIPCION AS 'Descripción'
+		FROM SALUDOS.RUBROS WHERE	
+		(RUBR_NOMBRE = @nombreRubro OR @nombreRubro IS NULL) AND
+		(RUBR_DESCRIPCION LIKE '%' + @descripcion + '%' OR @descripcion IS NULL)
+		)
+GO
+
 CREATE FUNCTION SALUDOS.getUsuarios
 (@username nvarchar(255), @tipo nvarchar(255), @habilitado nvarchar(50))
 RETURNS @usuarios TABLE (Usuario nvarchar(255), Tipo nvarchar(255), Habilitado bit)
