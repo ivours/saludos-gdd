@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
@@ -15,6 +16,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         public PrincipalRol()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
         }
 
         private void Form1_Click(object sender, EventArgs e)

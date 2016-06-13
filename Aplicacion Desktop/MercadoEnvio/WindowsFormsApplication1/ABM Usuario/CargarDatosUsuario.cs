@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public CargarDatosUsuario()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
         }
 
         private void label2_Click(object sender, EventArgs e)

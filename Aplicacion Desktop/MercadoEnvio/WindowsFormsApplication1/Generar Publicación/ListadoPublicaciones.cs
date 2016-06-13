@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Generar_Publicación
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         public ListadoPublicaciones(Form formAnterior, String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             ConfiguradorDataGrid.configurar(dataGridView1);
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.formAnterior = formAnterior;

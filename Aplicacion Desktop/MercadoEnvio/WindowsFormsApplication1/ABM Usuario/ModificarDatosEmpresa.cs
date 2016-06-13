@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1.Dominio;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public ModificarDatosEmpresa()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

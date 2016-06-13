@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Listado_Estadistico
 {
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         public DetalleProductosSinVender(int anio, int trimestre, String vendedor)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.llenarDataGridConConsulta(this.productosSinVenderDeUnVendedor(anio, trimestre, vendedor));
         }
 

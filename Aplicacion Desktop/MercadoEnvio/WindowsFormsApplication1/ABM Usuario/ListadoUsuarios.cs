@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public ListadoUsuarios(Form formAnterior)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.formAnterior = formAnterior;
             ConfiguradorDataGrid.configurar(dataGridView1);
             this.llenarComboBoxTipoDeUsuario();

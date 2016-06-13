@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -19,6 +20,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public CargarDatosCliente(Form formularioAnterior, String username, String password, int idRol)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.formularioAnterior = formularioAnterior;
             this.username = username;
             this.password = password;

@@ -222,8 +222,10 @@
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "Menu";
-            this.Text = "Form1";
+            this.Text = "MercadoEnvío";
             this.Load += new System.EventHandler(this.Menu_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

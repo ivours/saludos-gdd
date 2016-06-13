@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         public ListadoFuncionalidades(Form formAnterior)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.formAnterior = formAnterior;
             ConfiguradorDataGrid.configurar(dataGridView1);
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.getFuncionalidades(), dataGridView1);

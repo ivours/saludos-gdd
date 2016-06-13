@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Calificar
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsApplication1.Calificar
         public OperacionesSinCalificar(String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.username = username;
             ConfiguradorDataGrid.configurar(dataGridView1);
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;

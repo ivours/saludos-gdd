@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 //TODO: Revisar por las dudas si esta bien hecho esto
 namespace WindowsFormsApplication1.ABM_Rol
@@ -21,6 +22,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         public ModificarRol()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             funcionalidadesViejas = new List<String>();
             funcionalidadesNuevas = new List<String>();
             funcionalidadesAEliminar = new List<String>();
