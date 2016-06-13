@@ -33,13 +33,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDown1.Value = 1;
-            numericUpDown1.ReadOnly = true;
+            numericUpDown1.Enabled = false;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown1.ReadOnly = false;
             numericUpDown1.Value = 1;
+            numericUpDown1.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -108,6 +108,31 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 return 0;
         }
 
+        private void validarCampos()
+        {
+            this.validarRubro();
+            this.validarDescripcion();
+            this.validarPrecio();
+        }
+
+        private void validarRubro()
+        {
+            if (Validacion.estaVacio(textBox1.Text))
+                throw new Exception("Debe ingresar un rubro");
+        }
+
+        private void validarDescripcion()
+        {
+            if (Validacion.estaVacio(textBox4.Text))
+                throw new Exception("Debe ingresar una descripción");
+        }
+
+        private void validarPrecio()
+        {
+            if (Validacion.esCero(numericUpDown2.Value))
+                throw new Exception("Debe ingresar un precio");
+        }
+
         private void crearPublicacion()
         {
 
@@ -122,6 +147,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             int envio = this.getBitCheckBox(checkBox2);
 
             SQLManager manager = new SQLManager().generarSP("crearPublicacion")
+                                 .agregarStringSP("@usuario", this.username)
                                  .agregarStringSP("@tipo", tipo)
                                  .agregarStringSP("@descripcion", descripcion)
                                  .agregarIntSP("@stock", stock)
@@ -139,27 +165,36 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             try
             {
+                this.validarCampos();
                 this.crearPublicacion();
+
+                this.Close();
             }
             catch (Exception excepcion)
             {
                 MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
             }
-            
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!numericUpDown2.Value.Equals(0))
+            if (!numericUpDown2.Value.Equals(0))
                 this.llenarCamposComisiones();
 
             if (comboBox2.SelectedItem.ToString().Equals("Gratis"))
             {
                 checkBox2.Checked = false;
                 checkBox2.Hide();
+                label12.Visible = false;
+                textBox5.Visible = false;
+                label9.Visible = false;
             }
             else
                 checkBox2.Show();
+                label12.Visible = true;
+                textBox5.Visible = true;
+                label9.Visible = true;
         }
 
         //TODO: Terminar esto y testear
@@ -183,6 +218,22 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             if (!numericUpDown2.Value.Equals(0))
                 this.llenarCamposComisiones();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.getBitCheckBox(checkBox2) == 1)
+            {
+                label12.Visible = true;
+                textBox5.Visible = true;
+                label9.Visible = true;
+            }
+            else
+            {
+                label12.Visible = false;
+                textBox5.Visible = false;
+                label9.Visible = false;
+            }
         }
     }
 }

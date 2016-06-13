@@ -46,6 +46,11 @@ namespace WindowsFormsApplication1
             return texto.Length >= longitudMinima;
         }
 
+        public static Boolean esCero(Decimal numero)
+        {
+            return numero.Equals(0);
+        }
+
         public static Boolean tieneFormatoDeCuit(String texto)
         {
             int i = 0;
