@@ -34,12 +34,14 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             numericUpDown1.Value = 1;
             numericUpDown1.Enabled = false;
+            this.llenarCamposComisiones();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDown1.Value = 1;
             numericUpDown1.Enabled = true;
+            this.llenarCamposComisiones();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -103,6 +105,14 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private int getBitCheckBox(CheckBox checkBox)
         {
             if (checkBox.Checked)
+                return 1;
+            else
+                return 0;
+        }
+
+        private int getBitRadioButton(RadioButton radioButton)
+        {
+            if (radioButton.Checked)
                 return 1;
             else
                 return 0;
@@ -179,7 +189,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!numericUpDown2.Value.Equals(0))
+            //if (!numericUpDown2.Value.Equals(0)) esto no sé por qué estaba, pero si hay una buena justificación que vuelva
                 this.llenarCamposComisiones();
 
             if (comboBox2.SelectedItem.ToString().Equals("Gratis"))
@@ -200,17 +210,36 @@ namespace WindowsFormsApplication1.Generar_Publicación
         //TODO: Terminar esto y testear
         private void llenarCamposComisiones()
         {
-            decimal comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
-            decimal comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
-            decimal comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+            decimal comisionPublicacion;
+            decimal comisionVenta;
+            decimal comisionEnvio;
 
-            decimal.Round(comisionPublicacion, 2, MidpointRounding.AwayFromZero);
-            decimal.Round(comisionVenta, 2, MidpointRounding.AwayFromZero);
-            decimal.Round(comisionEnvio, 2, MidpointRounding.AwayFromZero);
+            if (this.getBitRadioButton(radioButton1) == 1)
+            {
+                comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+                comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+                comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+
+                label10.Text = "AR$";
+                label9.Text = "AR$";
+            }
+            else
+            {
+                comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+                comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * 100;
+                comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * 100;
+
+                label10.Text = "%";
+                label9.Text = "%";
+            }
 
             textBox7.Text = comisionPublicacion.ToString("F");
             textBox6.Text = comisionVenta.ToString("F");
             textBox5.Text = comisionEnvio.ToString("F");
+
+            decimal.Round(comisionPublicacion, 2, MidpointRounding.AwayFromZero);
+            decimal.Round(comisionVenta, 2, MidpointRounding.AwayFromZero);
+            decimal.Round(comisionEnvio, 2, MidpointRounding.AwayFromZero);
         }
 
         private void CrearPublicacion_Load(object sender, EventArgs e)
