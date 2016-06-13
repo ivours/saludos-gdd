@@ -74,6 +74,7 @@ namespace WindowsFormsApplication1.Calificar
             {
                 this.validarCampos();
                 this.calificarPublicacion();
+                this.Close();
             }
             catch (Exception excepcion)
             {
