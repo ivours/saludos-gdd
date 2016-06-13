@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1.Facturas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            campoFecha.Text = dateTimePicker1.Value.ToString();
+            campoFecha.Text = dateTimePicker1.Value.Date.ToString();
             this.Close();
         }
 

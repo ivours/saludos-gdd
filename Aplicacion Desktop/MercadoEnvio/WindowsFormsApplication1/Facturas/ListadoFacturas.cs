@@ -53,20 +53,6 @@ namespace WindowsFormsApplication1.Facturas
         
         private void validarIntervaloFechas()
         {
-            if (!textBox6.Text.Length.Equals(0))
-            {
-                DateTime extremoInferiorIntervaloFecha = Convert.ToDateTime(textBox6.Text);
-                if (extremoInferiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
-                    throw new Exception("La fecha del extremo inferior del intervalo de fechas no puede ser mayor a la fecha actual");
-            }
-
-            if (!textBox7.Text.Length.Equals(0))
-            {
-                DateTime extremoSuperiorIntervaloFecha = Convert.ToDateTime(textBox7.Text);
-                if (extremoSuperiorIntervaloFecha.CompareTo(Dominio.Fecha.getFechaActual()) > 0)
-                    throw new Exception("La fecha del extremo superior del intervalo de fechas no puede ser mayor a la fecha actual");
-            }
-
             if ((!textBox6.Text.Length.Equals(0)) && (!textBox7.Text.Length.Equals(0)))
             {
                 DateTime extremoInferiorIntervaloFecha = Convert.ToDateTime(textBox6.Text);
