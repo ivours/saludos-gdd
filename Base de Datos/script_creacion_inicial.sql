@@ -2295,6 +2295,14 @@ AS
 	END
 GO
 
+CREATE FUNCTION SALUDOS.getIdRol
+(@nombre_rol nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN SELECT ROL_COD AS 'Código' FROM SALUDOS.ROLES WHERE
+			ROL_NOMBRE = @nombre_rol
+GO
+
 CREATE FUNCTION SALUDOS.getIdRubro
 (@nombre_rubro nvarchar(255))
 RETURNS TABLE
