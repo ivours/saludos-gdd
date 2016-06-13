@@ -56,13 +56,16 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void eliminarFuncionalidadSeleccionada()
         {
-            if (funcionalidadesViejas.Contains(listBox1.SelectedItem.ToString()))
-                funcionalidadesAEliminar.Add(listBox1.SelectedItem.ToString());
+            if (listBox1.SelectedItems.Count > 0)
+            {
+                if (funcionalidadesViejas.Contains(listBox1.SelectedItem.ToString()))
+                    funcionalidadesAEliminar.Add(listBox1.SelectedItem.ToString());
 
-            if(funcionalidadesNuevas.Contains(listBox1.SelectedItem.ToString()))
-                funcionalidadesNuevas.Remove(listBox1.SelectedItem.ToString());
+                if (funcionalidadesNuevas.Contains(listBox1.SelectedItem.ToString()))
+                    funcionalidadesNuevas.Remove(listBox1.SelectedItem.ToString());
 
-            listBox1.Items.Remove(listBox1.SelectedItem);
+                listBox1.Items.Remove(listBox1.SelectedItem);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
