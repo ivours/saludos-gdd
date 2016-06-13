@@ -24,14 +24,30 @@ namespace WindowsFormsApplication1.Generar_Publicación
             this.llenarComboBoxEstados();
         }
 
+        private Object filtrarDescripcion()
+        {
+            if (textBox1.Text.Length.Equals(0))
+                return DBNull.Value;
+            else
+                return textBox1.Text;
+        }
+
+        private Object filtrarCreador()
+        {
+            if (textBox2.Text.Length.Equals(0))
+                return DBNull.Value;
+            else
+                return textBox2.Text;
+        }
+
         private SqlDataReader filtrarPublicacionesParaCambioDeEstado()
         {
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
             consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.filtrarPublicacionesParaCambioDeEstado(@descripcion, @creador, @estado)";
-            consulta.Parameters.Add(new SqlParameter("@descripcion",textBox1.Text));
-            consulta.Parameters.Add(new SqlParameter("@creador", textBox2.Text));
+            consulta.Parameters.Add(new SqlParameter("@descripcion",this.filtrarDescripcion()));
+            consulta.Parameters.Add(new SqlParameter("@creador", this.filtrarCreador()));
             consulta.Parameters.Add(new SqlParameter("@estado", this.filtrarEstado()));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
@@ -58,11 +74,10 @@ namespace WindowsFormsApplication1.Generar_Publicación
             comboBox1.Items.Add("Finalizada");
         }
 
-        private String filtrarEstado()
+        private Object filtrarEstado()
         {
-            //TODO: chequear esto
             if (comboBox1.SelectedIndex.Equals(-1))
-                return "";
+                return DBNull.Value;
             else
                 return comboBox1.SelectedItem.ToString();
         }

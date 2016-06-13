@@ -1227,9 +1227,10 @@ RETURNS @publicaciones TABLE (	Código numeric(18,0), Descripción nvarchar(255),
 	BEGIN
 		INSERT @publicaciones
 		SELECT PUBL_COD, PUBL_DESCRIPCION, USUA_USERNAME, ESTA_NOMBRE
-		FROM SALUDOS.PUBLICACIONES, SALUDOS.ESTADOS esta
+		FROM SALUDOS.PUBLICACIONES publ, SALUDOS.ESTADOS esta
 		WHERE	(USUA_USERNAME = @creador OR @creador IS NULL) AND
 				(PUBL_DESCRIPCION LIKE '%' + @descripcion + '%' OR @descripcion IS NULL) AND
+				publ.ESTA_COD = esta.ESTA_COD AND
 				(esta.ESTA_COD = (	SELECT ESTA_COD
 									FROM SALUDOS.ESTADOS
 									WHERE ESTA_NOMBRE = @estado) OR @estado IS NULL)
