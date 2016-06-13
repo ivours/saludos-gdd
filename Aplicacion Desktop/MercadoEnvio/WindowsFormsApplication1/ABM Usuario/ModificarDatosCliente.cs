@@ -294,11 +294,33 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 this.validarCampos();
                 this.modificarCliente();
+                this.Close();
             }
             catch (Exception excepcion)
             {
                 MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.limpiarCampos();
+        }
+
+        private void limpiarCampos()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox4.Clear();
+            textBox6.Clear();
+            textBox7.Clear();
+            textBox8.Clear();
+            textBox9.Clear();
+            textBox11.Clear();
+            textBox12.Clear();
+            textBox13.Clear();
+            comboBox1.SelectedIndex = 0;
+            numericUpDown1.Value = 0;
         }
     }
 }
