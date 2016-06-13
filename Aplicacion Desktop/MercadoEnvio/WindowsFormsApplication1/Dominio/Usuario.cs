@@ -26,6 +26,20 @@ namespace WindowsFormsApplication1.Dominio
             return (String)reader.GetValue(0);
         }
 
+        public static int esUsuarioNuevo(String username)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.esUsuarioNuevo(@username)";
+            consulta.Parameters.Add(new SqlParameter("@username", username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+            reader.Read();
+
+            return (int) reader.GetValue(0);
+        }
+
         public static List<String> getRolesUsuario(String username)
         {
             List<String> rolesUsuario = new List<String>();
