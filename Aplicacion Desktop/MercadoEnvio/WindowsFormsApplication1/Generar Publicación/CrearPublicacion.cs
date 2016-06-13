@@ -204,9 +204,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
             decimal comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
             decimal comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
 
-            textBox7.Text = comisionPublicacion.ToString();
-            textBox6.Text = comisionVenta.ToString();
-            textBox5.Text = comisionEnvio.ToString();
+            decimal.Round(comisionPublicacion, 2, MidpointRounding.AwayFromZero);
+            decimal.Round(comisionVenta, 2, MidpointRounding.AwayFromZero);
+            decimal.Round(comisionEnvio, 2, MidpointRounding.AwayFromZero);
+
+            textBox7.Text = comisionPublicacion.ToString("F");
+            textBox6.Text = comisionVenta.ToString("F");
+            textBox5.Text = comisionEnvio.ToString("F");
         }
 
         private void CrearPublicacion_Load(object sender, EventArgs e)
