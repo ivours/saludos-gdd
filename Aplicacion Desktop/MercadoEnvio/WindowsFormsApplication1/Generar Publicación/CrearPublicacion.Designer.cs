@@ -65,6 +65,7 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -461,12 +462,24 @@
             this.label15.TabIndex = 0;
             this.label15.Text = "Tipo de visibilidad";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(100, 534);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(452, 13);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Por ser usuario nuevo, tiene una publicación sin costo de publicación con cualqui" +
+    "er visibilidad.";
+            this.label16.Visible = false;
+            // 
             // CrearPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(652, 563);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button3);
@@ -487,6 +500,7 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -529,5 +543,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
     }
 }

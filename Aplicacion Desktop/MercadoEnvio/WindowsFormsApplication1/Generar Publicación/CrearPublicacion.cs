@@ -29,7 +29,15 @@ namespace WindowsFormsApplication1.Generar_Publicación
             textBox2.Text = Dominio.Fecha.getFechaActual().ToString();
             textBox3.Text = Dominio.Fecha.getFechaActual().AddDays(7).ToString();
 
-            comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+            if (Dominio.Usuario.esUsuarioNuevo(this.username).Equals(1))
+            {
+                label16.Show();
+                comisionPublicacion = 0;
+            }
+            else
+                comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+
+            
             comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString());
             comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString());
         }
