@@ -12,6 +12,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
     public partial class CrearPublicacion : Form
     {
         String username;
+        decimal comisionPublicacion;
+        decimal comisionVenta;
+        decimal comisionEnvio;
 
         public CrearPublicacion(String username)
         {
@@ -23,6 +26,10 @@ namespace WindowsFormsApplication1.Generar_Publicación
             comboBox2.SelectedIndex = 0;
             textBox2.Text = Dominio.Fecha.getFechaActual().ToString();
             textBox3.Text = Dominio.Fecha.getFechaActual().AddDays(7).ToString();
+
+            comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+            comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString());
+            comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString());
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -189,8 +196,12 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
+            comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString());
+            comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString());
+
             //if (!numericUpDown2.Value.Equals(0)) esto no sé por qué estaba, pero si hay una buena justificación que vuelva
-                this.llenarCamposComisiones();
+            this.llenarCamposComisiones();
 
             if (comboBox2.SelectedItem.ToString().Equals("Gratis"))
             {
@@ -207,39 +218,30 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 label9.Visible = true;
         }
 
-        //TODO: Terminar esto y testear
         private void llenarCamposComisiones()
         {
-            decimal comisionPublicacion;
-            decimal comisionVenta;
-            decimal comisionEnvio;
-
             if (this.getBitRadioButton(radioButton1) == 1)
             {
-                comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
-                comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
-                comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * numericUpDown2.Value;
+                textBox6.Text = (comisionVenta * numericUpDown2.Value).ToString("F");
+                textBox5.Text = (comisionEnvio * numericUpDown2.Value).ToString("F");
 
                 label10.Text = "AR$";
                 label9.Text = "AR$";
             }
             else
             {
-                comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
-                comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString()) * 100;
-                comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString()) * 100;
+                textBox6.Text = (comisionVenta * 100).ToString("F");
+                textBox5.Text = (comisionEnvio * 100).ToString("F");
 
                 label10.Text = "%";
                 label9.Text = "%";
             }
 
-            textBox7.Text = comisionPublicacion.ToString("F");
-            textBox6.Text = comisionVenta.ToString("F");
-            textBox5.Text = comisionEnvio.ToString("F");
-
             decimal.Round(comisionPublicacion, 2, MidpointRounding.AwayFromZero);
             decimal.Round(comisionVenta, 2, MidpointRounding.AwayFromZero);
             decimal.Round(comisionEnvio, 2, MidpointRounding.AwayFromZero);
+
+            textBox7.Text = comisionPublicacion.ToString("F");
         }
 
         private void CrearPublicacion_Load(object sender, EventArgs e)
@@ -249,7 +251,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            if (!numericUpDown2.Value.Equals(0))
+           // if (!numericUpDown2.Value.Equals(0))
                 this.llenarCamposComisiones();
         }
 
