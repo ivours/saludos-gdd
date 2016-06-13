@@ -152,6 +152,8 @@ namespace WindowsFormsApplication1.ABM_Rol
             comboBox1.SelectedIndex = -1;
             comboBox1.SelectedItem = null;
             comboBox1.SelectedValue = null;
+            dataGridView1.DataSource = null;
+            dataGridView1.Refresh();
         }
     }
 }
