@@ -51,6 +51,11 @@ namespace WindowsFormsApplication1
             return numero.Equals(0);
         }
 
+        public static Boolean esIgualOMenorACien(Decimal numero)
+        {
+            return numero <= 100;
+        }
+
         public static Boolean tieneFormatoDeCuit(String texto)
         {
             int i = 0;

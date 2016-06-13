@@ -57,7 +57,7 @@ CREATE TABLE SALUDOS.TIPOS(
 )
 
 CREATE TABLE SALUDOS.VISIBILIDADES(
-	VISI_COD					int,			--reemplaza Publiacion_Visibilidad_Cod
+	VISI_COD					int IDENTITY,	--reemplaza Publiacion_Visibilidad_Cod
 	VISI_COMISION_PUBLICACION	numeric(18,2),	--Publicacion_Visibilidad_Precio
 	VISI_COMISION_VENTA			numeric(18,2),	--Publicacion_Visibilidad_Porcentaje
 	VISI_COMISION_ENVIO			numeric(18,2),	--new. 10% del valor inicial de la publicación.
@@ -405,6 +405,8 @@ WHERE Publicacion_Rubro_Descripcion IS NOT NULL
 
 
 --Migrando visibilidades.
+SET IDENTITY_INSERT SALUDOS.VISIBILIDADES ON;
+
 INSERT INTO SALUDOS.VISIBILIDADES(
 	VISI_COD, VISI_DESCRIPCION, VISI_COMISION_ENVIO,
 	VISI_COMISION_PUBLICACION, VISI_COMISION_VENTA)
@@ -417,6 +419,7 @@ UPDATE SALUDOS.VISIBILIDADES
 SET VISI_COMISION_ENVIO = 0.00
 WHERE VISI_DESCRIPCION = 'Gratis'
 
+SET IDENTITY_INSERT SALUDOS.VISIBILIDADES OFF;
 GO
 
 
@@ -700,6 +703,101 @@ GO
 --------------------------------------------------------
 -----Funciones y procedures relacionadas a Facturas-----
 --------------------------------------------------------
+--Factura únicamente la comisión de compra.
+CREATE PROCEDURE SALUDOS.facturarCompra
+	@codPublicacion numeric(18,0),
+	@cantidadComprada numeric(18,0),
+	@precio numeric(18,2)
+AS
+	DECLARE @comisionVenta numeric(18,2)
+	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
+							FROM SALUDOS.VISIBILIDADES
+							WHERE VISI_COD = (	SELECT VISI_COD
+												FROM SALUDOS.PUBLICACIONES
+												WHERE PUBL_COD = @codPublicacion)
+											 )
+	
+	INSERT INTO SALUDOS.FACTURAS(
+	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
+
+	VALUES(
+	saludos.fechaActual(), @codPublicacion,
+	@comisionVenta * @cantidadComprada * @precio, 
+
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.PUBLICACIONES
+	WHERE PUBL_COD = @codPublicacion)
+	)
+
+	DECLARE @codFactura numeric(18,0)
+	SET @codFactura = SCOPE_IDENTITY()
+
+	INSERT INTO SALUDOS.ITEMS(
+	ITEM_IMPORTE, ITEM_CANTIDAD,
+	ITEM_DESCRIPCION, FACT_COD)
+
+	VALUES(
+	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
+	'Comisión por Venta', @codFactura
+	)
+
+GO
+
+--Factura las comisiones de compra y envío.
+CREATE PROCEDURE SALUDOS.facturarCompraYEnvio
+	@codPublicacion numeric(18,0),
+	@cantidadComprada numeric(18,0),
+	@precio numeric(18,2)
+AS
+	DECLARE @comisionVenta numeric(18,2)
+	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
+							FROM SALUDOS.VISIBILIDADES
+							WHERE VISI_COD = (	SELECT VISI_COD
+												FROM SALUDOS.PUBLICACIONES
+												WHERE PUBL_COD = @codPublicacion)
+											 )
+	DECLARE @comisionEnvio numeric(18,2)
+	SET @comisionEnvio =	(SELECT VISI_COMISION_ENVIO
+							FROM SALUDOS.VISIBILIDADES
+							WHERE VISI_COD = (	SELECT VISI_COD
+												FROM SALUDOS.PUBLICACIONES
+												WHERE PUBL_COD = @codPublicacion)
+											 )
+
+	INSERT INTO SALUDOS.FACTURAS(
+	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
+
+	VALUES(
+	saludos.fechaActual(), @codPublicacion,
+	(@comisionVenta * @cantidadComprada * @precio) + (@comisionEnvio * @precio),
+
+	(SELECT USUA_USERNAME
+	FROM SALUDOS.PUBLICACIONES
+	WHERE PUBL_COD = @codPublicacion)
+	)
+
+	DECLARE @codFactura numeric(18,0)
+	SET @codFactura = SCOPE_IDENTITY()
+
+	INSERT INTO SALUDOS.ITEMS(
+	ITEM_IMPORTE, ITEM_CANTIDAD,
+	ITEM_DESCRIPCION, FACT_COD)
+
+	VALUES(
+	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
+	'Comisión por Venta', @codFactura
+	)
+
+	INSERT INTO SALUDOS.ITEMS(
+	ITEM_IMPORTE, ITEM_CANTIDAD,
+	ITEM_DESCRIPCION, FACT_COD)
+
+	VALUES(
+	@comisionEnvio * @precio, 1,
+	'Comisión por Envío', @codFactura
+	)
+GO
+
 CREATE FUNCTION SALUDOS.cantidadDeFacturas(
 	@fechaInicio datetime, @fechaFinalizacion datetime,
 	@codigoPublicacion numeric(18,0), @codigoFactura numeric(18,0),
@@ -862,101 +960,6 @@ INSERT INTO SALUDOS.FACTURAS(
 	'Comisión por Publicación', @codFactura
 	)
 
-GO
-
---Factura únicamente la comisión de compra.
-CREATE PROCEDURE SALUDOS.facturarCompra
-	@codPublicacion numeric(18,0),
-	@cantidadComprada numeric(18,0),
-	@precio numeric(18,2)
-AS
-	DECLARE @comisionVenta numeric(18,2)
-	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
-							FROM SALUDOS.VISIBILIDADES
-							WHERE VISI_COD = (	SELECT VISI_COD
-												FROM SALUDOS.PUBLICACIONES
-												WHERE PUBL_COD = @codPublicacion)
-											 )
-	
-	INSERT INTO SALUDOS.FACTURAS(
-	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
-
-	VALUES(
-	saludos.fechaActual(), @codPublicacion,
-	@comisionVenta * @cantidadComprada * @precio, 
-
-	(SELECT USUA_USERNAME
-	FROM SALUDOS.PUBLICACIONES
-	WHERE PUBL_COD = @codPublicacion)
-	)
-
-	DECLARE @codFactura numeric(18,0)
-	SET @codFactura = SCOPE_IDENTITY()
-
-	INSERT INTO SALUDOS.ITEMS(
-	ITEM_IMPORTE, ITEM_CANTIDAD,
-	ITEM_DESCRIPCION, FACT_COD)
-
-	VALUES(
-	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
-	'Comisión por Venta', @codFactura
-	)
-
-GO
-
---Factura las comisiones de compra y envío.
-CREATE PROCEDURE SALUDOS.facturarCompraYEnvio
-	@codPublicacion numeric(18,0),
-	@cantidadComprada numeric(18,0),
-	@precio numeric(18,2)
-AS
-	DECLARE @comisionVenta numeric(18,2)
-	SET @comisionVenta =	(SELECT VISI_COMISION_VENTA
-							FROM SALUDOS.VISIBILIDADES
-							WHERE VISI_COD = (	SELECT VISI_COD
-												FROM SALUDOS.PUBLICACIONES
-												WHERE PUBL_COD = @codPublicacion)
-											 )
-	DECLARE @comisionEnvio numeric(18,2)
-	SET @comisionEnvio =	(SELECT VISI_COMISION_ENVIO
-							FROM SALUDOS.VISIBILIDADES
-							WHERE VISI_COD = (	SELECT VISI_COD
-												FROM SALUDOS.PUBLICACIONES
-												WHERE PUBL_COD = @codPublicacion)
-											 )
-
-	INSERT INTO SALUDOS.FACTURAS(
-	FACT_FECHA, PUBL_COD, FACT_TOTAL, USUA_USERNAME)
-
-	VALUES(
-	saludos.fechaActual(), @codPublicacion,
-	(@comisionVenta * @cantidadComprada * @precio) + (@comisionEnvio * @precio),
-
-	(SELECT USUA_USERNAME
-	FROM SALUDOS.PUBLICACIONES
-	WHERE PUBL_COD = @codPublicacion)
-	)
-
-	DECLARE @codFactura numeric(18,0)
-	SET @codFactura = SCOPE_IDENTITY()
-
-	INSERT INTO SALUDOS.ITEMS(
-	ITEM_IMPORTE, ITEM_CANTIDAD,
-	ITEM_DESCRIPCION, FACT_COD)
-
-	VALUES(
-	@comisionVenta * @cantidadComprada * @precio, @cantidadComprada,
-	'Comisión por Venta', @codFactura
-	)
-
-	INSERT INTO SALUDOS.ITEMS(
-	ITEM_IMPORTE, ITEM_CANTIDAD,
-	ITEM_DESCRIPCION, FACT_COD)
-
-	VALUES(
-	@comisionEnvio * @precio, 1,
-	'Comisión por Envío', @codFactura
-	)
 GO
 
 
@@ -2155,12 +2158,12 @@ END
 GO
 
 CREATE PROCEDURE SALUDOS.modificarVisibilidad
-(@nombre_visibilidad nvarchar(255), @comision_publicacion numeric(18,2), @comision_venta numeric (18,2), @comision_envio numeric(18,2))
+(@codigo int, @nombre_visibilidad nvarchar(255), @comision_publicacion numeric(18,2), @comision_venta numeric (18,2), @comision_envio numeric(18,2))
 AS BEGIN
 	UPDATE SALUDOS.VISIBILIDADES
 	SET VISI_COMISION_ENVIO = @comision_envio, VISI_COMISION_PUBLICACION = @comision_publicacion, 
 		VISI_COMISION_VENTA = @comision_venta, VISI_DESCRIPCION = @nombre_visibilidad
-	WHERE VISI_DESCRIPCION = @nombre_visibilidad
+	WHERE VISI_COD = @codigo
 END
 GO
 
@@ -2237,6 +2240,20 @@ RETURNS TABLE
 AS
 	RETURN (SELECT VISI_DESCRIPCION AS 'Visibilidad'
 			FROM SALUDOS.VISIBILIDADES)
+GO
+
+CREATE FUNCTION SALUDOS.getVisibilidades
+(@nombre nvarchar(255))
+RETURNS TABLE
+AS
+	RETURN (SELECT	VISI_COD AS 'Código',
+					VISI_DESCRIPCION AS 'Nombre',
+					VISI_COMISION_PUBLICACION AS 'Comisión_Publicación',
+					VISI_COMISION_VENTA AS 'Comisión_Venta',
+					VISI_COMISION_ENVIO AS 'Comisión_Envío',
+					VISI_HABILITADO AS 'Habilitado'
+			FROM SALUDOS.VISIBILIDADES
+			WHERE VISI_DESCRIPCION = @nombre OR @nombre IS NULL)
 GO
 
 CREATE FUNCTION SALUDOS.getRoles

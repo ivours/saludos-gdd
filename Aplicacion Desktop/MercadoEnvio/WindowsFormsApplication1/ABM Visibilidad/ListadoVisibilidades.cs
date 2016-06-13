@@ -23,13 +23,22 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        private Object filtrarDescripcion()
+        {
+            if (textBox1.Text.Equals(""))
+                return DBNull.Value;
+            else
+                return textBox1.Text;
+        }
+
         //TODO: Agregar filtros
         private SqlDataReader getVisibilidades()
         {
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.VISIBILIDADES";
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getVisibilidades(@descripcion)";
+            consulta.Parameters.Add(new SqlParameter("@descripcion", this.filtrarDescripcion()));
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 
@@ -38,27 +47,29 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void button4_Click(object sender, EventArgs e)
         {
+            int codigoVisibilidad;
             String nombreVisibilidad;
             decimal comisionPorPublicar;
             decimal comisionPorVender;
             decimal comisionPorEnvio;
 
-            //TODO: Ver orden columnas
             switch (formAnterior.Name)
             {
                 case "BajaVisibilidad":
-                    nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                    nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                     (formAnterior as ABM_Visibilidad.BajaVisibilidad).bajaVisibilidad(nombreVisibilidad);
-                    MessageBox.Show("Se ha eliminado la visibilidad '" + nombreVisibilidad + "'");
+                    MessageBox.Show("Se ha dado de baja la visibilidad '" + nombreVisibilidad + "'");
                     ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
                     break;
 
                 case "ModificarVisibilidad":
 
-                    nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
-                    comisionPorPublicar = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[1].Value);
-                    comisionPorVender = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[2].Value);
-                    comisionPorEnvio = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[3].Value.ToString());
+                    codigoVisibilidad = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+                    nombreVisibilidad = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                    comisionPorPublicar = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[2].Value);
+                    comisionPorVender = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[3].Value) * 100;
+                    comisionPorEnvio = Convert.ToDecimal(dataGridView1.SelectedRows[0].Cells[4].Value) * 100;
+                    (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setCodigoVisibilidad(codigoVisibilidad);
                     (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setNombreVisibilidad(nombreVisibilidad);
                     (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setComisionPorPublicar(comisionPorPublicar);
                     (formAnterior as ABM_Visibilidad.ModificarVisibilidad).setComisionPorVender(comisionPorVender);
@@ -68,6 +79,16 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             }
 
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ConfiguradorDataGrid.llenarDataGridConConsulta(this.getVisibilidades(), dataGridView1);
         }
 
         

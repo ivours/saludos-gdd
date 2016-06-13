@@ -38,8 +38,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         {
             String nombreVisibilidad = textBox4.Text;
             decimal comisionPorPublicar = numericUpDown1.Value;
-            decimal comisionPorVender = numericUpDown2.Value;
-            decimal comisionPorEnvio = numericUpDown3.Value;
+            decimal comisionPorVender = numericUpDown2.Value / 100;
+            decimal comisionPorEnvio = numericUpDown3.Value / 100;
 
             SQLManager manager = new SQLManager().generarSP("altaVisibilidad")
                                  .agregarStringSP("@nombre_visibilidad", nombreVisibilidad)
@@ -53,6 +53,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         private void validarCampos()
         {
             this.validarNombre();
+            this.validarComisiones();
         }
 
         private void validarNombre()
@@ -65,6 +66,13 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
             if (!Validacion.contieneSoloLetrasOEspacios(textBox4.Text))
                 throw new Exception("El nombre debe contener únicamente letras o espacios");
+        
+        }
+
+        private void validarComisiones()
+        {
+            if (!Validacion.esIgualOMenorACien(numericUpDown2.Value) || !Validacion.esIgualOMenorACien(numericUpDown3.Value))
+                throw new Exception("Las comisiones no pueden exceder el 100%");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -73,6 +81,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             {
                 this.validarCampos();
                 this.altaVisibilidad();
+
+                this.Close();
             }
             catch (Exception excepcion)
             {
