@@ -26,5 +26,19 @@ namespace WindowsFormsApplication1.Dominio
 
             return funcionalidadesRol;
         }
+
+        public static int getIdRol(String nombreRol)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.getIdRol(@nombre_rol)";
+            consulta.Parameters.Add(new SqlParameter("@nombre_rol", nombreRol));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+            reader.Read();
+
+            return (int)reader.GetValue(0);
+        }
     }
 }

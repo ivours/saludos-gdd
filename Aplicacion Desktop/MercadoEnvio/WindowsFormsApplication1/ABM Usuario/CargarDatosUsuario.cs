@@ -126,5 +126,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox4.Text = nombreRol;
             this.idRol = idRol;
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Text = "Cliente";
+            idRol = Dominio.Rol.getIdRol("Cliente");
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Text = "Empresa";
+            idRol = Dominio.Rol.getIdRol("Empresa");
+        }
     }
 }
