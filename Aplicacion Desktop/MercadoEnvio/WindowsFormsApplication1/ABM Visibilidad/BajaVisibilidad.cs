@@ -21,10 +21,11 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         public void bajaVisibilidad(String nombreVisibilidad)
         {
-            SQLManager manager = new SQLManager().generarSP("bajaVisibilidad")
-                                                 .agregarStringSP("@nombreVisibilidad", nombreVisibilidad);
 
-            manager.ejecutarSP();
+                SQLManager manager = new SQLManager().generarSP("bajaVisibilidad")
+                                     .agregarStringSP("@nombre_visibilidad", nombreVisibilidad);
+
+                manager.ejecutarSP();
         }
 
     }
