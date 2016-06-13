@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1.Dominio;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Login
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.Login
         public SeleccionarRol(String username, Login formLogin)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.username = username;
             this.llenarComboBoxConRoles();
             this.formLogin = formLogin;

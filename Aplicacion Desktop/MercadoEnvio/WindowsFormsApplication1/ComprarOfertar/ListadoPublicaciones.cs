@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ComprarOfertar
 {
@@ -19,6 +20,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         public ListadoPublicaciones(String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.username = username;
             ConfiguradorDataGrid.configurar(dataGridView1);
             paginaActual = 1;

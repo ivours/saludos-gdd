@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Facturas
 {
@@ -22,6 +23,7 @@ namespace WindowsFormsApplication1.Facturas
         public DetalleFactura(int codigoFactura, int codigoPublicacion, String destinatario, DateTime fechaFacturacion, decimal total)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.codigoFactura = codigoFactura;
             this.codigoPublicacion = codigoPublicacion;
             this.destinatario = destinatario;

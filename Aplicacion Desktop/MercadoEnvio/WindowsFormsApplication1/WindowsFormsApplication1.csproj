@@ -228,6 +228,7 @@
     <Compile Include="Dominio\Rubro.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Dominio\Visibilidad.cs" />
+    <Compile Include="Extras\ConfiguradorVentana.cs" />
     <Compile Include="Extras\ConcatenadorDeStrings.cs" />
     <Compile Include="Extras\ConfiguradorDataGrid.cs" />
     <Compile Include="Extras\EmailChecker.cs" />

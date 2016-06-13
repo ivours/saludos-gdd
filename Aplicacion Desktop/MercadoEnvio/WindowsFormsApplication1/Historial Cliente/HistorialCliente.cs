@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Historial_Cliente
 {
@@ -19,6 +20,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
         public HistorialCliente(String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.username = username;
             this.inicializarCampos();
             ConfiguradorDataGrid.configurar(dataGridView1);

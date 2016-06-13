@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Generar_Publicación
 {
@@ -14,6 +15,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         public ModificarVisibilidad()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
         }
     }
 }

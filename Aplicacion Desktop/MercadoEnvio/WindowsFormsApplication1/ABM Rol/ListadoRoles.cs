@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         public ListadoRoles(Form formAnterior)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             ConfiguradorDataGrid.configurar(dataGridView1);
             this.formAnterior = formAnterior;
             this.inicializarComboBoxHabilitado();

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Listado_Estadistico
 {
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         public ListadoRubros(ListadoEstadistico listadoEstadistico)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.listadoEstadistico = listadoEstadistico;
         }
     }

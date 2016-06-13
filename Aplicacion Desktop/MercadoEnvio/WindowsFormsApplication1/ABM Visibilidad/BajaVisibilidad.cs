@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Visibilidad
 {
@@ -15,6 +16,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         public BajaVisibilidad()
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
         }
 
         public void bajaVisibilidad(String nombreVisibilidad)

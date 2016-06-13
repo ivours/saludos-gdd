@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Calificar
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.Calificar
         public CalificarOperacion(String username, String vendedor, int codigoPublicacion)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.inicializarComboBoxEstrellas();
             this.username = username;
             this.vendedor = vendedor;

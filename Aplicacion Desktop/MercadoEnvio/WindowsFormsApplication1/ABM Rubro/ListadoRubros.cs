@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ABM_Rubro
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
         public ListadoRubros(Form formAnterior)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.inicializarCampos();
             this.formAnterior = formAnterior;
             ConfiguradorDataGrid.llenarDataGridConConsulta(this.getRubros(), dataGridView1); //TODO: esto ponerlo en el click de buscar

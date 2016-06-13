@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Facturas
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsApplication1.Facturas
         public SeleccionarFecha(TextBox campoFecha)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.campoFecha = campoFecha;
         }
 

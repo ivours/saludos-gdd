@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Cambio_de_Password
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsApplication1.Cambio_de_Password
         public CambiarPassword(String modo)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
 
             if (modo.Equals("Administrador"))
                 textBox1.ReadOnly = true;

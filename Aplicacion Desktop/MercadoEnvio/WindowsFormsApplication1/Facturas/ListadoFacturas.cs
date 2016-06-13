@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1.Dominio;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.Facturas
 {
@@ -20,6 +21,7 @@ namespace WindowsFormsApplication1.Facturas
         public ListadoFacturas(String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             ConfiguradorDataGrid.configurar(dataGridView1);
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.username = username;

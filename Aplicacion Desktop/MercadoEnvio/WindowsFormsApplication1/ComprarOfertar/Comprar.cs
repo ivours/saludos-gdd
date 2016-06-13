@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Extras;
 
 namespace WindowsFormsApplication1.ComprarOfertar
 {
@@ -18,6 +19,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         public Comprar(int codigoPublicacion, String username)
         {
             InitializeComponent();
+            ConfiguradorVentana.configurarVentana(this);
             this.codigoPublicacion = codigoPublicacion;
             this.username = username;
             this.inicializarCampos();
