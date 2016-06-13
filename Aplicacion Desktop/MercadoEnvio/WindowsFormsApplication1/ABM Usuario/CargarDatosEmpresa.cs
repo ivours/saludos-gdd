@@ -130,9 +130,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if (!Validacion.empiezaConCaracter(textBox8.Text))
                 throw new Exception("La calle debe comenzar con un caracter visible");
-
-            if (!Validacion.contieneSoloLetrasOEspacios(textBox8.Text))
-                throw new Exception("La calle debe contener únicamente letras o espacios");
         }
 
         private void validarNroCalle()
