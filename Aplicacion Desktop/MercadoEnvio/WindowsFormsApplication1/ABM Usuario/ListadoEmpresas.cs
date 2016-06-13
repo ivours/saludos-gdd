@@ -59,9 +59,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void seleccionarEmpresaAModificar()
         {
-            if (dataGridView1.DataSource.Equals(null))
-                throw new Exception("Debe seleccionar una empresa a modificar");
-
             ABM_Usuario.ModificarDatosEmpresa modificarDatosEmpresa = new ModificarDatosEmpresa();
 
             String razonSocial = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
@@ -97,13 +94,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button4_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                this.seleccionarEmpresaAModificar();
-            }
-            catch (Exception excepcion)
-            {
-                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+                try
+                {
+                    this.seleccionarEmpresaAModificar();
+                    this.Close();
+                }
+                catch (Exception excepcion)
+                {
+                    MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+                }
             }
         }
     }

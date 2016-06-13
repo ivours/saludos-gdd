@@ -61,9 +61,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void seleccionarClienteAModificar()
         {
-            if (dataGridView1.DataSource.Equals(null))
-                throw new Exception("Debe seleccionar un cliente a modificar");
-
                 ABM_Usuario.ModificarDatosCliente modificarDatosCliente = new ModificarDatosCliente();
 
                 String nombre = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
@@ -100,14 +97,20 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button4_Click(object sender, EventArgs e)
         {
-            try
+
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                this.seleccionarClienteAModificar();
+                try
+                {
+                    this.seleccionarClienteAModificar();
+                    this.Close();
+                }
+                catch (Exception excepcion)
+                {
+                    MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
+                }
             }
-            catch (Exception excepcion)
-            {
-                MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
-            }
+
         }
 
     }
