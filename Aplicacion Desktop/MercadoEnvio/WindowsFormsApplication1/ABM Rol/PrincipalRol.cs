@@ -30,8 +30,8 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form baja = new ABM_Rol.BajaRol();
-            Form listado = new ABM_Rol.ListadoRoles(baja);
+            Form bajaRol = new ABM_Rol.BajaRol();
+            Form listado = new ABM_Rol.ListadoRoles(bajaRol);
             listado.Show();
         }
 

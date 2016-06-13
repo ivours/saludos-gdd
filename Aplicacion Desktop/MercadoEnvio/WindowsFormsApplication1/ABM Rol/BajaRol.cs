@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             this.borrarRol(idRol);
         }
 
-        private void borrarRol(int idRol)
+        public void borrarRol(int idRol)
         {
             SQLManager manager = new SQLManager().generarSP("borrarRol")
                      .agregarIntSP("@id_rol", idRol);

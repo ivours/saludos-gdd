@@ -15,12 +15,14 @@ namespace WindowsFormsApplication1.ABM_Rol
         int idRol;
         String nombreRol;
         List<String> funcionalidadesViejas;
+        List<String> funcionalidadesNuevas;
         List<String> funcionalidadesAEliminar;
 
         public ModificarRol()
         {
             InitializeComponent();
             funcionalidadesViejas = new List<String>();
+            funcionalidadesNuevas = new List<String>();
             funcionalidadesAEliminar = new List<String>();
         }
 
@@ -47,12 +49,18 @@ namespace WindowsFormsApplication1.ABM_Rol
 
             if (funcionalidadesAEliminar.Contains(nombreFuncionalidad))
                 funcionalidadesAEliminar.Remove(nombreFuncionalidad);
+
+            if (!funcionalidadesViejas.Contains(nombreFuncionalidad))
+                funcionalidadesNuevas.Add(nombreFuncionalidad);
         }
 
         private void eliminarFuncionalidadSeleccionada()
         {
             if (funcionalidadesViejas.Contains(listBox1.SelectedItem.ToString()))
                 funcionalidadesAEliminar.Add(listBox1.SelectedItem.ToString());
+
+            if(funcionalidadesNuevas.Contains(listBox1.SelectedItem.ToString()))
+                funcionalidadesNuevas.Remove(listBox1.SelectedItem.ToString());
 
             listBox1.Items.Remove(listBox1.SelectedItem);
         }
@@ -77,19 +85,18 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void modificarRol()
         {
             String nombreRol = textBox1.Text;
-            System.Windows.Forms.ListBox.ObjectCollection funcionalidades = listBox1.Items;
 
             SQLManager manager = new SQLManager().generarSP("modificarRol")
                                  .agregarIntSP("@id_rol", idRol)
-                                 .agregarStringSP("@nombreRol", nombreRol);
+                                 .agregarStringSP("@nombre", nombreRol);
 
             manager.ejecutarSP();
 
-            for(int i = 0; i<funcionalidades.Count; i++)
+            for(int i = 0; i<this.funcionalidadesNuevas.Count; i++)
             {
                 manager = new SQLManager().generarSP("agregarFuncionalidadARol")
-                    .agregarStringSP("@nombreRol", nombreRol)
-                    .agregarStringSP("@nombreFuncionalidad", funcionalidades[i].ToString());
+                    .agregarStringSP("@nombre_rol", nombreRol)
+                    .agregarStringSP("@nombre_funcionalidad", this.funcionalidadesNuevas[i].ToString());
 
                     manager.ejecutarSP();
             }
@@ -97,8 +104,8 @@ namespace WindowsFormsApplication1.ABM_Rol
             for (int i = 0; i < funcionalidadesAEliminar.Count; i++)
             {
                 manager = new SQLManager().generarSP("quitarFuncionalidadDeRol")
-                    .agregarStringSP("@nombreRol", nombreRol)
-                    .agregarStringSP("@nombreFuncionalidad", funcionalidadesAEliminar[i].ToString());
+                    .agregarStringSP("@nombre_rol", nombreRol)
+                    .agregarStringSP("@nombre_funcionalidad", funcionalidadesAEliminar[i].ToString());
 
                 manager.ejecutarSP();
             }
@@ -134,6 +141,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             {
                 this.validarCampos();
                 this.modificarRol();
+                this.Close();
             }
             catch (Exception excepcion)
             {
@@ -154,7 +162,6 @@ namespace WindowsFormsApplication1.ABM_Rol
             {
                 listBox1.Items.Add(funcionalidades[i]);
             }
-
             
             funcionalidadesViejas.AddRange(funcionalidades);
         }
