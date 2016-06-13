@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             InitializeComponent();
             this.codigoPublicacion = codigoPublicacion;
             this.username = username;
+            this.inicializarCampos();
         }
 
         private SqlDataReader detallesPublicacionSubasta()
@@ -45,10 +46,10 @@ namespace WindowsFormsApplication1.ComprarOfertar
             this.inicializarPermiteEnvio(detallesPublicacionSubasta);
             this.inicializarUltimaOferta(detallesPublicacionSubasta);
             this.inicializarPrecioSugerido(detallesPublicacionSubasta);
-            this.inicializarBotonComprar(detallesPublicacionSubasta);
+            this.inicializarBotonOfertar(detallesPublicacionSubasta);
         }
 
-        private void inicializarBotonComprar(SqlDataReader detallesPublicacionSubasta)
+        private void inicializarBotonOfertar(SqlDataReader detallesPublicacionSubasta)
         {
             int cantidadCalificacionesPendientes = Dominio.Usuario.cantidadCalificacionesPendientes(this.username);
             String creadorPublicacion = detallesPublicacionSubasta.GetValue(5).ToString();
@@ -124,7 +125,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             int ultimaOferta = Convert.ToInt32(detallesPublicacionSubasta.GetValue(3));
 
             if (oferta < ultimaOferta)
-                throw new Exception("El monto a ofertar debe ser mayor a la ultima oferta realizada");
+                throw new Exception("El monto a ofertar debe ser mayor a la última oferta realizada");
         }
 
         private void ofertar()

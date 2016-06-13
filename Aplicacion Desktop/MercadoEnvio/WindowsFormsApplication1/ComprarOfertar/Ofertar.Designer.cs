@@ -248,20 +248,20 @@
             this.label7.ForeColor = System.Drawing.Color.Red;
             this.label7.Location = new System.Drawing.Point(232, 374);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(248, 13);
+            this.label7.Size = new System.Drawing.Size(240, 13);
             this.label7.TabIndex = 11;
-            this.label7.Text = "Calificar operaciones pendientes antes de comprar.";
+            this.label7.Text = "Calificar operaciones pendientes antes de ofertar.";
             this.label7.Visible = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(227, 374);
+            this.label3.Location = new System.Drawing.Point(222, 374);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(253, 13);
+            this.label3.Size = new System.Drawing.Size(260, 13);
             this.label3.TabIndex = 12;
-            this.label3.Text = "Un usuario no puede comprar su propia publicación.";
+            this.label3.Text = "Un usuario no puede ofertar en su propia publicación.";
             this.label3.Visible = false;
             // 
             // Ofertar
