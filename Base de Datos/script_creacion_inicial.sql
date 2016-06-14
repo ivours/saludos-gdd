@@ -2005,28 +2005,28 @@ CREATE FUNCTION SALUDOS.filtrarEmpresas
 (@razon_social nvarchar(255), @cuit nvarchar(50), @mail nvarchar(50))
 RETURNS @empresas TABLE
 (
-	EMPR_RAZON_SOCIAL		nvarchar(255),
-	EMPR_CUIT				nvarchar(50),
-	EMPR_MAIL				nvarchar(50),
-	EMPR_TELEFONO			numeric(18,0),
-	EMPR_CALLE				nvarchar(100),
-	EMPR_NRO_CALLE			numeric(18,0),
-	EMPR_PISO				numeric(18,0),
-	EMPR_DEPTO				nvarchar(50),
-	EMPR_CIUDAD				nvarchar(50),
-	EMPR_CONTACTO			nvarchar(50),
-	EMPR_CODIGO_POSTAL		nvarchar(50),
-	EMPR_LOCALIDAD			nvarchar(50),
-	RUBR_NOMBRE				nvarchar(255)
+	Razón_Social		nvarchar(255),
+	CUIT				nvarchar(50),
+	Email				nvarchar(50),
+	Teléfono			numeric(18,0),
+	Calle				nvarchar(100),
+	Número			numeric(18,0),
+	Piso				numeric(18,0),
+	Depto				nvarchar(50),
+	Ciudad				nvarchar(50),
+	Contacto			nvarchar(50),
+	Código_Postal		nvarchar(50),
+	Localidad			nvarchar(50),
+	Rubro				nvarchar(255)
 
 )
 AS
 BEGIN
 	IF(@cuit = '')
 		BEGIN
-			INSERT INTO @empresas(EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE,
-			EMPR_NRO_CALLE, EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL,
-			EMPR_LOCALIDAD, RUBR_NOMBRE)
+			INSERT INTO @empresas(Razón_Social, CUIT, Email, Teléfono, Calle,
+			Número, Piso, Depto, Ciudad, Contacto, Código_Postal,
+			Localidad, Rubro)
 			SELECT EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE, EMPR_NRO_CALLE,
 			EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL, EMPR_LOCALIDAD, RUBR_NOMBRE
 			FROM SALUDOS.EMPRESAS E LEFT JOIN SALUDOS.RUBROS R ON E.RUBR_COD = R.RUBR_COD
@@ -2035,9 +2035,9 @@ BEGIN
 		END
 	ELSE
 		BEGIN
-			INSERT INTO @empresas(EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE,
-			EMPR_NRO_CALLE, EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL,
-			EMPR_LOCALIDAD, RUBR_NOMBRE)
+			INSERT INTO @empresas(Razón_Social, CUIT, Email, Teléfono, Calle,
+			Número, Piso, Depto, Ciudad, Contacto, Código_Postal,
+			Localidad, Rubro)
 			SELECT EMPR_RAZON_SOCIAL, EMPR_CUIT, EMPR_MAIL, EMPR_TELEFONO, EMPR_CALLE, EMPR_NRO_CALLE,
 			EMPR_PISO, EMPR_DEPTO, EMPR_CIUDAD, EMPR_CONTACTO, EMPR_CODIGO_POSTAL, EMPR_LOCALIDAD, RUBR_NOMBRE
 			FROM SALUDOS.EMPRESAS E LEFT JOIN SALUDOS.RUBROS R ON E.RUBR_COD = R.RUBR_COD
@@ -2053,26 +2053,26 @@ CREATE FUNCTION SALUDOS.filtrarClientes
 (@nombre nvarchar(255), @apellido nvarchar(255), @nro_documento nvarchar(255), @mail nvarchar(50))
 RETURNS @clientes TABLE
 (
-	CLIE_NOMBRE				nvarchar(255),
-	CLIE_APELLIDO			nvarchar(255),
-	CLIE_TELEFONO			numeric(18,0),
-	CLIE_CALLE				nvarchar(255),
-	CLIE_NRO_CALLE			numeric(18,0),
-	CLIE_FECHA_NACIMIENTO	datetime,
-	CLIE_CODIGO_POSTAL		nvarchar(50),
-	CLIE_DEPTO				nvarchar(50),
-	CLIE_PISO				numeric(18,0),
-	CLIE_LOCALIDAD			nvarchar(255),
-	CLIE_NRO_DOCUMENTO		numeric(18,0),
-	CLIE_TIPO_DOCUMENTO		nvarchar(50),
-	CLIE_MAIL				nvarchar(50)
+	Nombre				nvarchar(255),
+	Apellido			nvarchar(255),
+	Teléfono			numeric(18,0),
+	Calle				nvarchar(255),
+	Número			numeric(18,0),
+	Fecha_de_Nacimiento	datetime,
+	Código_Postal		nvarchar(50),
+	Depto				nvarchar(50),
+	Piso				numeric(18,0),
+	Localidad			nvarchar(255),
+	Nro_Documento		numeric(18,0),
+	Tipo_Documento		nvarchar(50),
+	Email				nvarchar(50)
 )
 AS
 BEGIN
 	IF (@nro_documento = '')
 		BEGIN
-			INSERT INTO @clientes (CLIE_NOMBRE, CLIE_APELLIDO, CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_TELEFONO,
-			CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_LOCALIDAD, CLIE_CODIGO_POSTAL, CLIE_FECHA_NACIMIENTO)
+			INSERT INTO @clientes (Nombre, Apellido, Nro_Documento, Tipo_Documento, Email, Teléfono,
+			Calle, Número, Piso, Depto, Localidad, Código_Postal, Fecha_de_Nacimiento)
 			SELECT CLIE_NOMBRE, CLIE_APELLIDO, CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_TELEFONO,
 			CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_LOCALIDAD, CLIE_CODIGO_POSTAL, CLIE_FECHA_NACIMIENTO
 			FROM SALUDOS.CLIENTES
@@ -2082,8 +2082,8 @@ BEGIN
 		END
 	ELSE
 		BEGIN
-			INSERT INTO @clientes (CLIE_NOMBRE, CLIE_APELLIDO, CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_TELEFONO,
-			CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_LOCALIDAD, CLIE_CODIGO_POSTAL, CLIE_FECHA_NACIMIENTO)
+			INSERT INTO @clientes (Nombre, Apellido, Nro_Documento, Tipo_Documento, Email, Teléfono,
+			Calle, Número, Piso, Depto, Localidad, Código_Postal, Fecha_de_Nacimiento)
 			SELECT CLIE_NOMBRE, CLIE_APELLIDO, CLIE_NRO_DOCUMENTO, CLIE_TIPO_DOCUMENTO, CLIE_MAIL, CLIE_TELEFONO,
 			CLIE_CALLE, CLIE_NRO_CALLE, CLIE_PISO, CLIE_DEPTO, CLIE_LOCALIDAD, CLIE_CODIGO_POSTAL, CLIE_FECHA_NACIMIENTO
 			FROM SALUDOS.CLIENTES
