@@ -80,6 +80,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 this.limpiarUsername();
                 throw new Exception("El username debe tener al menos 4 caracteres");
             }
+
+            if (Dominio.Usuario.existeUsername(textBox1.Text).Equals(1))
+                throw new Exception("El username ya existe. Ingrese otro username.");
+            
         }
 
         private void limpiarUsername()
