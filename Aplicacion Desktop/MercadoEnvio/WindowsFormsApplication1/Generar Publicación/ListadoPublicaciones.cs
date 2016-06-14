@@ -94,7 +94,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             switch (formAnterior.Name)
             {
                 case "CambiarEstadoPublicacion":
-                    codigoPublicacion = (int) dataGridView1.SelectedRows[0].Cells[0].Value;
+                    codigoPublicacion = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     estadoActual = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
                     (formAnterior as Generar_Publicación.CambiarEstadoPublicacion).setCodigoPublicacion(codigoPublicacion);
                     (formAnterior as Generar_Publicación.CambiarEstadoPublicacion).setEstadoActual(estadoActual);

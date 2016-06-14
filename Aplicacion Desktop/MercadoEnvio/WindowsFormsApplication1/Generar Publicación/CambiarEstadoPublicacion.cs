@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             String nuevoEstado = comboBox1.SelectedItem.ToString();
 
             SQLManager manager = new SQLManager().generarSP("cambiarEstadoPublicacion")
-                                 .agregarIntSP("@codigoPublicacion", this.codigoPubliacion)
+                                 .agregarIntSP("@codPublicacion", this.codigoPubliacion)
                                  .agregarStringSP("@nuevoEstado", nuevoEstado);
 
             manager.ejecutarSP();
@@ -84,6 +84,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void button2_Click(object sender, EventArgs e)
         {
             this.cambiarEstadoPublicacion();
+            this.Close();
         }
     }
 }

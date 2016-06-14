@@ -22,7 +22,17 @@ namespace WindowsFormsApplication1.Login
 
         private void limpiarCampos()
         {
+            this.limpiarUsername();
+            this.limpiarPassword();
+        }
+
+        private void limpiarUsername()
+        {
             textBox1.Clear();
+        }
+
+        private void limpiarPassword()
+        {
             textBox2.Clear();
         }
 
@@ -41,7 +51,10 @@ namespace WindowsFormsApplication1.Login
         private void validarPassword()
         {
             if (!Validacion.empiezaConCaracter(textBox2.Text))
+            {
+                this.limpiarPassword();
                 throw new Exception("El Password debe empezar con un carácter visible.");
+            }
         }
 
         private void loguearse()
@@ -59,7 +72,7 @@ namespace WindowsFormsApplication1.Login
                 //String username = "odamartínez";
                 //String password = "2927009";
 
-                this.validarQueElUsuarioTengaRoles(username);
+                
 
                 SQLManager manager = new SQLManager().generarSP("login")
                                                  .agregarStringSP("@usuario", username)
@@ -68,6 +81,8 @@ namespace WindowsFormsApplication1.Login
                 manager.ejecutarSP();
 
                 String tipoUsuario = Usuario.getTipoUsuario(username);
+
+                this.validarQueElUsuarioTengaRoles(username);
 
                 if (tipoUsuario.Equals("Administrador"))
                 {
@@ -102,7 +117,6 @@ namespace WindowsFormsApplication1.Login
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
-                this.limpiarCampos();
             }
 
         }

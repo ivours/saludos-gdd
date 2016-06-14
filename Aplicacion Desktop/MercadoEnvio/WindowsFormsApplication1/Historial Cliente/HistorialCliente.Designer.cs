@@ -100,9 +100,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(12, 100);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(92, 13);
+            this.label10.Size = new System.Drawing.Size(74, 13);
             this.label10.TabIndex = 20;
-            this.label10.Text = "Total operaciones";
+            this.label10.Text = "Total compras";
             // 
             // textBox10
             // 
