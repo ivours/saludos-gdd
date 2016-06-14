@@ -1817,6 +1817,18 @@ GO
 -----------------------------------------------------------
 -----Funciones y procedures relacionados a ABM Usuario-----
 -----------------------------------------------------------
+CREATE FUNCTION SALUDOS.existeUsername(@username nvarchar(255))
+RETURNS int
+AS
+	BEGIN
+		DECLARE @existe int
+		SET @existe = (	SELECT COUNT(*)
+						FROM SALUDOS.USUARIOS
+						WHERE USUA_USERNAME = @username)
+		RETURN @existe
+	END
+GO
+
 CREATE FUNCTION SALUDOS.existeTipoYNumeroDeDocumento
 (@username nvarchar(255), @nro_documento numeric(18,0), @tipo_documento nvarchar(50))
 RETURNS int
