@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1.ABM_Rubro
 
         private Object filtrarDescripcion()
         {
-            if (textBox1.Text.Length.Equals(0))
+            if (textBox2.Text.Length.Equals(0))
                 return DBNull.Value;
             else
                 return textBox2.Text;

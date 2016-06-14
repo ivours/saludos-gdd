@@ -153,6 +153,8 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
                 textBox1.Text = oferta.ToString() + ",00";
                 numericUpDown1.Value = (Convert.ToDecimal(textBox1.Text)) + 1;
+
+                MessageBox.Show("Oferta realizada exitosamente.");
             }
             catch (Exception excepcion)
             {
@@ -164,7 +166,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void button1_Click(object sender, EventArgs e)
         {
             this.ofertar();
-            MessageBox.Show("Oferta realizada exitosamente.");
         }
     }
 }
