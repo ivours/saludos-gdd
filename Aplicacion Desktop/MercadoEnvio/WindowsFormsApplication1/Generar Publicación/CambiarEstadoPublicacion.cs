@@ -42,6 +42,16 @@ namespace WindowsFormsApplication1.Generar_Publicación
             manager.ejecutarSP();
         }
 
+        private void activarPublicacionPorPrimeraVez()
+        {
+            String nuevoEstado = comboBox1.SelectedItem.ToString();
+
+            SQLManager manager = new SQLManager().generarSP("activarPublicacionPorPrimeraVez")
+                                 .agregarIntSP("@codPublicacion", this.codigoPublicacion);
+
+            manager.ejecutarSP();
+        }
+
         public void setCodigoPublicacion(int codigoPublicacion)
         {
             this.codigoPublicacion = codigoPublicacion;
@@ -96,7 +106,12 @@ namespace WindowsFormsApplication1.Generar_Publicación
             if (comboBox1.SelectedItem.ToString() == "Finalizada")
                 this.finalizarPublicacionPorUsuario();
             else
-                this.cambiarEstadoPublicacion();
+            {
+                if (this.estadoActual == "Borrador" && comboBox1.SelectedItem.ToString() == "Activa")
+                    this.activarPublicacionPorPrimeraVez();
+                else
+                    this.cambiarEstadoPublicacion();
+            }
 
             this.Close();
         }

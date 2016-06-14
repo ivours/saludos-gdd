@@ -22,7 +22,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             InitializeComponent();
             ConfiguradorVentana.configurarVentana(this);
             this.username = username;
-            this.llenarComboBoxEstados();
             this.llenarComboBoxVisibilidades();
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
@@ -276,6 +275,29 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 label12.Visible = false;
                 textBox5.Visible = false;
                 label9.Visible = false;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem.ToString() == "Activa")
+            {
+                textBox2.Text = Dominio.Fecha.getFechaActual().ToString();
+                textBox3.Text = Dominio.Fecha.getFechaActual().AddDays(7).ToString();
+
+                textBox2.Show();
+                label3.Show();
+
+                textBox3.Show();
+                label4.Show();
+            }
+            else
+            {
+                textBox2.Hide();
+                label3.Hide();
+
+                textBox3.Hide();
+                label4.Hide();
             }
         }
     }
