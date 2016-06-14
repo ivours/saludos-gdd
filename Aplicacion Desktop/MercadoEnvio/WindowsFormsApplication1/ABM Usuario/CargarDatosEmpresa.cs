@@ -73,6 +73,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.validarDepto();
             this.validarLocalidad();
             this.validarCodigoPostal();
+            this.validarRubro();
 
         }
 
@@ -176,6 +177,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if (!textBox13.Text.Count().Equals(4))
                 throw new Exception("El código postal debe estar compuesto por 4 números");
+        }
+
+        private void validarRubro()
+        {
+            if (Validacion.estaVacio(textBox5.Text))
+                throw new Exception("Debe seleccionar un rubro");
         }
 
         private void button3_Click(object sender, EventArgs e)
