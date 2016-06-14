@@ -22,6 +22,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
             InitializeComponent();
             ConfiguradorVentana.configurarVentana(this);
             this.username = username;
+            this.inicializarCampos();
+        }
+
+        private void inicializarCampos()
+        {
             this.llenarComboBoxVisibilidades();
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
@@ -36,9 +41,14 @@ namespace WindowsFormsApplication1.Generar_Publicación
             else
                 comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
 
-            
+
             comisionVenta = Dominio.Visibilidad.getComisionVenta(comboBox2.SelectedItem.ToString());
             comisionEnvio = Dominio.Visibilidad.getComisionEnvio(comboBox2.SelectedItem.ToString());
+
+            String tipoUsuario = Dominio.Usuario.getTipoUsuario(this.username);
+
+            if (tipoUsuario.Equals("Administrador"))
+                button3.Enabled = false;
         }
 
         private void label6_Click(object sender, EventArgs e)

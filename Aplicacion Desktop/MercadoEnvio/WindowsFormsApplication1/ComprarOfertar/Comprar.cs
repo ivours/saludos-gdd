@@ -56,6 +56,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             int cantidadCalificacionesPendientes = Dominio.Usuario.cantidadCalificacionesPendientes(this.username);
             String creadorPublicacion = detallesPublicacionCompraInmediata.GetValue(5).ToString();
+            String tipoUsuario = Dominio.Usuario.getTipoUsuario(this.username);
 
             if ( (cantidadCalificacionesPendientes > 2) )
             {
@@ -68,6 +69,10 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 button1.Enabled = false;
                 label6.Show();
             }
+
+            if(tipoUsuario.Equals("Administrador"))
+                button1.Enabled = false;
+            
         }
 
         private void inicializarDescripcion(SqlDataReader detallesPublicacionCompraInmediata)

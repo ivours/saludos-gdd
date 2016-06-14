@@ -55,6 +55,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             int cantidadCalificacionesPendientes = Dominio.Usuario.cantidadCalificacionesPendientes(this.username);
             String creadorPublicacion = detallesPublicacionSubasta.GetValue(5).ToString();
+            String tipoUsuario = Dominio.Usuario.getTipoUsuario(this.username);
 
             if ((cantidadCalificacionesPendientes > 2))
             {
@@ -67,6 +68,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 button1.Enabled = false;
                 label3.Show();
             }
+
+            if (tipoUsuario.Equals("Administrador"))
+                button1.Enabled = false;
         }
 
         private void inicializarUltimaOferta(SqlDataReader detallesPublicacionSubasta)

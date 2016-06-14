@@ -19,13 +19,9 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
             InitializeComponent();
             ConfiguradorVentana.configurarVentana(this);
-            this.inicializarCampos();
-            this.formAnterior = formAnterior;
-        }
-
-        private void inicializarCampos()
-        {
             ConfiguradorDataGrid.configurar(dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.formAnterior = formAnterior;
         }
 
         private SqlDataReader getRubros()
