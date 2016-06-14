@@ -24,19 +24,20 @@ GO
 -----Creación de tablas y foreign keys-----
 -------------------------------------------
 CREATE TABLE SALUDOS.PUBLICACIONES(
-	PUBL_COD			numeric(18,0) IDENTITY, --Publicacion_Cod
-	PUBL_DESCRIPCION	nvarchar(255),			--Publicacion_Descripcion
-	PUBL_STOCK			numeric (18,0),			--Publicacion_Stock
-	PUBL_INICIO			datetime,				--Publicacion_Fecha
-	PUBL_FINALIZACION	datetime,				--Publicacion_Fecha_Venc
-	PUBL_PRECIO			numeric(18,2),			--Publicacion_Precio
-	PUBL_PREGUNTAS		bit,					--new
-	PUBL_PERMITE_ENVIO	bit,					--new
-	USUA_USERNAME		nvarchar(255),			--FK. Creador.
-	VISI_COD			int,					--FK. Visibilidad.
-	RUBR_COD			int,					--FK. Rubro.
-	ESTA_COD			int,					--FK. Estado.
-	TIPO_COD			int,					--Fk. Tipo.
+	PUBL_COD					numeric(18,0) IDENTITY, --Publicacion_Cod
+	PUBL_DESCRIPCION			nvarchar(255),			--Publicacion_Descripcion
+	PUBL_STOCK					numeric (18,0),			--Publicacion_Stock
+	PUBL_INICIO					datetime,				--Publicacion_Fecha
+	PUBL_FINALIZACION			datetime,				--Publicacion_Fecha_Venc
+	PUBL_PRECIO					numeric(18,2),			--Publicacion_Precio
+	PUBL_PREGUNTAS				bit,					--new
+	PUBL_PERMITE_ENVIO			bit,					--new
+	PUBL_FINALIZADA_POR_USUARIO	bit DEFAULT 0,			--new. Si la finalizó manualmente el usuario.
+	USUA_USERNAME				nvarchar(255),			--FK. Creador.
+	VISI_COD					int,					--FK. Visibilidad.
+	RUBR_COD					int,					--FK. Rubro.
+	ESTA_COD					int,					--FK. Estado.
+	TIPO_COD					int,					--Fk. Tipo.
 	CONSTRAINT PK_PUBLICACIONES PRIMARY KEY (PUBL_COD),
 )
 
@@ -1054,6 +1055,7 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codActiva
 	WHERE	PUBL_INICIO <= @fecha AND
 			PUBL_FINALIZACION > @fecha AND
+			PUBL_FINALIZADA_POR_USUARIO = 0 AND
 			ESTA_COD IN (@codActiva, @codFinalizada)
 			
 	UPDATE SALUDOS.PUBLICACIONES
@@ -1220,6 +1222,16 @@ AS
 
 	UPDATE SALUDOS.PUBLICACIONES
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codEstado
+	WHERE PUBL_COD = @codPublicacion
+GO
+
+CREATE PROCEDURE SALUDOS.finalizarPublicacionPorUsuario
+	@codPublicacion numeric(18,0)
+AS
+	EXEC SALUDOS.cambiarEstadoPublicacion @codPublicacion, 'Finalizada'
+	
+	UPDATE SALUDOS.PUBLICACIONES
+	SET SALUDOS.PUBLICACIONES.PUBL_FINALIZADA_POR_USUARIO = 1
 	WHERE PUBL_COD = @codPublicacion
 GO
 
@@ -2111,10 +2123,14 @@ END
 GO
 
 CREATE PROCEDURE SALUDOS.modificarRol
-(@id_rol int, @nombre nvarchar(50))
+(@id_rol int, @nombre nvarchar(50), @habilitado bit)
 AS BEGIN
 	UPDATE SALUDOS.ROLES
-	SET ROL_NOMBRE = @nombre
+	SET ROL_NOMBRE = @nombre, ROL_HABILITADO = @habilitado
+	WHERE ROL_COD = @id_rol
+
+	UPDATE SALUDOS.ROLESXUSUARIO
+	SET RXU_HABILITADO = @habilitado
 	WHERE ROL_COD = @id_rol
 END
 GO

@@ -35,6 +35,7 @@ DROP PROCEDURE SALUDOS.adjudicarSubastas
 DROP PROCEDURE SALUDOS.crearPublicacion
 DROP FUNCTION SALUDOS.stockActual
 DROP PROCEDURE SALUDOS.cambiarEstadoPublicacion
+DROP PROCEDURE SALUDOS.finalizarPublicacionPorUsuario
 DROP FUNCTION SALUDOS.filtrarPublicacionesParaCambioDeEstado
 DROP FUNCTION SALUDOS.detallesPublicacionCompraInmediata
 DROP FUNCTION SALUDOS.detallesPublicacionSubasta

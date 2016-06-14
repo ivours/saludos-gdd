@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class CambiarEstadoPublicacion : Form
     {
-        int codigoPubliacion;
+        int codigoPublicacion;
         String estadoActual;
 
         public CambiarEstadoPublicacion()
@@ -26,15 +26,25 @@ namespace WindowsFormsApplication1.Generar_Publicación
             String nuevoEstado = comboBox1.SelectedItem.ToString();
 
             SQLManager manager = new SQLManager().generarSP("cambiarEstadoPublicacion")
-                                 .agregarIntSP("@codPublicacion", this.codigoPubliacion)
+                                 .agregarIntSP("@codPublicacion", this.codigoPublicacion)
                                  .agregarStringSP("@nuevoEstado", nuevoEstado);
+
+            manager.ejecutarSP();
+        }
+        
+        private void finalizarPublicacionPorUsuario()
+        {
+            String nuevoEstado = comboBox1.SelectedItem.ToString();
+
+            SQLManager manager = new SQLManager().generarSP("finalizarPublicacionPorUsuario")
+                                 .agregarIntSP("@codPublicacion", this.codigoPublicacion);
 
             manager.ejecutarSP();
         }
 
         public void setCodigoPublicacion(int codigoPublicacion)
         {
-            this.codigoPubliacion = codigoPublicacion;
+            this.codigoPublicacion = codigoPublicacion;
         }
 
         public void setEstadoActual(String estadoActual)
@@ -83,7 +93,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.cambiarEstadoPublicacion();
+            if (comboBox1.SelectedItem.ToString() == "Finalizada")
+                this.finalizarPublicacionPorUsuario();
+            else
+                this.cambiarEstadoPublicacion();
+
             this.Close();
         }
     }
