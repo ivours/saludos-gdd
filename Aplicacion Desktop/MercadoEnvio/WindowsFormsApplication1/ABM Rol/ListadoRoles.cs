@@ -87,6 +87,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             String nombreRol;
             int idRol;
+            int habilitado;
 
             switch (formAnterior.Name)
             {
@@ -121,8 +122,10 @@ namespace WindowsFormsApplication1.ABM_Rol
                     {
                         idRol = (int)dataGridView1.SelectedRows[0].Cells[0].Value;
                         nombreRol = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        habilitado = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[2].Value);
                         (formAnterior as ABM_Rol.ModificarRol).setIdRol(idRol);
                         (formAnterior as ABM_Rol.ModificarRol).setNombreRol(nombreRol);
+                        (formAnterior as ABM_Rol.ModificarRol).setHabilitado(habilitado);
                         (formAnterior as ABM_Rol.ModificarRol).setFuncionalidades();
                         formAnterior.Show();
                         this.Close();

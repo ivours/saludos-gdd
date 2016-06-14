@@ -15,6 +15,7 @@ namespace WindowsFormsApplication1.ABM_Rol
     {
         int idRol;
         String nombreRol;
+        int habilitado;
         List<String> funcionalidadesViejas;
         List<String> funcionalidadesNuevas;
         List<String> funcionalidadesAEliminar;
@@ -37,6 +38,24 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             this.nombreRol = nombreRol;
             textBox1.Text = nombreRol;
+        }
+
+        public void setHabilitado(int habilitado)
+        {
+            this.habilitado = habilitado;
+
+            if (habilitado.Equals(0))
+                checkBox1.Checked = false;
+            else
+                checkBox1.Checked = true;
+        }
+
+        private int getHabilitado()
+        {
+            if (checkBox1.Checked)
+                return 1;
+            else
+                return 0;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -93,7 +112,8 @@ namespace WindowsFormsApplication1.ABM_Rol
 
             SQLManager manager = new SQLManager().generarSP("modificarRol")
                                  .agregarIntSP("@id_rol", idRol)
-                                 .agregarStringSP("@nombre", nombreRol);
+                                 .agregarStringSP("@nombre", nombreRol)
+                                 .agregarIntSP("@habilitado", this.getHabilitado());
 
             manager.ejecutarSP();
 
