@@ -38,7 +38,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 catch (Exception excepcion)
                 {
                     MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
-                    this.limpiarCampos();
                 }
 
                 
@@ -54,7 +53,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 catch (Exception excepcion)
                 {
                     MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
-                    this.limpiarCampos();
                 }
             }
            
@@ -72,16 +70,37 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 throw new Exception("Debe ingresar un username");
 
             if (!Validacion.empiezaConCaracter(textBox1.Text))
+            {
+                this.limpiarUsername();
                 throw new Exception("El username debe empezar con un caracter visible");
+            }
 
             if (!Validacion.tieneLongitudMayorOIgualA(textBox1.Text, 4))
+            {
+                this.limpiarUsername();
                 throw new Exception("El username debe tener al menos 4 caracteres");
+            }
+        }
+
+        private void limpiarUsername()
+        {
+            textBox1.Clear();
+        }
+
+
+        private void limpiarPassword()
+        {
+            textBox2.Clear();
+            textBox3.Clear();
         }
 
         private void validarPassword()
         {
             if (Validacion.contieneEspacio(textBox2.Text))
+            {
+                this.limpiarPassword();
                 throw new Exception("La password no debe contener espacios");
+            }
 
             if (Validacion.estaVacio(textBox2.Text))
                 throw new Exception("Debe ingresar una password");
@@ -90,10 +109,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 throw new Exception("Debe re-ingresar la password");
 
             if (!Validacion.tieneLongitudMayorOIgualA(textBox2.Text, 4))
+            {
+                this.limpiarPassword();
                 throw new Exception("La password debe contener al menos 4 caracteres");
+            }
 
             if (!textBox2.Text.Equals(textBox3.Text))
+            {
+                this.limpiarPassword();
                 throw new Exception("Las passwords no coinciden");
+            }
         }
 
         private void validarCampos()
@@ -107,7 +132,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
-            textBox4.Clear();
         }
 
         private void button2_Click(object sender, EventArgs e)

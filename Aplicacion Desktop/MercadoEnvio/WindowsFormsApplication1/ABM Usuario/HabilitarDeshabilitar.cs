@@ -94,9 +94,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private void button2_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem.Equals("NO"))
+            {
                 this.deshabilitarUsuario();
+                MessageBox.Show("Usuario deshabilitado exitosamente.");
+            }
             else if (comboBox1.SelectedItem.Equals("SI"))
+            {
                 this.habilitarUsuario();
+                MessageBox.Show("Usuario habilitado exitosamente.");
+            }
 
             this.Close();
         }

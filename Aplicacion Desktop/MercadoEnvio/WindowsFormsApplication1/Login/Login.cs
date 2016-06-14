@@ -117,6 +117,7 @@ namespace WindowsFormsApplication1.Login
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK);
+                this.limpiarCampos();
             }
 
         }

@@ -144,6 +144,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void button1_Click(object sender, EventArgs e)
         {
             this.comprar();
+            MessageBox.Show("Compra realiada exitosamente.");
             this.Close();
         }
     }

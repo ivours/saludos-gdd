@@ -296,6 +296,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 this.validarCampos();
                 this.modificarCliente();
+                MessageBox.Show("Cliente modificado exitosamente.");
                 this.Close();
             }
             catch (Exception excepcion)

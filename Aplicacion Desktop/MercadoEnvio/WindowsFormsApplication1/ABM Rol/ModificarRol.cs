@@ -146,6 +146,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             {
                 this.validarCampos();
                 this.modificarRol();
+                MessageBox.Show("Rol modificado exitosamente.");
                 this.Close();
             }
             catch (Exception excepcion)

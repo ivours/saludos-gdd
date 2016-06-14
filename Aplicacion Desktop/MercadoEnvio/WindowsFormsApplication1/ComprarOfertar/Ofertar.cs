@@ -160,6 +160,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void button1_Click(object sender, EventArgs e)
         {
             this.ofertar();
+            MessageBox.Show("Oferta realizada exitosamente.");
         }
     }
 }

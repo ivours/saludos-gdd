@@ -74,10 +74,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void llenarComboBoxEstados()
         {
-            comboBox1.Items.Add("Borrador");
             comboBox1.Items.Add("Activa");
-            comboBox1.Items.Add("Pausada");
-            comboBox1.Items.Add("Finalizada");
+            comboBox1.Items.Add("Borrador");
         }
 
         private void llenarComboBoxVisibilidades()
