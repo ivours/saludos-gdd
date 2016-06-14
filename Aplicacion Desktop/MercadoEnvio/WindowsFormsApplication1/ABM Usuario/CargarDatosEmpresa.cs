@@ -77,7 +77,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         }
 
-        //TODO: ver si puede incluir cualquier caracter o no
         private void validarRazonSocial()
         {
             if (Validacion.estaVacio(textBox1.Text))

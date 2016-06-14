@@ -26,7 +26,6 @@ namespace WindowsFormsApplication1.ABM_Rol
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        //TODO: agregar filtros
         private SqlDataReader getFuncionalidades()
         {
             SqlDataReader reader;

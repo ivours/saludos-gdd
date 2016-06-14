@@ -42,7 +42,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             return reader;
         }
 
-        //TODO: ver si el filtro tiene que ser exacto o like
         private Object filtrarUsername()
         {
             if (textBox1.Text.Length.Equals(0))

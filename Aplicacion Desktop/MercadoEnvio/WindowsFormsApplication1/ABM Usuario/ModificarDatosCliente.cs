@@ -141,7 +141,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.validarCodigoPostal();
         }
 
-        //TODO: ver si hay que agregar alguna otra restriccion
         private void validarNombre()
         {
             if (Validacion.estaVacio(textBox1.Text))

@@ -32,7 +32,6 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 return textBox1.Text;
         }
 
-        //TODO: Agregar filtros
         private SqlDataReader getVisibilidades()
         {
             SqlDataReader reader;

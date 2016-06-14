@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1.Extras;
 
-//TODO: Revisar por las dudas si esta bien hecho esto
 namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class ModificarRol : Form

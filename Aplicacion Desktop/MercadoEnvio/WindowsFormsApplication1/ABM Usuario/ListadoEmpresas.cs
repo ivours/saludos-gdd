@@ -38,7 +38,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.Close();
         }
 
-        //TODO: Estos filtros los valido?
         private SqlDataReader filtrarEmpresas()
         {
             SqlDataReader reader;

@@ -46,7 +46,6 @@ namespace WindowsFormsApplication1.Facturas
 
         }
 
-        //TODO: Ver si hace falta validar los otros campos
         private void validarCampos()
         {
             this.validarIntervaloFechas();

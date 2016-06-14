@@ -23,8 +23,6 @@ namespace WindowsFormsApplication1.Listado_Estadistico
 
         private SqlDataReader productosSinVenderDeUnVendedor(int anio, int trimestre, String vendedor)
         {
-            //TODO: ver si el nombre de parametro visibilidad esta bien
-
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
