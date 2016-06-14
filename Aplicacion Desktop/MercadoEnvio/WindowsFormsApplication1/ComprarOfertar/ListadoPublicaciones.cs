@@ -23,6 +23,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             ConfiguradorVentana.configurarVentana(this);
             this.username = username;
             ConfiguradorDataGrid.configurar(dataGridView1);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             paginaActual = 1;
             ultimaPagina = 1;
         }
@@ -256,15 +257,15 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 {
                     ComprarOfertar.Comprar comprar = new Comprar(codigoPublicacion, this.username);
                     comprar.Show();
+                    this.Close();
                 }
                 else
                 {
                     ComprarOfertar.Ofertar ofertar = new Ofertar(codigoPublicacion, this.username);
                     ofertar.Show();
+                    this.Close();
                 }
             }
-
-            this.Close();
         }
 
         private void ListadoPublicaciones_Load(object sender, EventArgs e)

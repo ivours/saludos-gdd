@@ -192,7 +192,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 this.validarCampos();
                 this.crearPublicacion();
-
+                MessageBox.Show("Publicación creada exitosamente.");
                 this.Close();
             }
             catch (Exception excepcion)
