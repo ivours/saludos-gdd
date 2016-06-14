@@ -1926,7 +1926,6 @@ CREATE PROCEDURE SALUDOS.altaUsuarioEmpresa
  @depto nvarchar(50), @ciudad nvarchar(50), @contacto nvarchar(50), @cod_postal nvarchar(50), @localidad nvarchar(50),
  @id_rubro int)
 AS
-BEGIN TRANSACTION
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0)----No existe otro usuario igual
 		BEGIN
 			IF (SALUDOS.existeRazonSocialYCuit(@username, @razon_social, @cuit) = 0)------No existe empresa con misma razon y cuit
@@ -1956,7 +1955,6 @@ BEGIN TRANSACTION
 			RAISERROR('Ya existe el usuario', 16, 1)
 			RETURN
 		END
-COMMIT
 GO
 
 CREATE PROCEDURE SALUDOS.modificarEmpresa
@@ -2313,7 +2311,7 @@ AS
 		(CONVERT(nvarchar, ROL_HABILITADO) = @habilitado OR @habilitado is null))
 GO
 
-CREATE FUNCTION SALUDOS.getRubros select * from saludos.getrubros('Soportes', null) select * from saludos.rubros
+CREATE FUNCTION SALUDOS.getRubros
 (@nombreRubro nvarchar(255), @descripcion nvarchar(255))
 RETURNS TABLE
 AS
