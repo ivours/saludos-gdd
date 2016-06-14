@@ -1850,7 +1850,6 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
  @depto nvarchar(50), @piso numeric(18,0), @localidad nvarchar(255), @documento numeric(18,0), @tipo_documento nvarchar(50),
  @mail nvarchar(50))
  AS
- BEGIN TRANSACTION
 	IF ((SELECT COUNT(*) FROM SALUDOS.USUARIOS WHERE USUA_USERNAME = @username) = 0) --NO EXISTE OTRO USERNAME IGUAL
 		BEGIN
 			IF (SALUDOS.existeTipoYNumeroDeDocumento(@username, @documento, @tipo_documento) = 0) --NO EXISTE CLIENTE CON MISMO TIPO Y NRO DE DOCUMENTO
@@ -1880,7 +1879,6 @@ CREATE PROCEDURE SALUDOS.altaUsuarioCliente
 			RAISERROR('Ya existe el usuario', 16, 1)
 			RETURN
 		END
-COMMIT
 GO
 
 CREATE PROCEDURE SALUDOS.modificarCliente
@@ -2315,7 +2313,7 @@ AS
 		(CONVERT(nvarchar, ROL_HABILITADO) = @habilitado OR @habilitado is null))
 GO
 
-CREATE FUNCTION SALUDOS.getRubros
+CREATE FUNCTION SALUDOS.getRubros select * from saludos.getrubros('Soportes', null) select * from saludos.rubros
 (@nombreRubro nvarchar(255), @descripcion nvarchar(255))
 RETURNS TABLE
 AS
