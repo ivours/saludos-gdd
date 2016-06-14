@@ -1587,7 +1587,7 @@ RETURNS @calificaciones TABLE (Estrellas numeric(18,0), Descripción nvarchar(255
 			SELECT TOP 5 CALI_ESTRELLAS, CALI_DESCRIPCION, CALI_FECHA
 			FROM SALUDOS.CALIFICACIONES
 			WHERE USUA_USERNAME = @usuario
-			ORDER BY CALI_FECHA, CALI_COD DESC
+			ORDER BY CALI_FECHA ASC, CALI_COD DESC
 		RETURN;
 	END
 GO
@@ -1685,7 +1685,7 @@ BEGIN
 
 	IF @existe_usuario = 0
 		BEGIN
-			RAISERROR('El usuario no existe.', 16, 1)
+			RAISERROR('El usuario no existe o los datos ingresados son incorrectos.', 16, 1)
 			RETURN
 		END
 
