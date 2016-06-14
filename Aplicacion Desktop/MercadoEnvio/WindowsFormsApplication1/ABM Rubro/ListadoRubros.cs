@@ -67,36 +67,40 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
             String nombreRubro;
 
-            switch (formAnterior.Name)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                case "ListadoEstadistico":
-                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as Listado_Estadistico.ListadoEstadistico).setRubro(nombreRubro);
-                    break;
+                switch (formAnterior.Name)
+                {
+                    case "ListadoEstadistico":
+                        nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        (formAnterior as Listado_Estadistico.ListadoEstadistico).setRubro(nombreRubro);
+                        break;
 
-                case "CargarDatosEmpresa":
-                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as ABM_Usuario.CargarDatosEmpresa).setRubroPrincipal(nombreRubro);
-                    break;
+                    case "CargarDatosEmpresa":
+                        nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        (formAnterior as ABM_Usuario.CargarDatosEmpresa).setRubroPrincipal(nombreRubro);
+                        break;
 
-                case "ModificarDatosEmpresa":
-                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as ABM_Usuario.ModificarDatosEmpresa).setRubroPrincipal(nombreRubro);
-                    break;
+                    case "ModificarDatosEmpresa":
+                        nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        (formAnterior as ABM_Usuario.ModificarDatosEmpresa).setRubroPrincipal(nombreRubro);
+                        break;
 
-                case "CrearPublicacion":
-                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as Generar_Publicación.CrearPublicacion).setRubro(nombreRubro);
-                    break;
+                    case "CrearPublicacion":
+                        nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        (formAnterior as Generar_Publicación.CrearPublicacion).setRubro(nombreRubro);
+                        break;
 
-                case "ListadoPublicaciones":
-                    nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                    (formAnterior as ComprarOfertar.ListadoPublicaciones).addRubro(nombreRubro);
-                    break;
+                    case "ListadoPublicaciones":
+                        nombreRubro = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                        (formAnterior as ComprarOfertar.ListadoPublicaciones).addRubro(nombreRubro);
+                        break;
 
+                }
+
+                this.Close();
             }
 
-            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
