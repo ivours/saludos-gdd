@@ -220,10 +220,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             String nombre = textBox1.Text;
             String apellido = textBox2.Text;
             String tipoDeDocumento = comboBox1.SelectedItem.ToString();
-            int nroDeDocumento = Convert.ToInt32(textBox4.Text);
+            long nroDeDocumento = Convert.ToInt64(textBox4.Text);
             DateTime fechaDeNacimiento = dateTimePicker1.Value.Date;
             String email = textBox6.Text;
-            int telefono = Convert.ToInt32(textBox7.Text);
+            long telefono = Convert.ToInt64(textBox7.Text);
             String calle = textBox8.Text;
             int nroCalle = Convert.ToInt32(textBox9.Text);
             int piso = Convert.ToInt32(numericUpDown1.Value);
@@ -237,7 +237,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                                  .agregarIntSP("@id_rol", idRol)
                                  .agregarStringSP("@nombre", nombre)
                                  .agregarStringSP("@apellido", apellido)
-                                 .agregarIntSP("@telefono", telefono)
+                                 .agregarLongSP("@telefono", telefono)
                                  .agregarStringSP("@calle", calle)
                                  .agregarIntSP("@nro_calle", nroCalle)
                                  .agregarFechaSP("@nacimiento", fechaDeNacimiento)
@@ -245,7 +245,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                                  .agregarStringSP("@depto", depto)
                                  .agregarIntSP("@piso", piso)
                                  .agregarStringSP("@localidad", localidad)
-                                 .agregarIntSP("@documento", nroDeDocumento)
+                                 .agregarLongSP("@documento", nroDeDocumento)
                                  .agregarStringSP("@tipo_documento", tipoDeDocumento)
                                  .agregarStringSP("@mail", email);
 

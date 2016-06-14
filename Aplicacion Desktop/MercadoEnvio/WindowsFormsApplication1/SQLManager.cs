@@ -44,6 +44,12 @@ namespace WindowsFormsApplication1
             return this;
         }
 
+        public SQLManager agregarLongSP(string nombreVariable, long numero)
+        {
+            command.Parameters.AddWithValue(nombreVariable, Convert.ToInt64(numero));
+            return this;
+        }
+
         public SQLManager agregarDecimalSP(string nombreVariable, decimal numero)
         {
             command.Parameters.AddWithValue(nombreVariable, numero);

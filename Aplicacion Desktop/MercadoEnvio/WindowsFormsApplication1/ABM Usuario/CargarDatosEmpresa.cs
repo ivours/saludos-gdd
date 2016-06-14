@@ -224,7 +224,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             String nombreDeContacto = textBox3.Text;
             String cuit = textBox4.Text;
             String email = textBox6.Text;
-            int telefono = Convert.ToInt32(textBox7.Text);
+            long telefono = Convert.ToInt64(textBox7.Text);
             String ciudad = textBox2.Text;
             String calle = textBox8.Text;
             int nroCalle = Convert.ToInt32(textBox9.Text);
@@ -240,7 +240,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                                  .agregarStringSP("@razon_social", razonSocial)
                                  .agregarStringSP("@cuit", cuit)
                                  .agregarStringSP("@mail", email)
-                                 .agregarIntSP("@telefono", telefono)
+                                 .agregarLongSP("@telefono", telefono)
                                  .agregarStringSP("@calle", calle)
                                  .agregarIntSP("@nro_calle", nroCalle)
                                  .agregarIntSP("@piso", piso)
