@@ -1035,6 +1035,7 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	DECLARE @fecha datetime
 	DECLARE @codActiva int
 	DECLARE @codFinalizada int
+	DECLARE @codPausada int
 	DECLARE @codCompras int
 	
 	SET @fecha = SALUDOS.fechaActual()
@@ -1047,6 +1048,10 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 							FROM SALUDOS.ESTADOS
 							WHERE ESTA_NOMBRE = 'Finalizada')
 
+	SET @codPausada = (	SELECT ESTA_COD 
+						FROM SALUDOS.ESTADOS
+						WHERE ESTA_NOMBRE = 'Pausada')
+	
 	SET @codCompras = (	SELECT TIPO_COD
 						FROM SALUDOS.TIPOS
 						WHERE TIPO_NOMBRE = 'Compra Inmediata')
@@ -1062,7 +1067,7 @@ CREATE PROCEDURE SALUDOS.actualizarEstadosDePublicaciones AS
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codFinalizada
 	WHERE  (PUBL_INICIO > @fecha OR
 			PUBL_FINALIZACION <= @fecha) AND
-			ESTA_COD IN (@codActiva, @codFinalizada)
+			ESTA_COD IN (@codActiva, @codFinalizada, @codPausada)
 
 	UPDATE SALUDOS.PUBLICACIONES
 	SET SALUDOS.PUBLICACIONES.ESTA_COD = @codFinalizada
@@ -1111,6 +1116,22 @@ CREATE PROCEDURE SALUDOS.adjudicarSubastas AS
 	EXEC SALUDOS.facturarSubastasAdjudicadas
 GO
 
+--Para cuando una publicación sale de borrador.
+CREATE PROCEDURE SALUDOS.activarPublicacionPorPrimeraVez
+	@codPublicacion numeric(18,0)
+AS
+	DECLARE @codActiva int
+	SET @codActiva = (	SELECT ESTA_COD
+						FROM SALUDOS.ESTADOS
+						WHERE ESTA_NOMBRE = 'Activa')
+
+	UPDATE SALUDOS.PUBLICACIONES
+	SET PUBL_INICIO = (SELECT SALUDOS.fechaActual()),
+		PUBL_FINALIZACION = DATEADD(day, 7, SALUDOS.fechaActual()),
+		ESTA_COD = @codActiva
+	WHERE PUBL_COD = @codPublicacion
+GO
+
 --Generar publicación.
 CREATE PROCEDURE SALUDOS.crearPublicacion
 	@usuario nvarchar(255),
@@ -1126,10 +1147,9 @@ CREATE PROCEDURE SALUDOS.crearPublicacion
 AS
 	INSERT INTO SALUDOS.PUBLICACIONES(
 	USUA_USERNAME, TIPO_COD, PUBL_DESCRIPCION,
-	PUBL_STOCK, PUBL_PRECIO, RUBR_COD, ESTA_COD,
-	PUBL_PREGUNTAS,	VISI_COD, PUBL_PERMITE_ENVIO,
-	PUBL_INICIO, PUBL_FINALIZACION)
-
+	PUBL_STOCK, PUBL_PRECIO, RUBR_COD,
+	PUBL_PREGUNTAS,	VISI_COD, PUBL_PERMITE_ENVIO)
+	
 	VALUES(
 	(SELECT USUA_USERNAME
 	FROM SALUDOS.USUARIOS
@@ -1145,21 +1165,13 @@ AS
 	FROM SALUDOS.RUBROS
 	WHERE RUBR_NOMBRE = @rubro),
 
-	(SELECT ESTA_COD
-	FROM SALUDOS.ESTADOS
-	WHERE ESTA_NOMBRE = @estado),
-
 	@preguntas,
 
 	(SELECT VISI_COD
 	FROM SALUDOS.VISIBILIDADES
 	WHERE VISI_DESCRIPCION = @visibilidad),
 
-	@envio,
-
-	(SELECT SALUDOS.fechaActual()),
-
-	DATEADD(day, 7, SALUDOS.fechaActual())
+	@envio
 	)
 
 	DECLARE @codPublicacion numeric(18,0)
@@ -1170,6 +1182,15 @@ AS
 							FROM SALUDOS.USUARIOS
 							WHERE USUA_USERNAME = @usuario)
 
+	IF (@estado = 'Activa')
+		BEGIN
+			EXEC SALUDOS.activarPublicacionPorPrimeraVez @codPublicacion
+		END
+	ELSE
+		BEGIN
+			EXEC SALUDOS.cambiarEstadoPublicacion @codPublicacion, 'Borrador'
+		END
+	
 	IF (@visibilidad <> 'Gratis' AND @usuarioNuevo = 1)
 		BEGIN
 			EXEC SALUDOS.facturarPublicacionGratuita @codPublicacion

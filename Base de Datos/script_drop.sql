@@ -33,6 +33,7 @@ DROP FUNCTION SALUDOS.cantidadDePaginasPublicaciones
 DROP PROCEDURE SALUDOS.actualizarEstadosDePublicaciones
 DROP PROCEDURE SALUDOS.adjudicarSubastas
 DROP PROCEDURE SALUDOS.crearPublicacion
+DROP PROCEDURE SALUDOS.activarPublicacionPorPrimeraVez
 DROP FUNCTION SALUDOS.stockActual
 DROP PROCEDURE SALUDOS.cambiarEstadoPublicacion
 DROP PROCEDURE SALUDOS.finalizarPublicacionPorUsuario
