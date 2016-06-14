@@ -12,6 +12,20 @@ namespace WindowsFormsApplication1.Dominio
 
     class Usuario
     {
+        public static int existeUsername(String username)
+        {
+            SqlDataReader reader;
+            SqlCommand consulta = new SqlCommand();
+            consulta.CommandType = CommandType.Text;
+            consulta.CommandText = "SELECT GD1C2016.SALUDOS.existeUsername(@username)";
+            consulta.Parameters.Add(new SqlParameter("@username", username));
+            consulta.Connection = Program.conexionDB();
+            reader = consulta.ExecuteReader();
+            reader.Read();
+
+            return (int) reader.GetValue(0);
+        }
+
         public static String getTipoUsuario(String username)
         {
             SqlDataReader reader;
