@@ -102,13 +102,12 @@ namespace WindowsFormsApplication1.ABM_Rol
                 this.validarCampos();
                 this.altaRol();
                 MessageBox.Show("Rol creado exitosamente.");
+                this.Close();
             }
             catch (Exception excepcion)
             {
                 MessageBox.Show(excepcion.Message, "Error", MessageBoxButtons.OK);
             }
-
-            this.Close();
 
         }
 
