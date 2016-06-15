@@ -161,9 +161,9 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(23, 64);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(87, 17);
+            this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "Incluír envío";
+            this.checkBox1.Text = "Incluir envío";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label5

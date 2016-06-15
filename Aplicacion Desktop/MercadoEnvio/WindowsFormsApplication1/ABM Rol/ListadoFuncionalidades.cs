@@ -31,7 +31,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             SqlDataReader reader;
             SqlCommand consulta = new SqlCommand();
             consulta.CommandType = CommandType.Text;
-            consulta.CommandText = "SELECT * from GD1C2016.SALUDOS.FUNCIONALIDADES";
+            consulta.CommandText = "SELECT FUNC_COD AS 'Código', FUNC_NOMBRE AS 'Nombre' from GD1C2016.SALUDOS.FUNCIONALIDADES";
             consulta.Connection = Program.conexionDB();
             reader = consulta.ExecuteReader();
 

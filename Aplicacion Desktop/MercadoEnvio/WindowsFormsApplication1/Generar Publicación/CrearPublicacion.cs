@@ -37,6 +37,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 label16.Show();
                 comisionPublicacion = 0;
+                textBox7.Text = "0.00";
             }
             else
                 comisionPublicacion = Dominio.Visibilidad.getComisionPublicacion(comboBox2.SelectedItem.ToString());
@@ -258,7 +259,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
             decimal.Round(comisionVenta, 2, MidpointRounding.AwayFromZero);
             decimal.Round(comisionEnvio, 2, MidpointRounding.AwayFromZero);
 
-            textBox7.Text = comisionPublicacion.ToString("F");
+            if (!Dominio.Usuario.esUsuarioNuevo(this.username).Equals(1))
+                textBox7.Text = comisionPublicacion.ToString("F");
         }
 
         private void CrearPublicacion_Load(object sender, EventArgs e)
