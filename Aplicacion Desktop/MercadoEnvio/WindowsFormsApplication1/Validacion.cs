@@ -31,6 +31,16 @@ namespace WindowsFormsApplication1
             return (texto.All(caracter => Char.IsLetter(caracter) || Char.IsWhiteSpace(caracter)));
         }
 
+        public static Boolean contieneSoloLetrasONumeros(String texto)
+        {
+            return (texto.All(caracter => Char.IsLetter(caracter) || Char.IsNumber(caracter)));
+        }
+
+        public static Boolean contieneSoloLetrasEspaciosONumeros(String texto)
+        {
+            return (texto.All(caracter => Char.IsLetter(caracter) || Char.IsWhiteSpace(caracter) || Char.IsNumber(caracter)));
+        }
+
         public static Boolean contieneSoloNumeros(String texto)
         {
             return (texto.All(caracter => Char.IsNumber(caracter)));

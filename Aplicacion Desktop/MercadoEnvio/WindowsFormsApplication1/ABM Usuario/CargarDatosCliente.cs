@@ -165,6 +165,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if (!Validacion.empiezaConCaracter(textBox8.Text))
                 throw new Exception("La calle debe comenzar con un caracter visible");
+
+            if (!Validacion.contieneSoloLetrasEspaciosONumeros(textBox8.Text))
+                throw new Exception("La calle debe contener únicamente letras, espacios o números");
         }
 
         private void validarNroCalle()
@@ -181,8 +184,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (Validacion.estaVacio(textBox11.Text))
                 throw new Exception("Debe ingresar un depto.");
 
-            if (!Validacion.contieneSoloLetras(textBox11.Text))
-                throw new Exception("El depto. debe ser una letra");
+            if (!Validacion.contieneSoloLetrasONumeros(textBox11.Text))
+                throw new Exception("El depto. debe ser una letra o un número");
         }
 
         private void validarLocalidad()
@@ -193,8 +196,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (!Validacion.empiezaConCaracter(textBox12.Text))
                 throw new Exception("La localidad debe comenzar con un caracter visible");
 
-            if (!Validacion.contieneSoloLetrasOEspacios(textBox12.Text))
-                throw new Exception("La localidad debe contener únicamente letras o espacios");
+            if (!Validacion.contieneSoloLetrasEspaciosONumeros(textBox12.Text))
+                throw new Exception("La localidad debe contener únicamente letras, espacios o números");
         }
 
         private void validarCodigoPostal()
